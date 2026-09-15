@@ -77,11 +77,14 @@ pnpm format:check
 pnpm lint
 pnpm typecheck
 pnpm test
+pnpm test:smoke:dev
 pnpm build
 pnpm check
 ```
 
 `pnpm check` is the required local completion gate. It runs formatting, linting, type checking, tests, and the production build in sequence. CI runs the same command in the stable `quality` job; do not duplicate or weaken these checks in workflow-only commands. The separate `security` job owns dependency auditing and secret scanning because those checks require registry or GitHub context.
+
+`pnpm test:smoke:dev` targets a deployed application and requires `DEV_URL`; it is not part of the local `pnpm check` sequence.
 
 ## Git Rules
 

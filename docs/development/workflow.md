@@ -87,4 +87,6 @@ The agent does not merge its own pull request. Required CI and review gates must
 
 ## 8. Deploy
 
-After later Phase 1 steps are implemented, merging to `main` triggers DEV deployment and a smoke test. PROD requires explicit human approval and cannot be approved by the coding agent.
+After a merge, successful `quality` and `security` verification of the resulting `main` commit triggers the DEV workflow. It deploys that exact commit to Cloudflare Workers Static Assets and runs the smoke test against the URL returned by Wrangler. See [`deployment.md`](deployment.md) for configuration and operations.
+
+PROD requires explicit human approval and cannot be approved by the coding agent.

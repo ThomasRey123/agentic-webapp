@@ -6,7 +6,7 @@ A small learning project for building and validating an agentic software-deliver
 
 ## Current Status
 
-Phase 1 is in progress. The repository, modular structure, structured GitHub contribution workflow, automated tests, unified local quality gate, and independent pull-request CI are established. Deployment follows in later Phase 1 steps.
+Phase 1 is in progress. The repository, modular structure, structured GitHub contribution workflow, automated tests, unified local quality gate, and independent CI are established. Verified `main` commits deploy automatically to the Cloudflare Workers Static Assets DEV target once its GitHub environment is configured.
 
 ## Technology
 
@@ -16,6 +16,7 @@ Phase 1 is in progress. The repository, modular structure, structured GitHub con
 - pnpm
 - GitHub Issues and pull requests
 - GitHub Actions for independent CI verification
+- Cloudflare Workers Static Assets for DEV hosting
 
 ## Prerequisites
 
@@ -40,22 +41,25 @@ More detail is available in [`docs/development/local-setup.md`](docs/development
 
 ## Available Commands
 
-| Command             | Purpose                                         |
-| ------------------- | ----------------------------------------------- |
-| `pnpm dev`          | Start the local development server              |
-| `pnpm format`       | Format supported repository files with Prettier |
-| `pnpm format:check` | Check formatting without changing files         |
-| `pnpm lint`         | Run ESLint                                      |
-| `pnpm typecheck`    | Run strict TypeScript without emitting files    |
-| `pnpm test`         | Run the Vitest suite once                       |
-| `pnpm test:watch`   | Run Vitest in watch mode                        |
-| `pnpm build`        | Create a production build                       |
-| `pnpm check`        | Run every required local quality gate           |
-| `pnpm start`        | Serve a completed production build              |
+| Command               | Purpose                                         |
+| --------------------- | ----------------------------------------------- |
+| `pnpm dev`            | Start the local development server              |
+| `pnpm format`         | Format supported repository files with Prettier |
+| `pnpm format:check`   | Check formatting without changing files         |
+| `pnpm lint`           | Run ESLint                                      |
+| `pnpm typecheck`      | Run strict TypeScript without emitting files    |
+| `pnpm test`           | Run the Vitest suite once                       |
+| `pnpm test:watch`     | Run Vitest in watch mode                        |
+| `pnpm test:smoke:dev` | Smoke test the URL in `DEV_URL`                 |
+| `pnpm build`          | Create a production build                       |
+| `pnpm check`          | Run every required local quality gate           |
+| `pnpm start`          | Serve a completed production build              |
 
 Run `pnpm check` before completing a task. It executes formatting, linting, type checking, tests, and the production build in sequence.
 
 GitHub Actions runs the same command in the required `quality` job for pull requests targeting `main` and for pushes to `main`. A separate required `security` job audits dependencies and scans Git history for secrets.
+
+After CI succeeds for a `main` commit, `Deploy DEV` exports the application, deploys it to Cloudflare, and smoke tests the returned deployment URL. See [`docs/development/deployment.md`](docs/development/deployment.md) for the required GitHub environment and Cloudflare setup.
 
 ## Architecture
 
@@ -93,6 +97,8 @@ Read [`AGENTS.md`](AGENTS.md) before agent-assisted work and [`docs/development/
 
 - [`docs/architecture/phase-1.md`](docs/architecture/phase-1.md): Phase 1 boundaries and component responsibilities
 - [`docs/architecture/decisions/ADR-001-modular-monolith.md`](docs/architecture/decisions/ADR-001-modular-monolith.md): architecture decision record
+- [`docs/architecture/decisions/ADR-002-cloudflare-workers-static-assets.md`](docs/architecture/decisions/ADR-002-cloudflare-workers-static-assets.md): DEV hosting decision
 - [`docs/development/local-setup.md`](docs/development/local-setup.md): local installation and troubleshooting
 - [`docs/development/workflow.md`](docs/development/workflow.md): issue-to-PR workflow
 - [`docs/development/github-governance.md`](docs/development/github-governance.md): issue templates, pull-request contract, and branch protection
+- [`docs/development/deployment.md`](docs/development/deployment.md): DEV deployment configuration and operation
