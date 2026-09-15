@@ -6,7 +6,7 @@ A small learning project for building and validating an agentic software-deliver
 
 ## Current Status
 
-Phase 1 is in progress. The repository, modular structure, structured GitHub contribution workflow, first automated tests, and unified local quality gate are established. CI and deployment follow in later Phase 1 steps.
+Phase 1 is in progress. The repository, modular structure, structured GitHub contribution workflow, automated tests, unified local quality gate, and independent pull-request CI are established. Deployment follows in later Phase 1 steps.
 
 ## Technology
 
@@ -15,7 +15,7 @@ Phase 1 is in progress. The repository, modular structure, structured GitHub con
 - TypeScript in strict mode
 - pnpm
 - GitHub Issues and pull requests
-- GitHub Actions in a later Phase 1 step
+- GitHub Actions for independent CI verification
 
 ## Prerequisites
 
@@ -54,6 +54,8 @@ More detail is available in [`docs/development/local-setup.md`](docs/development
 | `pnpm start`        | Serve a completed production build              |
 
 Run `pnpm check` before completing a task. It executes formatting, linting, type checking, tests, and the production build in sequence.
+
+GitHub Actions runs the same command in the required `quality` job for pull requests targeting `main` and for pushes to `main`. A separate required `security` job audits dependencies and scans Git history for secrets.
 
 ## Architecture
 

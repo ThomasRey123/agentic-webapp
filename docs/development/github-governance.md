@@ -32,11 +32,12 @@ The repository owner configures a repository ruleset named `protect-main` with t
 | Require a pull request before merging | Enabled                                         |
 | Required approvals                    | 0                                               |
 | Require conversation resolution       | Enabled                                         |
-| Required status checks                | Deferred to Phase 1 step 6                      |
+| Required status checks                | `quality` and `security` from GitHub Actions    |
+| Require branch to be up to date       | Enabled                                         |
 
 Zero required approvals is intentional for this single-owner learning repository: changes must still pass through a visible pull request, but the owner is not blocked waiting for a second collaborator. Agents remain forbidden from merging their own pull requests by `AGENTS.md`.
 
-Do not add a required status-check name before its GitHub Actions job has run successfully in the repository. Step 6 introduces the CI workflow and then adds its stable job name to this ruleset.
+The required status checks are the stable `quality` and `security` jobs from `.github/workflows/ci.yml`. `quality` runs the repository's existing `pnpm check` command, so local and independent verification use one contract. `security` scans Git history for secrets and runs `pnpm audit --audit-level high`. Add both checks to the ruleset only after their first successful GitHub Actions run; requiring an unknown or unsuccessful check can block every merge.
 
 ## Verification
 
