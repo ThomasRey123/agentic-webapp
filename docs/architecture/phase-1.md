@@ -50,10 +50,10 @@ Feature internals are private. Other areas import a feature through its `index.t
 ## Environments
 
 - **LOCAL:** manual development with `.env.local`.
-- **DEV:** automatic deployment of a verified `main` commit.
+- **DEV:** automatic deployment of a verified `main` commit as a static Next.js export on Cloudflare Workers Static Assets.
 - **PROD:** the same verified commit after explicit human approval.
 
-The hosting provider remains behind the deployment workflow and is selected in Phase 1 step 7 based on actual runtime needs.
+Cloudflare is isolated behind the deployment workflow and `wrangler.jsonc`. The application remains a provider-independent static export; see [`ADR-002`](decisions/ADR-002-cloudflare-workers-static-assets.md). Revisit that decision if an accepted feature requires server-side Next.js behavior.
 
 ## Deferred Capabilities
 
