@@ -62,7 +62,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy
           packageManager: pnpm
-          wranglerVersion: "4.132.0"
+          wranglerVersion: "4.131.2"
 
       - name: Smoke test deployed application
         env:
