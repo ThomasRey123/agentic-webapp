@@ -32,6 +32,12 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Current Checks
 
 ```bash
+pnpm check
+```
+
+The unified command runs these checks in order:
+
+```bash
 pnpm format:check
 pnpm lint
 pnpm typecheck
@@ -39,7 +45,7 @@ pnpm test
 pnpm build
 ```
 
-Until Phase 1 step 4 adds the first meaningful tests, `pnpm test` explicitly allows an empty suite. Step 4 removes that temporary condition and combines all checks as `pnpm check`.
+`pnpm check` is the required local completion gate. Run an individual command when diagnosing a failure, but do not treat that as a replacement for the full sequence.
 
 ## Environment Configuration
 
