@@ -6,7 +6,21 @@ A small learning project for building and validating an agentic software-deliver
 
 ## Current Status
 
-Phase 1 is in progress. The repository, modular structure, structured GitHub contribution workflow, automated tests, unified local quality gate, and independent CI are established. Verified `main` commits deploy automatically to the Cloudflare Workers Static Assets DEV target once its GitHub environment is configured.
+The Phase 1 DEV foundation is operational. The repository, modular structure, GitHub contribution workflow, automated tests, unified local quality gate, independent CI, and automatic DEV deployment are established.
+
+Every successfully verified `main` commit is deployed to Cloudflare Workers Static Assets and checked by a remote smoke test. The public environment is available at [agentic-webapp-dev.tr-config-place.workers.dev](https://agentic-webapp-dev.tr-config-place.workers.dev).
+
+Production deployment was intentionally deferred by the repository owner. The next milestone is the Phase 1 feature proof of concept: deliver one visible, tested application feature through the complete issue-to-DEV workflow.
+
+| Milestone                                    | Status   |
+| -------------------------------------------- | -------- |
+| Repository and modular application structure | Complete |
+| Local quality gate                           | Complete |
+| GitHub governance and protected `main`       | Complete |
+| Independent CI and security checks           | Complete |
+| Automatic DEV deployment and smoke test      | Complete |
+| Production deployment and approval           | Deferred |
+| Feature proof of concept                     | Next     |
 
 ## Technology
 
@@ -60,6 +74,8 @@ Run `pnpm check` before completing a task. It executes formatting, linting, type
 GitHub Actions runs the same command in the required `quality` job for pull requests targeting `main` and for pushes to `main`. A separate required `security` job audits dependencies and scans Git history for secrets.
 
 After CI succeeds for a `main` commit, `Deploy DEV` exports the application, deploys it to Cloudflare, and smoke tests the returned deployment URL. See [`docs/development/deployment.md`](docs/development/deployment.md) for the required GitHub environment and Cloudflare setup.
+
+The current cross-chat project baseline is [`PROJECT_STATE_V3.md`](PROJECT_STATE_V3.md).
 
 ## Architecture
 

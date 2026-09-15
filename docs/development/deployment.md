@@ -8,11 +8,19 @@ The Phase 1 DEV target is a Cloudflare Worker named `agentic-webapp-dev` that se
 
 The automatic path checks out `github.event.workflow_run.head_sha`. This keeps deployment tied to the exact commit independently verified by CI rather than whatever commit happens to be latest when the job starts.
 
+DEV is live at [agentic-webapp-dev.tr-config-place.workers.dev](https://agentic-webapp-dev.tr-config-place.workers.dev). The first successful deployment and remote smoke test completed on September 15, 2026.
+
 ## One-Time Owner Setup
 
 ### 1. Prepare Cloudflare
 
-Use a Cloudflare account with a configured `workers.dev` subdomain. Create a scoped API token with permission to edit Workers in only the intended account.
+Use a Cloudflare account with a configured `workers.dev` subdomain. Create a custom API token scoped to only the intended account with:
+
+```text
+Developer Platform -> Workers Scripts (Legacy) -> Edit
+```
+
+Cloudflare's API documentation calls the corresponding accepted permission `Workers Scripts Write`. The modern `Workers -> Editor` role alone does not authorize the Workers Static Assets upload-session endpoint used by this deployment. See the [Cloudflare assets upload API](https://developers.cloudflare.com/api/resources/workers/subresources/scripts/subresources/assets/subresources/upload/methods/create/).
 
 Do not use a global API key and do not put either value in the repository.
 
@@ -26,6 +34,8 @@ In the repository settings, create an environment named `development`. Add these
 | `CLOUDFLARE_ACCOUNT_ID` | Target Cloudflare account for the DEV Worker |
 
 The environment must not require a deployment approval: verified `main` commits deploy to DEV automatically. Production credentials must never be reused here.
+
+Production deployment and the `production` GitHub environment are intentionally deferred. They must use separate credentials when implemented later.
 
 ## Deployment Flow
 
