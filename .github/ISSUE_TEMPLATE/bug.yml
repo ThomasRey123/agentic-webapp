@@ -1,0 +1,70 @@
+name: Bug report
+description: Report reproducible behavior that differs from the expected result.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Include the smallest reliable reproduction and avoid sensitive data in logs or screenshots.
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: List the exact steps needed to observe the problem.
+      placeholder: |
+        1. Go to...
+        2. Select...
+        3. Observe...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What should happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual behavior
+      description: What happens instead? Include safe error output when useful.
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, operating system, deployment environment, or commit SHA when relevant.
+      placeholder: Firefox 143, development, commit abc1234
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: List the observable conditions that prove the bug is fixed.
+      placeholder: |
+        - [ ] The reproduction no longer fails.
+        - [ ] A meaningful regression test covers the behavior.
+    validations:
+      required: true
+
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of scope
+      description: State any related behavior that this fix must not change. Write "None" if there are no exclusions.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed secrets, credentials, and sensitive personal data from this report.
+          required: true

@@ -11,6 +11,8 @@ Create one GitHub issue containing:
 
 The issue is the task contract. Do not infer additional product scope.
 
+Use the structured feature or bug form. Blank issues are disabled for contributors, and security-sensitive details must not be posted publicly. See [`github-governance.md`](github-governance.md) for the complete repository policy.
+
 ## 2. Create a Branch
 
 Start from current `main` and use one of:
@@ -75,9 +77,11 @@ Known risks or `None known`.
 
 Include screenshots for meaningful visual changes and document new configuration or migration steps.
 
+Keep every section of `.github/pull_request_template.md`. The template is the handoff record between implementation, review, and later CI enforcement.
+
 ## 7. Review and Merge
 
-The agent does not merge its own pull request. Required CI and review gates must pass. Direct pushes and force pushes to `main` are forbidden.
+The agent does not merge its own pull request. Required CI and review gates must pass. The `protect-main` repository ruleset requires the pull-request path and blocks force pushes and deletion; its required status check is added after CI exists in Phase 1 step 6.
 
 ## 8. Deploy
 
