@@ -6,7 +6,7 @@ A small learning project for building and validating an agentic software-deliver
 
 ## Current Status
 
-Phase 1 is in progress. The repository and minimal Next.js application are initialized, and the project structure and operating documentation are being established. Code-quality tooling, CI, and deployment follow in later Phase 1 steps.
+Phase 1 is in progress. The repository, modular structure, operating documentation, and individual code-quality tools are established. The unified local check, CI, and deployment follow in later Phase 1 steps.
 
 ## Technology
 
@@ -40,15 +40,19 @@ More detail is available in [`docs/development/local-setup.md`](docs/development
 
 ## Available Commands
 
-| Command | Purpose |
-| --- | --- |
-| `pnpm dev` | Start the local development server |
-| `pnpm lint` | Run ESLint |
-| `pnpm exec tsc --noEmit` | Run the current TypeScript check |
-| `pnpm build` | Create a production build |
-| `pnpm start` | Serve a completed production build |
+| Command             | Purpose                                         |
+| ------------------- | ----------------------------------------------- |
+| `pnpm dev`          | Start the local development server              |
+| `pnpm format`       | Format supported repository files with Prettier |
+| `pnpm format:check` | Check formatting without changing files         |
+| `pnpm lint`         | Run ESLint                                      |
+| `pnpm typecheck`    | Run strict TypeScript without emitting files    |
+| `pnpm test`         | Run the Vitest suite once                       |
+| `pnpm test:watch`   | Run Vitest in watch mode                        |
+| `pnpm build`        | Create a production build                       |
+| `pnpm start`        | Serve a completed production build              |
 
-Formatting, Vitest, and the unified `pnpm check` command are intentionally introduced in Phase 1 steps 3 and 4.
+`pnpm test` temporarily allows an empty suite because the first meaningful tests and the unified `pnpm check` command belong to Phase 1 step 4.
 
 ## Architecture
 

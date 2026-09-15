@@ -52,7 +52,7 @@ Create a directory only when it contains a real file with an immediate purpose. 
 - Prefer small, explicit modules and readable names over premature abstractions.
 - Keep feature-specific styles and components inside their feature.
 - Use the `@/*` alias for imports across top-level source areas.
-- Preserve the current formatting style until Prettier is introduced in Phase 1 step 3.
+- Use Prettier as the formatting authority and run `pnpm format` after editing supported files.
 - Add a dependency only when the issue requires it and document why in the pull request.
 - Consult the bundled Next.js documentation required by the generated rules above before changing framework-specific behavior.
 
@@ -63,7 +63,8 @@ Create a directory only when it contains a real file with an immediate purpose. 
 - Test observable behavior rather than implementation details.
 - Add a regression test for a bug fix when technically meaningful.
 - Never weaken, skip, or delete a failing test merely to make a check pass.
-- Vitest and the shared test setup are introduced in Phase 1 step 3; until then, run every check currently available.
+- Vitest uses jsdom and the shared setup in `src/test/setup.ts`.
+- The temporary `--passWithNoTests` flag exists only until Phase 1 step 4 adds the first meaningful tests; do not use it to hide deleted tests afterward.
 
 ## Commands
 
@@ -72,8 +73,10 @@ Use pnpm and the pinned Node.js version from `.nvmrc`.
 ```bash
 pnpm install --frozen-lockfile
 pnpm dev
+pnpm format:check
 pnpm lint
-pnpm exec tsc --noEmit
+pnpm typecheck
+pnpm test
 pnpm build
 ```
 
