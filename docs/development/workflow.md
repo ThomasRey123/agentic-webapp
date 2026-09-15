@@ -29,7 +29,7 @@ Read `AGENTS.md`, the issue, and relevant documentation before editing. Keep rou
 
 ## 4. Verify Locally
 
-Run every currently configured check and report each result accurately. Once Phase 1 step 4 is complete, the required command is:
+Run the required local completion gate and report its result accurately:
 
 ```bash
 pnpm check

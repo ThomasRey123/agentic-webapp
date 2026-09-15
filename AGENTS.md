@@ -64,7 +64,7 @@ Create a directory only when it contains a real file with an immediate purpose. 
 - Add a regression test for a bug fix when technically meaningful.
 - Never weaken, skip, or delete a failing test merely to make a check pass.
 - Vitest uses jsdom and the shared setup in `src/test/setup.ts`.
-- The temporary `--passWithNoTests` flag exists only until Phase 1 step 4 adds the first meaningful tests; do not use it to hide deleted tests afterward.
+- The test command must fail when no tests are discovered.
 
 ## Commands
 
@@ -78,9 +78,10 @@ pnpm lint
 pnpm typecheck
 pnpm test
 pnpm build
+pnpm check
 ```
 
-`pnpm check` becomes the required completion command when it is introduced in Phase 1 step 4. CI must call the same package scripts used locally.
+`pnpm check` is the required local completion gate. It runs formatting, linting, type checking, tests, and the production build in sequence. CI must call the same package scripts used locally.
 
 ## Git Rules
 

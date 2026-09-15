@@ -6,7 +6,7 @@ A small learning project for building and validating an agentic software-deliver
 
 ## Current Status
 
-Phase 1 is in progress. The repository, modular structure, operating documentation, and individual code-quality tools are established. The unified local check, CI, and deployment follow in later Phase 1 steps.
+Phase 1 is in progress. The repository, modular structure, operating documentation, first automated tests, and unified local quality gate are established. CI and deployment follow in later Phase 1 steps.
 
 ## Technology
 
@@ -50,9 +50,10 @@ More detail is available in [`docs/development/local-setup.md`](docs/development
 | `pnpm test`         | Run the Vitest suite once                       |
 | `pnpm test:watch`   | Run Vitest in watch mode                        |
 | `pnpm build`        | Create a production build                       |
+| `pnpm check`        | Run every required local quality gate           |
 | `pnpm start`        | Serve a completed production build              |
 
-`pnpm test` temporarily allows an empty suite because the first meaningful tests and the unified `pnpm check` command belong to Phase 1 step 4.
+Run `pnpm check` before completing a task. It executes formatting, linting, type checking, tests, and the production build in sequence.
 
 ## Architecture
 
