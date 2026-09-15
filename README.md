@@ -6,7 +6,7 @@ A small learning project for building and validating an agentic software-deliver
 
 ## Current Status
 
-Phase 1 is in progress. The repository, modular structure, operating documentation, first automated tests, and unified local quality gate are established. CI and deployment follow in later Phase 1 steps.
+Phase 1 is in progress. The repository, modular structure, structured GitHub contribution workflow, first automated tests, and unified local quality gate are established. CI and deployment follow in later Phase 1 steps.
 
 ## Technology
 
@@ -93,3 +93,4 @@ Read [`AGENTS.md`](AGENTS.md) before agent-assisted work and [`docs/development/
 - [`docs/architecture/decisions/ADR-001-modular-monolith.md`](docs/architecture/decisions/ADR-001-modular-monolith.md): architecture decision record
 - [`docs/development/local-setup.md`](docs/development/local-setup.md): local installation and troubleshooting
 - [`docs/development/workflow.md`](docs/development/workflow.md): issue-to-PR workflow
+- [`docs/development/github-governance.md`](docs/development/github-governance.md): issue templates, pull-request contract, and branch protection
