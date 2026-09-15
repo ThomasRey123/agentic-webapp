@@ -32,12 +32,14 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Current Checks
 
 ```bash
+pnpm format:check
 pnpm lint
-pnpm exec tsc --noEmit
+pnpm typecheck
+pnpm test
 pnpm build
 ```
 
-Phase 1 step 3 adds formatting and test commands. Step 4 combines all checks as `pnpm check`.
+Until Phase 1 step 4 adds the first meaningful tests, `pnpm test` explicitly allows an empty suite. Step 4 removes that temporary condition and combines all checks as `pnpm check`.
 
 ## Environment Configuration
 

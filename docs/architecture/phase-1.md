@@ -25,27 +25,27 @@ Browser
 
 ### Responsibilities
 
-| Area | Owns | Must not own |
-| --- | --- | --- |
-| `src/app` | Routes, layouts, global styles, page composition | Business logic |
-| `src/features/*` | Feature-specific UI, behavior, services, and tests | Generic cross-project primitives |
-| `src/components/ui` | Reusable UI primitives when needed | Feature knowledge |
-| `src/components/layout` | Shared application layout when needed | Feature behavior |
-| `src/lib` | Shared technical helpers when needed | A catch-all for unrelated logic |
-| `tests` | Deployed-system, smoke, and later E2E tests | Feature unit tests |
+| Area                    | Owns                                               | Must not own                     |
+| ----------------------- | -------------------------------------------------- | -------------------------------- |
+| `src/app`               | Routes, layouts, global styles, page composition   | Business logic                   |
+| `src/features/*`        | Feature-specific UI, behavior, services, and tests | Generic cross-project primitives |
+| `src/components/ui`     | Reusable UI primitives when needed                 | Feature knowledge                |
+| `src/components/layout` | Shared application layout when needed              | Feature behavior                 |
+| `src/lib`               | Shared technical helpers when needed               | A catch-all for unrelated logic  |
+| `tests`                 | Deployed-system, smoke, and later E2E tests        | Feature unit tests               |
 
 Feature internals are private. Other areas import a feature through its `index.ts` public API.
 
 ## Delivery Boundary
 
-| Component | Responsibility | Trust limitation |
-| --- | --- | --- |
-| Issue | Goal, acceptance criteria, scope | Does not approve technical quality |
-| Coding agent | Implementation, tests, local checks, PR | Cannot merge or approve PROD |
-| Pull request | Review and audit point | Does not replace automated checks |
-| CI | Reproducible quality and security gates | Does not invent requirements |
-| DEV | Integrated `main` deployment | Cannot authorize PROD |
-| Human approval | Explicit production decision | Cannot bypass failed gates |
+| Component      | Responsibility                          | Trust limitation                   |
+| -------------- | --------------------------------------- | ---------------------------------- |
+| Issue          | Goal, acceptance criteria, scope        | Does not approve technical quality |
+| Coding agent   | Implementation, tests, local checks, PR | Cannot merge or approve PROD       |
+| Pull request   | Review and audit point                  | Does not replace automated checks  |
+| CI             | Reproducible quality and security gates | Does not invent requirements       |
+| DEV            | Integrated `main` deployment            | Cannot authorize PROD              |
+| Human approval | Explicit production decision            | Cannot bypass failed gates         |
 
 ## Environments
 
