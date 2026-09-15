@@ -39,6 +39,8 @@ pnpm check
 
 An environment limitation must be recorded; it is not equivalent to a passing check.
 
+GitHub Actions independently runs the same command in the stable `quality` job for pull requests targeting `main` and pushes to `main`. The parallel `security` job scans Git history for secrets and fails on high- or critical-severity dependency advisories. Local output helps the author iterate, but only the GitHub-hosted results satisfy the required repository status checks.
+
 ## 5. Commit
 
 Use a scoped Conventional Commit, for example:
@@ -81,7 +83,7 @@ Keep every section of `.github/pull_request_template.md`. The template is the ha
 
 ## 7. Review and Merge
 
-The agent does not merge its own pull request. Required CI and review gates must pass. The `protect-main` repository ruleset requires the pull-request path and blocks force pushes and deletion; its required status check is added after CI exists in Phase 1 step 6.
+The agent does not merge its own pull request. Required CI and review gates must pass. The `protect-main` repository ruleset requires the pull-request path, successful `quality` and `security` status checks against current `main`, and resolved review threads; it also blocks force pushes and deletion.
 
 ## 8. Deploy
 
