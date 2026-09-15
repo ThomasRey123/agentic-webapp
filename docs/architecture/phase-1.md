@@ -11,6 +11,18 @@ GitHub issue -> coding agent -> task branch -> pull request -> CI
 
 The coding agent is replaceable. GitHub, reproducible checks, and deployment controls form the stable system boundary.
 
+## Current Checkpoint
+
+The infrastructure path through DEV is complete and verified:
+
+```text
+Issue -> task branch -> pull request -> CI -> main -> DEV -> smoke test
+```
+
+The first successful public DEV deployment was verified on September 15, 2026. Production deployment remains part of the target architecture but was intentionally deferred by the repository owner. It is not required for the next milestone.
+
+The remaining Phase 1 proof is application-level: deliver one visible, tested feature through the established issue-to-DEV path. Until that proof succeeds, the delivery foundation is complete but the original end-to-end feature acceptance is not.
+
 ## Application Boundary
 
 The application is a modular monolith in one repository and one deployable unit.
@@ -51,7 +63,7 @@ Feature internals are private. Other areas import a feature through its `index.t
 
 - **LOCAL:** manual development with `.env.local`.
 - **DEV:** automatic deployment of a verified `main` commit as a static Next.js export on Cloudflare Workers Static Assets.
-- **PROD:** the same verified commit after explicit human approval.
+- **PROD:** planned as the same verified commit after explicit human approval; implementation is currently deferred.
 
 Cloudflare is isolated behind the deployment workflow and `wrangler.jsonc`. The application remains a provider-independent static export; see [`ADR-002`](decisions/ADR-002-cloudflare-workers-static-assets.md). Revisit that decision if an accepted feature requires server-side Next.js behavior.
 
