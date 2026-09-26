@@ -78,6 +78,8 @@ After CI succeeds for a `main` commit, `Deploy DEV` exports the application, dep
 
 The current cross-chat project baseline is [`PROJECT_STATE_V7.md`](PROJECT_STATE_V7.md).
 
+Follow-up work is tracked in [`docs/development/next-steps.md`](docs/development/next-steps.md).
+
 ## Architecture
 
 The application is a modular monolith:
@@ -108,6 +110,10 @@ Only directories with an immediate purpose are created. See [`docs/architecture/
 Read [`AGENTS.md`](AGENTS.md) before agent-assisted work and [`docs/development/workflow.md`](docs/development/workflow.md) for the complete process.
 
 ## Configuration and Secrets
+
+Dependabot checks npm (including the pnpm lockfile) and GitHub Actions every Monday. Minor and patch updates are grouped per ecosystem, while major updates remain individually reviewable. Do not automatically merge its PRs. In the repository's **Settings → Advanced Security**, check that **Dependabot alerts** and **Dependabot security updates** are enabled: the settings are separate from `.github/dependabot.yml` and cannot be enabled by this PR alone. Verify the first Dependabot PR passes `quality`, `security`, and `browser` before merging it. If GitHub withholds preview deployment secrets from a Dependabot PR, review CI and the dependency change, then merge under the existing human approval rules; the merged commit deploys to stable DEV. Do not weaken the secret boundary to force a preview.
+
+The `browser` CI job verifies theme persistence locally. Once this PR is merged, the trusted preview workflow also runs the same test against deployed PR previews and uploads Playwright traces when the test fails. Run it manually against an approved URL using `DEV_URL=https://... pnpm test:e2e:preview` after `pnpm exec playwright install chromium`.
 
 `.env.example` contains only safe configuration names and examples. Put real local values in `.env.local`, which is ignored by Git. Never commit credentials or production configuration.
 
