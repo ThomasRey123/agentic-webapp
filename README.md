@@ -6,11 +6,11 @@ A small learning project for building and validating an agentic software-deliver
 
 ## Current Status
 
-The Phase 1 DEV foundation is operational. The repository, modular structure, GitHub contribution workflow, automated tests, unified local quality gate, independent CI, and automatic DEV deployment are established.
+The Phase 2 ChatGPT-to-DEV milestone is operational. A coding task can turn a request into a scoped branch, pull request, independent CI run, and isolated DEV preview. The owner tests the preview before merging; the verified `main` commit then deploys to stable DEV.
 
 Every successfully verified `main` commit is deployed to Cloudflare Workers Static Assets and checked by a remote smoke test. The public environment is available at [agentic-webapp-dev.tr-config-place.workers.dev](https://agentic-webapp-dev.tr-config-place.workers.dev).
 
-Production deployment was intentionally deferred by the repository owner. The next milestone is the Phase 1 feature proof of concept: deliver one visible, tested application feature through the complete issue-to-DEV workflow.
+The persistent theme toggle completed this workflow through a PR preview, human verification, merge, and stable DEV deployment. Production deployment remains deferred.
 
 | Milestone                                    | Status   |
 | -------------------------------------------- | -------- |
@@ -19,8 +19,9 @@ Production deployment was intentionally deferred by the repository owner. The ne
 | GitHub governance and protected `main`       | Complete |
 | Independent CI and security checks           | Complete |
 | Automatic DEV deployment and smoke test      | Complete |
+| ChatGPT task to PR DEV preview               | Complete |
+| Feature proof of concept: persistent theme   | Complete |
 | Production deployment and approval           | Deferred |
-| Feature proof of concept                     | Next     |
 
 ## Technology
 
@@ -75,7 +76,7 @@ GitHub Actions runs the same command in the required `quality` job for pull requ
 
 After CI succeeds for a `main` commit, `Deploy DEV` exports the application, deploys it to Cloudflare, and smoke tests the returned deployment URL. See [`docs/development/deployment.md`](docs/development/deployment.md) for the required GitHub environment and Cloudflare setup.
 
-The current cross-chat project baseline is [`PROJECT_STATE_V3.md`](PROJECT_STATE_V3.md).
+The current cross-chat project baseline is [`PROJECT_STATE_V4.md`](PROJECT_STATE_V4.md).
 
 ## Architecture
 
@@ -96,12 +97,13 @@ Only directories with an immediate purpose are created. See [`docs/architecture/
 
 ## Development Workflow
 
-1. Define the goal, acceptance criteria, and out-of-scope items in a GitHub issue.
+1. Describe the feature in ChatGPT Work/Codex. The worker creates a GitHub issue when useful.
 2. Create one short-lived branch such as `agent/42-dark-mode`.
 3. Implement only the agreed scope and run the available checks.
 4. Commit using Conventional Commits.
 5. Open one pull request containing `Closes #42`, verification, and risks.
-6. Merge only after the required checks and review pass.
+6. Test the automatically deployed PR preview after successful CI.
+7. Merge only after the required checks and review pass; stable DEV then deploys automatically.
 
 Read [`AGENTS.md`](AGENTS.md) before agent-assisted work and [`docs/development/workflow.md`](docs/development/workflow.md) for the complete process.
 
@@ -112,6 +114,8 @@ Read [`AGENTS.md`](AGENTS.md) before agent-assisted work and [`docs/development/
 ## Documentation
 
 - [`docs/architecture/phase-1.md`](docs/architecture/phase-1.md): Phase 1 boundaries and component responsibilities
+- [`docs/architecture/phase-2.md`](docs/architecture/phase-2.md): autonomous ChatGPT-to-DEV design and safety boundaries
+- [`docs/development/chat-to-dev.md`](docs/development/chat-to-dev.md): starting a feature from ChatGPT and testing its PR preview
 - [`docs/architecture/decisions/ADR-001-modular-monolith.md`](docs/architecture/decisions/ADR-001-modular-monolith.md): architecture decision record
 - [`docs/architecture/decisions/ADR-002-cloudflare-workers-static-assets.md`](docs/architecture/decisions/ADR-002-cloudflare-workers-static-assets.md): DEV hosting decision
 - [`docs/development/local-setup.md`](docs/development/local-setup.md): local installation and troubleshooting
