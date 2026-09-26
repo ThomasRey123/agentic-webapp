@@ -14,7 +14,7 @@ permissions:
 
 concurrency:
   group: preview-${{ github.event.workflow_run.head_branch }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy-preview:
@@ -78,6 +78,14 @@ jobs:
             echo 'Preview assets must not contain symlinks.' >&2
             exit 1
           fi
+
+      - name: Recheck that this commit is still the open PR head
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" |
+            jq -e --arg sha "$VERIFIED_SHA" --arg repo "$GITHUB_REPOSITORY" \
+              '.state == "open" and .head.sha == $sha and .head.repo.full_name == $repo'
 
       - name: Deploy isolated PR preview to Cloudflare Workers
         id: deploy
