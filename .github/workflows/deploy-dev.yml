@@ -68,3 +68,56 @@ jobs:
         env:
           DEV_URL: ${{ steps.deploy.outputs['deployment-url'] }}
         run: pnpm test:smoke:dev
+
+  resolve-merged-pr:
+    name: resolve-merged-pr
+    needs: deploy-development
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      head_ref: ${{ steps.pr.outputs.head_ref }}
+    steps:
+      - name: Check out trusted cleanup code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+
+      - name: Find PR for successful DEV deployment
+        id: pr
+        run: node scripts/cleanup-pr.mjs resolve
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERIFIED_SHA: ${{ github.event.workflow_run.head_sha }}
+
+  cleanup-merged-pr:
+    name: cleanup-merged-pr
+    needs: resolve-merged-pr
+    if: needs.resolve-merged-pr.outputs.head_ref != ''
+    concurrency:
+      group: preview-${{ needs.resolve-merged-pr.outputs.head_ref }}
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: read
+    environment:
+      name: development
+    steps:
+      - name: Check out trusted cleanup code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+
+      - name: Remove merged PR preview and unchanged branch
+        run: node scripts/cleanup-pr.mjs merged
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERIFIED_SHA: ${{ github.event.workflow_run.head_sha }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
