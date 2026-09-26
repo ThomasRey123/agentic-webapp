@@ -69,6 +69,9 @@ Create a directory only when it contains a real file with an immediate purpose. 
 - Put deployed-system and smoke tests under `tests/`.
 - Test observable behavior rather than implementation details.
 - Cover the changed behavior and meaningful failure or edge cases at the lowest useful level; add an integration or browser test when integration or browser behavior itself matters. Avoid tests that only restate the implementation.
+- Every change to a user-facing workflow must add or update automated tests that exercise its observable behavior. Maintain browser regression coverage for the app's critical user journeys (currently page load, primary links, static assets, and persistent theme across reloads). When adding a route or critical interaction, extend that browser coverage in the same PR; do not rely solely on jsdom for navigation, asset loading, browser storage, or hydration.
+- Dependency or GitHub Actions updates must pass the existing quality, security, and browser jobs. If an update affects an untested critical user journey, add its regression test before treating the update as verified. Inspect release notes and migration guidance for major updates, and keep major updates under human review.
+- A failed or missing browser job is a failed verification, even when the other checks pass. The `main` ruleset must require `browser` alongside `quality` and `security`; do not work around a failure by removing a test or bypassing the rule.
 - Add a regression test for a bug fix when technically meaningful.
 - Never weaken, skip, or delete a failing test merely to make a check pass.
 - Vitest uses jsdom and the shared setup in `src/test/setup.ts`.
@@ -86,6 +89,7 @@ pnpm lint
 pnpm typecheck
 pnpm test
 pnpm test:smoke:dev
+DEV_URL=https://example.workers.dev pnpm test:e2e:preview
 pnpm build
 pnpm check
 ```
@@ -93,6 +97,7 @@ pnpm check
 `pnpm check` is the required local completion gate. It runs formatting, linting, type checking, tests, and the production build in sequence. CI runs the same command in the stable `quality` job; do not duplicate or weaken these checks in workflow-only commands. The separate `security` job owns dependency auditing and secret scanning because those checks require registry or GitHub context.
 
 `pnpm test:smoke:dev` targets a deployed application and requires `DEV_URL`; it is not part of the local `pnpm check` sequence.
+`pnpm test:e2e:preview` runs Playwright against `DEV_URL` and is checked separately in the `browser` CI job and on deployed PR previews. Set `PLAYWRIGHT_LOCAL_SERVER=1` and `DEV_URL=http://127.0.0.1:3000` to run it against a local Next.js server.
 
 ## Git Rules
 
