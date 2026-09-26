@@ -46,8 +46,10 @@ test("a reopened, merged, or fork PR cannot be cleaned as unmerged", () => {
 
 test("branch names and preview names remain scoped to the PR", () => {
   assert.equal(branchCanBeDeleted(pr), true);
+  assert.equal(branchCanBeDeleted({ ...pr, number: 28 }), true);
   assert.equal(branchCanBeDeleted({ ...pr, head: { ...pr.head, ref: "main" } }), false);
-  assert.equal(branchCanBeDeleted({ ...pr, head: { ...pr.head, ref: "agent/26-cleanup" } }), false);
+  assert.equal(branchCanBeDeleted({ ...pr, head: { ...pr.head, ref: "agent/cleanup" } }), false);
+  assert.equal(branchCanBeDeleted({ ...pr, head: { ...pr.head, sha: "bad" } }), false);
   assert.equal(workerName(27), "agentic-webapp-pr-27");
   assert.throws(() => workerName(0));
 });
