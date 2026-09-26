@@ -103,3 +103,20 @@ jobs:
         run: |
           pnpm test:smoke:dev
           echo "PR #${PR_NUMBER} preview: ${DEV_URL}" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Install Chromium for preview browser test
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Verify persisted theme in PR preview
+        env:
+          DEV_URL: ${{ steps.deploy.outputs['deployment-url'] }}
+        run: pnpm test:e2e:preview
+
+      - name: Upload browser trace on failure
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: preview-browser-trace-${{ steps.pr.outputs.number }}
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7
