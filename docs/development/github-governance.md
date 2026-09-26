@@ -18,6 +18,8 @@ fix/<issue>-<slug>
 
 Open exactly one pull request and retain the template sections. `Closes #<issue>` provides traceability from requirement to implementation. Record every check accurately; an environment limitation is not a successful check.
 
+After a merged PR reaches a successful stable DEV deployment and smoke test, the cleanup job removes its branch only if the current branch still points at the PR head commit. GitHub's repository-wide automatic branch deletion setting is not required for this project. A PR closed without a merge retains its branch; only its preview Worker is removed.
+
 ## Initial `main` Ruleset
 
 The repository owner configures a repository ruleset named `protect-main` with these settings:
