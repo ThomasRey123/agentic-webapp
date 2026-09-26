@@ -36,7 +36,6 @@ export function workerName(number) {
 export function branchCanBeDeleted(pr) {
   return (
     /^(agent|feature|fix)\/[0-9]+-[a-z0-9-]+$/.test(pr.head?.ref ?? "") &&
-    pr.head.ref.split("/")[1].startsWith(`${pr.number}-`) &&
     /^[a-f0-9]{40}$/i.test(pr.head?.sha ?? "")
   );
 }
