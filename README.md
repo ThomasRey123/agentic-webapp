@@ -76,7 +76,7 @@ GitHub Actions runs the same command in the required `quality` job for pull requ
 
 After CI succeeds for a `main` commit, `Deploy DEV` exports the application, deploys it to Cloudflare, and smoke tests the returned deployment URL. See [`docs/development/deployment.md`](docs/development/deployment.md) for the required GitHub environment and Cloudflare setup.
 
-The current cross-chat project baseline is [`PROJECT_STATE_V6.md`](PROJECT_STATE_V6.md).
+The current cross-chat project baseline is [`PROJECT_STATE_V7.md`](PROJECT_STATE_V7.md).
 
 ## Architecture
 
@@ -122,4 +122,4 @@ Read [`AGENTS.md`](AGENTS.md) before agent-assisted work and [`docs/development/
 - [`docs/development/workflow.md`](docs/development/workflow.md): issue-to-PR workflow
 - [`docs/development/github-governance.md`](docs/development/github-governance.md): issue templates, pull-request contract, and branch protection
 - [`docs/development/deployment.md`](docs/development/deployment.md): DEV deployment configuration and operation
-- [`PROJECT_STATE_V6.md`](PROJECT_STATE_V6.md): current milestone and outstanding maintenance to-dos
+- [`PROJECT_STATE_V7.md`](PROJECT_STATE_V7.md): verified Phase 3 cleanup and outstanding maintenance to-dos
