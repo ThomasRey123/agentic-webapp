@@ -46,8 +46,13 @@ Production deployment and the `production` GitHub environment are intentionally 
 5. Wrangler deploys `out/` using `wrangler.jsonc`.
 6. Wrangler returns the deployment URL.
 7. `pnpm test:smoke:dev` retries the URL and requires HTTP success plus an HTML document.
+8. Once the deployment and smoke test succeed, `cleanup-merged-pr` resolves the PR associated with the verified merge commit. It removes only `agentic-webapp-pr-<number>` and deletes the short-lived branch only if its current SHA still equals the PR head SHA.
 
 Any failed build, deployment, missing credential, empty deployment URL, non-success response, or non-HTML response fails the deployment job.
+
+The separate `cleanup-preview.yml` handles PRs closed without a merge. It rechecks that the PR is still closed and unmerged in this repository, then removes only its numbered preview Worker. It never deletes an unmerged branch. Both cleanup paths accept an already missing Worker; other Cloudflare errors fail visibly. The workflows use trusted code and never check out or run PR code with Cloudflare credentials. Preview deployment and cleanup share a concurrency group per PR branch; the preview checks again immediately before deployment that the PR is still open at the verified commit.
+
+If the stable DEV deploy fails, the merged PR's preview and branch are retained so the problem can be investigated. A successful retry of the full workflow triggers cleanup. Old branches and preview Workers created before these workflows require a separate, reviewed inventory before any one-time removal.
 
 ## Manual Retry
 
