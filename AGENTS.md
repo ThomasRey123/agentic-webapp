@@ -29,6 +29,7 @@ Read the linked GitHub issue and this file before changing code. Implement only 
 - `src/lib` contains only genuinely shared technical helpers.
 - Feature modules must not import another feature's internal files. Import from that feature's public `index.ts` instead.
 - Do not add architectural layers, services, or infrastructure without a concrete use case.
+- Apply SOLID principles where they improve a real change: give modules clear responsibilities and keep dependencies explicit, but introduce an interface or layer only when it solves a current problem. Prefer the smallest design that satisfies the acceptance criteria.
 
 See `docs/architecture/phase-1.md` and `docs/architecture/decisions/ADR-001-modular-monolith.md`.
 
@@ -55,12 +56,19 @@ Create a directory only when it contains a real file with an immediate purpose. 
 - Use Prettier as the formatting authority and run `pnpm format` after editing supported files.
 - Add a dependency only when the issue requires it and document why in the pull request.
 - Consult the bundled Next.js documentation required by the generated rules above before changing framework-specific behavior.
+- Match the installed framework and library versions, the lockfile, and established repository patterns. For a new or uncertain API, verify the relevant version's official documentation; do not assume a remembered API is current.
+- Keep the static-export deployment constraint (`output: "export"`) in mind. Check whether a proposed Next.js feature requires a runtime server before using it; record a consequential architecture change as an ADR.
+- Prefer native browser features and platform APIs when they solve the task clearly. Add a maintained, compatible dependency only for a concrete need; inspect its official documentation, release and maintenance status, license, and security implications. Record the choice and alternatives in the PR.
+- Do not upgrade unrelated packages or GitHub Actions during feature work. Make required compatibility updates explicit and keep the lockfile in sync. Handle general version and security updates in separate reviewed PRs.
+- Handle expected failures and boundary inputs explicitly. Validate untrusted data at its entry point; do not silence type errors with `any`, broad casts, or disabled lint rules without a narrow, documented reason.
+- Use semantic HTML and native controls first. For changed interactions, check keyboard access, visible focus, accessible names, and relevant contrast; avoid unnecessary ARIA when a native element already provides the behavior.
 
 ## Testing Rules
 
 - Put feature tests close to the feature under `src/features/<feature>/tests`.
 - Put deployed-system and smoke tests under `tests/`.
 - Test observable behavior rather than implementation details.
+- Cover the changed behavior and meaningful failure or edge cases at the lowest useful level; add an integration or browser test when integration or browser behavior itself matters. Avoid tests that only restate the implementation.
 - Add a regression test for a bug fix when technically meaningful.
 - Never weaken, skip, or delete a failing test merely to make a check pass.
 - Vitest uses jsdom and the shared setup in `src/test/setup.ts`.
@@ -99,6 +107,7 @@ pnpm check
 - Create exactly one pull request for each issue.
 - Include `Closes #<issue>` in the pull request body.
 - Summarize changes, verification, known risks, and configuration or migration notes.
+- Explain non-obvious tradeoffs, runtime or compatibility constraints, and why a new dependency or abstraction is needed. State when none apply.
 - Include screenshots when a visible UI change benefits from them.
 - Do not merge your own pull request or bypass required reviews and checks.
 
