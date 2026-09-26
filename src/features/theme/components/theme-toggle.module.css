@@ -1,0 +1,19 @@
+.toggle {
+  align-self: flex-end;
+  padding: 8px 12px;
+  border: 1px solid var(--button-secondary-border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  background: var(--panel);
+  font: inherit;
+  cursor: pointer;
+}
+
+.toggle:hover {
+  background: var(--button-secondary-hover);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}

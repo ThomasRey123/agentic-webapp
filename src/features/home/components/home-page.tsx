@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ThemeToggle } from "@/features/theme";
 
 import styles from "./home-page.module.css";
 
@@ -6,6 +7,7 @@ export function HomePage() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <ThemeToggle />
         <Image
           className={styles.logo}
           src="/next.svg"
