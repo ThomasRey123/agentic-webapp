@@ -54,6 +54,8 @@ The separate `cleanup-preview.yml` handles PRs closed without a merge. It rechec
 
 If the stable DEV deploy fails, the merged PR's preview and branch are retained so the problem can be investigated. A successful retry of the full workflow triggers cleanup. Old branches and preview Workers created before these workflows require a separate, reviewed inventory before any one-time removal.
 
+After the entire `Deploy DEV` workflow succeeds, `reconcile-resources.yml` inventories GitHub branches and PRs alongside Cloudflare Worker scripts. The job summary lists exact cleanup candidates before changing anything. It removes only `agentic-webapp-pr-<number>` Workers for still-closed PRs from this repository and merges' short-lived branches whose current SHA still matches the PR head. Open PRs, closed unmerged branches, other Worker names, and `agentic-webapp-dev` are excluded. This also catches resources left behind by a failed or previously missing cleanup job. If the Cloudflare inventory is incomplete, or any API call fails, the job fails rather than guessing. It never runs PR code with the Cloudflare credentials.
+
 ## Manual Retry
 
 Open the failed `Deploy DEV` workflow run in GitHub Actions and choose **Re-run jobs**. Re-running the existing job retains the verified commit SHA and uses the same `development` environment, build, deployment, and smoke-test steps.
