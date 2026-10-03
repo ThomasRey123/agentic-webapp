@@ -3,7 +3,11 @@
   min-height: 100vh;
   justify-content: center;
   background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--foreground) 8%, transparent), transparent 36%),
+    radial-gradient(
+      circle at top left,
+      color-mix(in srgb, var(--foreground) 8%, transparent),
+      transparent 36%
+    ),
     var(--surface);
 }
 
