@@ -19,6 +19,37 @@
   padding: 72px 48px;
 }
 
+.cloudTest {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+.cloudTest button {
+  min-height: 44px;
+  border: 1px solid var(--button-secondary-border);
+  border-radius: 999px;
+  background: var(--text-primary);
+  padding: 0 20px;
+  color: var(--panel);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cloudTest button:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+.cloudTest p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
 .header {
   display: flex;
   align-items: flex-start;
@@ -133,6 +164,11 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .cloudTest button:hover {
+    background: var(--button-primary-hover);
+    transform: translateY(-1px);
+  }
+
   .links a:hover {
     transform: translateY(-1px);
   }
