@@ -53,7 +53,7 @@ Create a directory only when it contains a real file with an immediate purpose. 
 - Prefer small, explicit modules and readable names over premature abstractions.
 - Keep feature-specific styles and components inside their feature.
 - Use the `@/*` alias for imports across top-level source areas.
-- Use Prettier as the formatting authority and run `pnpm format` after editing supported files.
+- Use Prettier as the formatting authority and run `pnpm format` after editing supported files. Manual attempts to imitate expected Prettier output are not a formatting check; the repository-installed Prettier version must actually run.
 - Add a dependency only when the issue requires it and document why in the pull request.
 - Consult the bundled Next.js documentation required by the generated rules above before changing framework-specific behavior.
 - Match the installed framework and library versions, the lockfile, and established repository patterns. For a new or uncertain API, verify the relevant version's official documentation; do not assume a remembered API is current.
@@ -114,7 +114,7 @@ Before opening a pull request, run `pnpm format` and then all locally executable
 - For user-facing workflow changes, run `pnpm check:pr`.
 - For non-user-facing changes, run at least `pnpm check` plus any task-specific checks.
 - Do not open a PR with a locally reproducible formatting, unit-test, browser-test, typecheck, lint, or build failure.
-- If the execution environment prevents a required check from running, run every remaining executable check and record the exact command and environment error in the PR. Never describe an unrun check as passed.
+- If the execution environment prevents a required check from running, run every remaining executable check and record the exact command and environment error in the PR. Never describe an unrun check as passed. If `pnpm format` or `pnpm format:check` cannot run, explicitly record formatting as unverified instead of manually approximating Prettier output.
 - A PR that depends on GitHub CI because of an environment limitation is not ready for human review until the required `quality` and `browser` gates are green.
 - Follow `docs/development/worker-pre-pr-verification.md` for the exact sequence and fallback behavior.
 
