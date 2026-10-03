@@ -3,6 +3,12 @@ import { expect, test } from "@playwright/test";
 test("loads the project workflow with its primary links", async ({ page }) => {
   await page.goto("/");
 
+  await expect(page).toHaveTitle("Agentic Web App");
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    "content",
+    "A learning project for controlled agentic software delivery from ChatGPT to verified DEV deployments.",
+  );
+
   await expect(page.getByRole("heading", { level: 1, name: "Agentic Web App" })).toBeVisible();
   await expect(
     page.getByRole("heading", {
