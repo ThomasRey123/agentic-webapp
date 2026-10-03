@@ -1,30 +1,35 @@
 import { expect, test } from "@playwright/test";
 
-test("loads the home page with its primary links and static logo", async ({ page }) => {
+test("loads the project workflow with its primary links", async ({ page }) => {
   await page.goto("/");
 
+  await expect(page.getByRole("heading", { level: 1, name: "Agentic Web App" })).toBeVisible();
   await expect(
     page.getByRole("heading", {
-      level: 1,
-      name: /to get started, edit the home-page\.tsx file/i,
+      level: 2,
+      name: /controlled agentic software delivery/i,
     }),
   ).toBeVisible();
 
-  const logo = page.getByRole("img", { name: "Next.js logo" });
-  await expect(logo).toBeVisible();
-  await expect
-    .poll(() =>
-      logo.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0),
-    )
-    .toBe(true);
+  await expect(page.getByText("ChatGPT request")).toBeVisible();
+  await expect(page.getByText("Verified stable DEV deployment")).toBeVisible();
 
-  const documentation = page.getByRole("link", { name: "Documentation" });
-  await expect(documentation).toBeVisible();
-  await expect(documentation).toHaveAttribute("href", /^https:\/\/nextjs\.org\/docs/);
-  await expect(documentation).toHaveAttribute("target", "_blank");
-  await expect(documentation).toHaveAttribute("rel", /noopener/);
+  const repository = page.getByRole("link", { name: "View repository" });
+  await expect(repository).toBeVisible();
+  await expect(repository).toHaveAttribute(
+    "href",
+    "https://github.com/ThomasRey123/agentic-webapp",
+  );
+  await expect(repository).toHaveAttribute("target", "_blank");
+  await expect(repository).toHaveAttribute("rel", /noopener/);
 
-  await expect(page.getByRole("link", { name: "Deploy Now" })).toBeVisible();
-  await documentation.focus();
-  await expect(documentation).toBeFocused();
+  const stableDev = page.getByRole("link", { name: "Open stable DEV" });
+  await expect(stableDev).toBeVisible();
+  await expect(stableDev).toHaveAttribute(
+    "href",
+    "https://agentic-webapp-dev.tr-config-place.workers.dev/",
+  );
+
+  await repository.focus();
+  await expect(repository).toBeFocused();
 });
