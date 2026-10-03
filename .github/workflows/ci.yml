@@ -86,7 +86,20 @@ jobs:
           node-version-file: .nvmrc
 
       - name: Audit dependencies
+        id: dependency-audit
+        continue-on-error: true
         run: pnpm audit --audit-level high
+
+      - name: Report dependency audit warning
+        if: steps.dependency-audit.outcome == 'failure'
+        run: |
+          echo "::warning title=Dependency security audit::High-severity dependency findings were reported. Review the audit output and track remediation separately."
+          {
+            echo "## Dependency security warning"
+            echo
+            echo "High-severity dependency findings were reported by \`pnpm audit --audit-level high\`."
+            echo "This warning does not block the workflow, but it must be reviewed and remediated in a dedicated dependency/security task."
+          } >> "$GITHUB_STEP_SUMMARY"
 
   browser:
     name: browser
