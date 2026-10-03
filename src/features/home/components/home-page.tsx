@@ -1,5 +1,6 @@
 import { ThemeToggle } from "@/features/theme";
 
+import { CloudTest } from "./cloud-test";
 import styles from "./home-page.module.css";
 
 const deliverySteps = [
@@ -15,6 +16,8 @@ export function HomePage() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <CloudTest />
+
         <header className={styles.header}>
           <div>
             <p className={styles.eyebrow}>Agentisches Programmieren · Phase 3</p>

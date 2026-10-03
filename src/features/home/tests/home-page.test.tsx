@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { HomePage } from "../components/home-page";
@@ -29,5 +29,15 @@ describe("HomePage", () => {
       "href",
       "https://agentic-webapp-dev.tr-config-place.workers.dev/",
     );
+  });
+
+  it("reveals the cloud-agent confirmation after activating the Cloud-Test button", () => {
+    render(<HomePage />);
+
+    expect(screen.queryByText("Der Cloud-Agent funktioniert.")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Cloud-Test" }));
+
+    expect(screen.getByText("Der Cloud-Agent funktioniert.")).toBeVisible();
   });
 });

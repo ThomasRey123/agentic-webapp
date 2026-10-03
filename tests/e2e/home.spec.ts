@@ -20,6 +20,15 @@ test("loads the project workflow with its primary links", async ({ page }) => {
   await expect(page.getByText("ChatGPT request")).toBeVisible();
   await expect(page.getByText("Verified stable DEV deployment")).toBeVisible();
 
+  const cloudTest = page.getByRole("button", { name: "Cloud-Test" });
+  const cloudConfirmation = page.getByText("Der Cloud-Agent funktioniert.");
+  await expect(cloudTest).toBeVisible();
+  await expect(cloudConfirmation).toBeHidden();
+  await cloudTest.focus();
+  await expect(cloudTest).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(cloudConfirmation).toBeVisible();
+
   const repository = page.getByRole("link", { name: "View repository" });
   await expect(repository).toBeVisible();
   await expect(repository).toHaveAttribute(
