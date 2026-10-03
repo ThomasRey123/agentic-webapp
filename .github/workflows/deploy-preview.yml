@@ -110,7 +110,7 @@ jobs:
       - name: Verify persisted theme in PR preview
         env:
           DEV_URL: ${{ steps.deploy.outputs['deployment-url'] }}
-        run: pnpm test:e2e:preview
+        run: pnpm exec playwright test tests/e2e/theme.spec.ts
 
       - name: Upload browser trace on failure
         if: failure()
