@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 
 import { HomePage } from "../components/home-page";
 
-
 describe("HomePage", () => {
   it("renders the project purpose and delivery workflow", () => {
     render(<HomePage />);
