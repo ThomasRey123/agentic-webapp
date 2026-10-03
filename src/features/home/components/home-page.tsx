@@ -1,72 +1,64 @@
-import Image from "next/image";
 import { ThemeToggle } from "@/features/theme";
 
 import styles from "./home-page.module.css";
+
+const deliverySteps = [
+  "ChatGPT request",
+  "Scoped branch and pull request",
+  "Quality, security, and browser checks",
+  "Isolated PR preview",
+  "Human review and merge",
+  "Verified stable DEV deployment",
+];
 
 export function HomePage() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
         <header className={styles.header}>
+          <div>
+            <p className={styles.eyebrow}>Agentisches Programmieren · Phase 3</p>
+            <h1>Agentic Web App</h1>
+          </div>
           <ThemeToggle />
         </header>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the <code className={styles.code}>home-page.tsx</code> file.
-          </h1>
+
+        <section className={styles.intro} aria-labelledby="project-purpose">
+          <h2 id="project-purpose">A learning project for controlled agentic software delivery</h2>
           <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+            This app demonstrates how a feature request can move from ChatGPT to a reviewed,
+            independently verified DEV deployment while keeping the human merge as an explicit
+            control point.
           </p>
-        </div>
-        <div className={styles.ctas}>
+        </section>
+
+        <section className={styles.workflow} aria-labelledby="delivery-workflow">
+          <h2 id="delivery-workflow">Delivery workflow</h2>
+          <ol className={styles.steps}>
+            {deliverySteps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+        </section>
+
+        <nav className={styles.links} aria-label="Project links">
           <a
             className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="https://github.com/ThomasRey123/agentic-webapp"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
+            View repository
           </a>
           <a
             className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="https://agentic-webapp-dev.tr-config-place.workers.dev/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Documentation
+            Open stable DEV
           </a>
-        </div>
+        </nav>
       </main>
     </div>
   );
