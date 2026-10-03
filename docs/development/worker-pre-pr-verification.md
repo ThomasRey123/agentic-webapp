@@ -33,6 +33,17 @@ On Linux runners that also lack browser system libraries, the environment may re
 pnpm exec playwright install --with-deps chromium
 ```
 
+## Formatting authority
+
+Formatting is verified only by the repository-installed Prettier version. Run it through pnpm so the version pinned by the repository is used:
+
+```bash
+pnpm format
+pnpm format:check
+```
+
+Manually rewrapping lines or trying to reproduce expected Prettier output by inspection does not count as formatting verification. If Prettier cannot run in the current environment, record `pnpm format` / `pnpm format:check` as not executed and let the GitHub `quality` gate provide the authoritative result.
+
 ## Environment limitations
 
 A worker must not report a check as passed when it could not run.
