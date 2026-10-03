@@ -24,7 +24,9 @@ export function HomePage() {
         </header>
 
         <section className={styles.intro} aria-labelledby="project-purpose">
-          <h2 id="project-purpose">A learning project for controlled agentic software delivery</h2>
+          <h2 id="project-purpose">
+            A learning project for controlled agentic software delivery
+          </h2>
           <p>
             This app demonstrates how a feature request can move from ChatGPT to a reviewed,
             independently verified DEV deployment while keeping the human merge as an explicit
