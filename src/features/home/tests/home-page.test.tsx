@@ -7,9 +7,7 @@ describe("HomePage", () => {
   it("renders the project purpose and delivery workflow", () => {
     render(<HomePage />);
 
-    expect(
-      screen.getByRole("heading", { level: 1, name: "Agentic Web App" }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Agentic Web App" })).toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
         level: 2,
