@@ -71,7 +71,7 @@ Create a directory only when it contains a real file with an immediate purpose. 
 - Cover the changed behavior and meaningful failure or edge cases at the lowest useful level; add an integration or browser test when integration or browser behavior itself matters. Avoid tests that only restate the implementation.
 - Every change to a user-facing workflow must add or update automated tests that exercise its observable behavior. Maintain browser regression coverage for the app's critical user journeys (currently page load, primary links, static assets, and persistent theme across reloads). When adding a route or critical interaction, extend that browser coverage in the same PR; do not rely solely on jsdom for navigation, asset loading, browser storage, or hydration.
 - Dependency or GitHub Actions updates must pass the existing quality, security, and browser jobs. If an update affects an untested critical user journey, add its regression test before treating the update as verified. Inspect release notes and migration guidance for major updates, and keep major updates under human review.
-- A failed or missing browser job is a failed verification, even when the other checks pass. The `main` ruleset must require `browser` alongside `quality` and `security`; do not work around a failure by removing a test or bypassing the rule.
+- A failed or missing required browser job is a failed verification, even when other checks pass. The `main` ruleset must require `browser` alongside `quality`; the `security` job remains visible and must be reviewed, but dependency-audit findings are advisory unless repository policy is tightened again. Do not work around a failure by removing a test or bypassing the rule.
 - Add a regression test for a bug fix when technically meaningful.
 - Never weaken, skip, or delete a failing test merely to make a check pass.
 - Vitest uses jsdom and the shared setup in `src/test/setup.ts`.
@@ -94,10 +94,10 @@ pnpm build
 pnpm check
 ```
 
-`pnpm check` is the required local completion gate. It runs formatting, linting, type checking, tests, and the production build in sequence. CI runs the same command in the stable `quality` job; do not duplicate or weaken these checks in workflow-only commands. The separate `security` job owns dependency auditing and secret scanning because those checks require registry or GitHub context.
+`pnpm check` is the base local completion gate. It runs formatting, linting, type checking, tests, and the production build in sequence. CI runs the same command in the stable `quality` job; do not duplicate or weaken these checks in workflow-only commands. For any user-facing workflow change, `pnpm check:pr` is the required pre-PR gate and additionally runs the full Playwright regression suite against a local Next.js server. The separate `security` job owns dependency auditing and secret scanning because those checks require registry or GitHub context.
 
 `pnpm test:smoke:dev` targets a deployed application and requires `DEV_URL`; it is not part of the local `pnpm check` sequence.
-`pnpm test:e2e:preview` runs Playwright against `DEV_URL` and is checked separately in the `browser` CI job and on deployed PR previews. Set `PLAYWRIGHT_LOCAL_SERVER=1` and `DEV_URL=http://127.0.0.1:3000` to run it against a local Next.js server.
+`pnpm test:e2e:preview` runs Playwright against `DEV_URL`. `pnpm check:pr` sets `PLAYWRIGHT_LOCAL_SERVER=1` and `DEV_URL=http://127.0.0.1:3000` automatically for the local browser regression suite.
 
 ## Git Rules
 
@@ -106,6 +106,17 @@ pnpm check
 - Use Conventional Commits such as `feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:`, or `ci:`.
 - Keep commits scoped and do not mix unrelated cleanup into a task.
 - Never push directly to `main`.
+
+## Pre-PR Verification
+
+Before opening a pull request, run `pnpm format` and then all locally executable verification required by the change.
+
+- For user-facing workflow changes, run `pnpm check:pr`.
+- For non-user-facing changes, run at least `pnpm check` plus any task-specific checks.
+- Do not open a PR with a locally reproducible formatting, unit-test, browser-test, typecheck, lint, or build failure.
+- If the execution environment prevents a required check from running, run every remaining executable check and record the exact command and environment error in the PR. Never describe an unrun check as passed.
+- A PR that depends on GitHub CI because of an environment limitation is not ready for human review until the required `quality` and `browser` gates are green.
+- Follow `docs/development/worker-pre-pr-verification.md` for the exact sequence and fallback behavior.
 
 ## Pull Request Rules
 
