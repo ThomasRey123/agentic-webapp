@@ -25,13 +25,9 @@ function run(label, args, extraEnv = {}) {
 }
 
 run("Repository completion gate", ["check"]);
-run(
-  "Local browser regression suite",
-  ["exec", "playwright", "test"],
-  {
-    DEV_URL: "http://127.0.0.1:3000",
-    PLAYWRIGHT_LOCAL_SERVER: "1",
-  },
-);
+run("Local browser regression suite", ["exec", "playwright", "test"], {
+  DEV_URL: "http://127.0.0.1:3000",
+  PLAYWRIGHT_LOCAL_SERVER: "1",
+});
 
 console.log("\nPre-PR verification passed.\n");
