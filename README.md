@@ -10,7 +10,7 @@ The Phase 2 ChatGPT-to-DEV milestone is operational. A coding task can turn a re
 
 Every successfully verified `main` commit is deployed to Cloudflare Workers Static Assets and checked by a remote smoke test. The public environment is available at [agentic-webapp-dev.tr-config-place.workers.dev](https://agentic-webapp-dev.tr-config-place.workers.dev).
 
-The persistent theme toggle completed this workflow through a PR preview, human verification, merge, and stable DEV deployment. Production deployment remains deferred.
+The persistent theme toggle completed this workflow through a PR preview, human verification, merge, and stable DEV deployment. The second small UI delivery (FAQ, issue #86 / PR #87) also passed local checks and independent CI; see the dated [delivery review](docs/development/delivery-review.md) for deployment evidence and observation limits. Production deployment remains deferred.
 
 | Milestone                                    | Status   |
 | -------------------------------------------- | -------- |
@@ -72,11 +72,11 @@ More detail is available in [`docs/development/local-setup.md`](docs/development
 
 Run `pnpm check` before completing a task. It executes formatting, linting, type checking, tests, and the production build in sequence.
 
-GitHub Actions runs the same command in the required `quality` job for pull requests targeting `main` and for pushes to `main`. A separate required `security` job audits dependencies and scans Git history for secrets.
+GitHub Actions runs the same command in the required `quality` job for pull requests targeting `main` and for pushes to `main`. The required `browser` job covers existing journeys, including the FAQ, and `secret-scan` scans Git history for secrets. The separate `security` job reports advisory dependency findings; a green job can still contain findings tracked for remediation.
 
 After CI succeeds for a `main` commit, `Deploy DEV` exports the application, deploys it to Cloudflare, and smoke tests the returned deployment URL. See [`docs/development/deployment.md`](docs/development/deployment.md) for the required GitHub environment and Cloudflare setup.
 
-The current cross-chat project baseline is [`PROJECT_STATE_V8.md`](PROJECT_STATE_V8.md).
+The current delivery checkpoint is documented in [`docs/development/delivery-review.md`](docs/development/delivery-review.md). [`PROJECT_STATE_V9.md`](PROJECT_STATE_V9.md) is a historical snapshot.
 
 Follow-up work is tracked in [`docs/development/next-steps.md`](docs/development/next-steps.md).
 
@@ -99,9 +99,9 @@ Only directories with an immediate purpose are created. See [`docs/architecture/
 
 ## Development Workflow
 
-1. Describe the feature in ChatGPT Work/Codex. The worker creates a GitHub issue when useful.
+1. Describe the feature in ChatGPT Work/Codex. The worker creates one scoped GitHub issue as the task contract.
 2. Create one short-lived branch such as `agent/42-dark-mode`.
-3. Implement only the agreed scope and run the available checks.
+3. Implement only the agreed scope; run `pnpm format` and `pnpm check:pr` for user-facing changes before opening the PR.
 4. Commit using Conventional Commits.
 5. Open one pull request containing `Closes #42`, verification, and risks.
 6. Test the automatically deployed PR preview after successful CI.
@@ -111,9 +111,9 @@ Read [`AGENTS.md`](AGENTS.md) before agent-assisted work and [`docs/development/
 
 ## Configuration and Secrets
 
-Dependabot checks npm (including the pnpm lockfile) and GitHub Actions every Monday. Minor and patch updates are grouped per ecosystem, while major updates remain individually reviewable. Do not automatically merge its PRs. In the repository's **Settings → Advanced Security**, check that **Dependabot alerts** and **Dependabot security updates** are enabled: the settings are separate from `.github/dependabot.yml` and cannot be enabled by this PR alone. Verify the first Dependabot PR passes `quality`, `security`, and `browser` before merging it. If GitHub withholds preview deployment secrets from a Dependabot PR, review CI and the dependency change, then merge under the existing human approval rules; the merged commit deploys to stable DEV. Do not weaken the secret boundary to force a preview.
+Dependabot checks npm (including the pnpm lockfile) and GitHub Actions every Monday. Minor and patch updates are grouped per ecosystem, while major updates remain individually reviewable. Do not automatically merge its PRs. In the repository's **Settings → Advanced Security**, check that **Dependabot alerts** and **Dependabot security updates** are enabled: the settings are separate from `.github/dependabot.yml` and cannot be enabled by this PR alone. Verify each Dependabot PR passes `quality`, `browser` and `secret-scan`, and review the advisory `security` results before merging it. If GitHub withholds preview deployment secrets from a Dependabot PR, review CI and the dependency change, then merge under the existing human approval rules; the merged commit deploys to stable DEV. Do not weaken the secret boundary to force a preview.
 
-The `browser` CI job verifies theme persistence locally. Once this PR is merged, the trusted preview workflow also runs the same test against deployed PR previews and uploads Playwright traces when the test fails. Run it manually against an approved URL using `DEV_URL=https://... pnpm test:e2e:preview` after `pnpm exec playwright install chromium`.
+The `browser` CI job verifies page/link, FAQ and theme behavior locally. The trusted preview workflow runs its main-branch theme test against deployed PR previews and uploads Playwright traces when the test fails. Run it manually against an approved URL using `DEV_URL=https://... pnpm test:e2e:preview` after `pnpm exec playwright install chromium`.
 
 `.env.example` contains only safe configuration names and examples. Put real local values in `.env.local`, which is ignored by Git. Never commit credentials or production configuration.
 
@@ -128,7 +128,8 @@ The `browser` CI job verifies theme persistence locally. Once this PR is merged,
 - [`docs/development/workflow.md`](docs/development/workflow.md): issue-to-PR workflow
 - [`docs/development/github-governance.md`](docs/development/github-governance.md): issue templates, pull-request contract, and branch protection
 - [`docs/development/deployment.md`](docs/development/deployment.md): DEV deployment configuration and operation
-- [`PROJECT_STATE_V8.md`](PROJECT_STATE_V8.md): verified project state, worker handoff, and remaining milestones
+- [`docs/development/delivery-review.md`](docs/development/delivery-review.md): current delivery evidence, permission inventory and review limits
+- [`PROJECT_STATE_V9.md`](PROJECT_STATE_V9.md): historical project state and worker handoff
 
 Node follows the latest supported LTS release through reviewed updates. See
 [`Node update policy`](docs/development/node-updates.md) for manual updates and verification.

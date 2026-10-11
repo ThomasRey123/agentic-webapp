@@ -1,26 +1,50 @@
-# Nächste Schritte nach Dependabot und dem Dark-Mode-Browsertest
+# Nächste Schritte nach dem zweiten UI-Durchlauf
 
-Diese Liste wird durch den aktuellen Code und die Live-GitHub-Prüfungen ergänzt. Historische Projektstände sind datierte Momentaufnahmen.
+## Verifizierter Stand am 11. Oktober 2026
 
-Der Browserjob prüft die vorhandenen Startseiten-, Link-, Asset- und Theme-Abläufe. Das aktive [`protect-main`-Ruleset](https://github.com/ThomasRey123/agentic-webapp/rules/23471361) verlangt seit dem 26. September 2026 `browser` zusätzlich zu `quality`. Die erforderlichen Checks wurden nach einem erfolgreichen PR-Browserlauf über die GitHub-REST-API kontrolliert.
+Der aktuelle Nachweis steht in [delivery-review.md](delivery-review.md).
+Datierte `PROJECT_STATE_*`-Dateien bleiben historische Momentaufnahmen.
 
-1. **Unbeaufsichtigten Coding-Durchlauf belegen.** Ein kleines Feature einmalig in ChatGPT beauftragen, die Sitzung nicht weiter steuern und prüfen, ob Implementierung, CI, PR und DEV ohne weitere Eingriffe entstehen. Falls die Codierung beim Ende der Sitzung stoppt, erst dann einen dauerhaften Worker-Mechanismus anhand des tatsächlichen Fehlers auswählen. Die menschliche PR-Prüfung und der Merge bleiben erhalten.
-2. **PR-Vorschau besser auffindbar machen.** Vorschau-URL und Ergebnis des Browserlaufs am PR oder GitHub-Deployment anzeigen; Fehlschläge eindeutig melden. Bei mehreren Commits pro PR sicherstellen, dass nur der aktuelle geprüfte Commit als bereit angezeigt wird.
-3. **DEV-Rollback dokumentieren und testen.** Letzten funktionierenden Worker-Stand identifizieren, die Cloudflare-Rollback-Prozedur und nötige Berechtigungen dokumentieren und den Smoke-Test nach dem Rollback wiederholen.
-4. **Workflow-Berechtigungen regelmäßig prüfen.** Insbesondere `workflow_run`, heruntergeladene Artefakte, Token-Rechte, Secrets, Actions-SHAs und Dependabot-PRs prüfen. Die Bereitstellung darf weiterhin keinen nicht geprüften PR-Code mit Cloudflare-Zugangsdaten ausführen.
-5. **PROD erst bei Bedarf planen.** Separates Environment und Secrets, bewusste menschliche Freigabe, Rollback und klare Promotion-Kriterien definieren. Kein automatisches PROD-Deployment aus einem Coding-Agenten.
+- **Unabhängige Prüfungen:** `protect-main` verlangt `quality`, `browser` und
+  `secret-scan`. Dependency-Audit-Befunde sind sichtbar und werden separat bewertet.
+- **PR-Vorschau:** Commitgenaue Deployment-Anzeige mit Smoke- und Theme-Browsertest
+  live an PR #78 und #87 geprüft. Fehler/veraltete Identitäten haben Skripttests;
+  absichtlich fehlschlagende Remote-Deployments wurden nicht durchgeführt.
+- **Rollback:** Isolierte Übung 38141174993 erfolgreich; Baseline wiederhergestellt,
+  Inhalt geprüft und Test-Worker entfernt. Kein Rollback des stabilen DEV durchgeführt.
+- **Updates:** Dependabot-PRs #78–#80 gemergt; kombinierter Main-Stand, DEV und
+  Bereinigung erfolgreich geprüft. Wöchentliche Updates bleiben unter menschlicher Prüfung.
+- **Zweiter UI-Durchlauf:** FAQ aus Issue #86 / PR #87 implementiert, PR-CI und
+  Vorschau erfolgreich, vom Eigentümer gemergt. Lokales `pnpm check:pr` ist im PR
+  dokumentiert. Die vollständigen Laufnachweise und Beobachtungsgrenzen stehen im Review.
+- **Cloud-Zugriff:** Wiederverwendbare Freigabe `*.tr-config-place.workers.dev`
+  gespeichert; Zugriff auf die FAQ-Vorschau aus dieser Umgebung liefert HTTP 200.
+  Neue Aufgaben müssen die veröffentlichte Konfiguration verwenden.
+- **Berechtigungsprüfung:** Workflows, Artefakte, Checkouts und Live-GitHub-Regeln
+  geprüft. Der Review-PR ergänzt eine ausdrückliche Push-/Repository-Prüfung für
+  DEV. Die genauen Cloudflare-Tokenrechte sind über die Integration nicht einsehbar.
 
-## Phase-3-Hardening nach dem ersten unbeaufsichtigten Durchlauf
+## Prioritäten
 
-Issue #58 dokumentiert die beim ersten Phase-3-Durchlauf gefundenen Vorab-Verifikationslücken. Der zugehörige Hardening-PR führt ein gemeinsames Pre-PR-Gate (`pnpm check:pr`), zentrales Testing-Library-Cleanup und verbindliche Worker-Regeln für nicht ausführbare lokale Checks ein. Nach dem Merge soll ein zweiter kleiner UI-Durchlauf prüfen, ob die zuvor lokal erkennbaren Fehler vor der PR-Erstellung abgefangen werden.
+1. **Review abschließen.** Berechtigungsprüfung und Dokumentationsabgleich aus Issue
+   #88 menschlich prüfen und mergen; danach CI und DEV für den Merge-Commit prüfen.
+   Der Eigentümer bestätigt aus dem anderen Worker-Chat, ob der FAQ-Auftrag ohne
+   steuernde Folgemeldungen durchlief. Pipeline-Erfolg allein beweist das nicht.
+2. **Nächstes fachliches Feature abgrenzen.** Einen konkreten Nutzerbedarf, kleine
+   Akzeptanzkriterien und passende Browserabdeckung definieren; den vorhandenen
+   Issue→PR→Vorschau→menschlicher Merge→DEV-Ablauf wiederverwenden.
+3. **Wartung fortführen.** Dependabot-Updates wöchentlich prüfen, Node-LTS-Updates
+   gemäß [node-updates.md](node-updates.md) manuell koordinieren. Issue #82 bleibt
+   offen, bis ein verifizierter unterstützter braces-Fix verfügbar ist.
+4. **Berechtigungen erneut prüfen**, wenn Trigger, Artefakte, Checkouts, Secrets
+   oder Hauptversionen von Actions geändert werden. Der Eigentümer prüft zusätzlich
+   die Cloudflare-Account-/Tokenrechte direkt in Cloudflare.
+5. **PROD bei konkretem Bedarf planen.** Separates Environment und Credentials,
+   menschliche Freigabe, Promotion-Kriterien und Rollback festlegen.
 
-## Wartung am 11. Oktober 2026
+## Bedarf für zusätzliche Automatisierung
 
-PR #84 ist gemergt: eigener `secret-scan`-Job, Dependency-Korrekturen und
-Wrangler-Angleichung sind auf `main`. Das aktive Ruleset verlangt nun `quality`,
-`browser` und `secret-scan`; CI, DEV-Deployment und Bereinigung wurden bestätigt.
-
-Die Preview-Anzeige und eine isolierte Rollback-Übung sind in
-[`preview-status.md`](preview-status.md) und [`dev-rollback.md`](dev-rollback.md)
-beschrieben. Die neuen vertrauenswürdigen Workflows sind erst nach Merge live
-prüfbar; vorbereitete Schritte sind noch kein Nachweis einer erfolgreichen Übung.
+Issue #58 führte das gemeinsame Pre-PR-Gate und verbindliche Worker-Regeln ein.
+Der FAQ-Durchlauf liefert den zweiten technischen Nachweis nach diesem Hardening.
+Ein dauerhafter Worker oder Agent-Orchestrator wird erst ausgewählt, wenn ein
+beobachteter Sitzungsabbruch oder anderer konkreter Bedarf ihn rechtfertigt.

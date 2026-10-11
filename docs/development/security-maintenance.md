@@ -25,9 +25,9 @@ The starting lockfile reported seven high and two moderate advisories:
 | braces 3.0.3           | Unresolved: advertised fix 3.0.4 is not published | Next ESLint/fast-glob/micromatch |
 | sharp 0.35.4           | Narrow override to 0.35.5                         | Wrangler/Miniflare               |
 
-The braces advisory remains tracked: the registry latest is 3.0.3, and an
+The braces advisory remains tracked in issue #82: the registry latest is 3.0.3, and an
 installation attempt for 3.0.4 returned no matching version. Do not hide this
-finding or fabricate a patched release. Review the upstream fix when published.
+finding or fabricate a patched release. GitHub currently lists no first patched version, despite the npm audit metadata advertising 3.0.4. Review the upstream fix when published.
 This path handles lint file patterns; the static browser app does not execute it.
 
 Overrides apply only to the old exact versions, preserving other versions and
@@ -41,15 +41,15 @@ Deploy workflows resolve Wrangler from the frozen-installed package rather than
 maintaining an independent version string. Keep this source of truth when
 reviewing a Wrangler update.
 
-## Open update proposals
+## Merged update proposals
 
 PRs #78 (setup-node/download-artifact), #79 (upload-artifact major) and #80
-(application/test tooling) passed their existing CI jobs at inspection time.
-Review release notes and preview behavior before human merge. Upload-artifact 7
-adds opt-in direct uploads and ESM; current zipped-directory uploads remain the
-intended mode. A passing security job may still contain advisory audit findings.
-These PRs are not merged automatically. Refresh their branches after this change
-and recheck CI, especially the lockfile overrides and deployment tool version.
+(application/test tooling) were merged by the owner. CI, stable DEV smoke and
+cleanup succeeded for the combined main commit
+`bcbf90925500791d5e86a72bdd9c2ee29d41cc68`. No dependency PRs remained open at that
+checkpoint. Upload-artifact 7 adds opt-in direct uploads and ESM; current
+zipped-directory uploads remain the intended mode. Weekly Dependabot updates
+continue through human review. A passing security job may still report findings.
 
 Review `.github/workflows` changes with particular care: credentialed
 `workflow_run` jobs must not check out or execute untrusted PR code. Preserve

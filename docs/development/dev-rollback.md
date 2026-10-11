@@ -2,7 +2,7 @@
 
 ## Isolated rehearsal
 
-After this workflow is merged to `main`, run **Actions → Rehearse isolated DEV
+Run **Actions → Rehearse isolated DEV
 rollback → Run workflow** from `main`. It uses the existing `development`
 Cloudflare credentials and the frozen-installed Wrangler version.
 
@@ -13,8 +13,7 @@ probe. It refuses to overwrite an existing Worker or target stable DEV/PROD.
 The result and version IDs are recorded in the job summary.
 
 This checks the Cloudflare version/asset restoration mechanism. It does not
-prove that a specific historical app release works after restoration. A live
-rehearsal is not verified until the workflow actually completes successfully.
+prove that a specific historical app release works after restoration. The isolated rehearsal succeeded on 11 October 2026 in [run 38141174993](https://github.com/ThomasRey123/agentic-webapp/actions/runs/38141174993): two asset versions were checked, baseline content was restored and the probe was deleted. This is not a live rollback of stable DEV.
 The workflow cannot be dispatched from a feature branch; no Cloudflare secrets
 are exposed to the coding environment. If cancellation or runner loss interrupts
 cleanup, inspect and remove the named `agentic-webapp-rollback-<run>-<attempt>`

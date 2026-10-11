@@ -20,26 +20,28 @@ Open exactly one pull request and retain the template sections. `Closes #<issue>
 
 After a merged PR reaches a successful stable DEV deployment and smoke test, the cleanup job removes its branch only if the current branch still points at the PR head commit. GitHub's repository-wide automatic branch deletion setting is not required for this project. A PR closed without a merge retains its branch; only its preview Worker is removed.
 
-## Initial `main` Ruleset
+## Current `main` Ruleset
 
 The repository owner configures a repository ruleset named `protect-main` with these settings:
 
-| Setting                               | Value                                           |
-| ------------------------------------- | ----------------------------------------------- |
-| Enforcement status                    | Active                                          |
-| Target                                | Default branch (`main`)                         |
-| Bypass list                           | Empty                                           |
-| Restrict deletions                    | Enabled                                         |
-| Block force pushes                    | Enabled (`Non-fast-forward updates` restricted) |
-| Require a pull request before merging | Enabled                                         |
-| Required approvals                    | 0                                               |
-| Require conversation resolution       | Enabled                                         |
-| Required status checks                | `quality` and `security` from GitHub Actions    |
-| Require branch to be up to date       | Enabled                                         |
+| Setting                               | Value                                                      |
+| ------------------------------------- | ---------------------------------------------------------- |
+| Enforcement status                    | Active                                                     |
+| Target                                | Default branch (`main`)                                    |
+| Bypass list                           | Empty                                                      |
+| Restrict deletions                    | Enabled                                                    |
+| Block force pushes                    | Enabled (`Non-fast-forward updates` restricted)            |
+| Require a pull request before merging | Enabled                                                    |
+| Required approvals                    | 0                                                          |
+| Require conversation resolution       | Enabled                                                    |
+| Required status checks                | `quality`, `browser` and `secret-scan` from GitHub Actions |
+| Require branch to be up to date       | Enabled                                                    |
 
 Zero required approvals is intentional for this single-owner learning repository: changes must still pass through a visible pull request, but the owner is not blocked waiting for a second collaborator. Agents remain forbidden from merging their own pull requests by `AGENTS.md`.
 
-The required status checks are the stable `quality` and `security` jobs from `.github/workflows/ci.yml`. `quality` runs the repository's existing `pnpm check` command, so local and independent verification use one contract. `security` scans Git history for secrets and runs `pnpm audit --audit-level high`. Add both checks to the ruleset only after their first successful GitHub Actions run; requiring an unknown or unsuccessful check can block every merge.
+The required status checks are the stable `quality`, `browser` and `secret-scan` jobs from `.github/workflows/ci.yml`. `quality` runs `pnpm check`; `browser` runs the Playwright regression suite; `secret-scan` scans full Git history with Gitleaks. The separate `security` audit job reports high-severity findings as advisory warnings that still require triage. It is not a required ruleset check.
+
+The live ruleset was verified on 11 October 2026. See [delivery-review.md](delivery-review.md) for the permission inventory and the development environment's main-only branch policy.
 
 ## Verification
 

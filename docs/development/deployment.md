@@ -4,7 +4,7 @@
 
 The Phase 1 DEV target is a Cloudflare Worker named `agentic-webapp-dev` that serves the static Next.js export from `out/`.
 
-`.github/workflows/deploy-dev.yml` runs automatically after the `CI` workflow completes successfully for `main`.
+`.github/workflows/deploy-dev.yml` runs automatically after the `CI` workflow completes successfully for a push on `main` in this repository. PR and foreign-repository CI runs are excluded.
 
 The automatic path checks out `github.event.workflow_run.head_sha`. This keeps deployment tied to the exact commit independently verified by CI rather than whatever commit happens to be latest when the job starts.
 
@@ -39,7 +39,7 @@ Production deployment and the `production` GitHub environment are intentionally 
 
 ## Deployment Flow
 
-1. A pull request passes `quality` and `security` and is merged.
+1. A pull request passes required `quality`, `browser` and `secret-scan` checks, its advisory audit is reviewed, and the owner merges it.
 2. The `CI` workflow verifies the resulting `main` commit.
 3. `Deploy DEV` checks out that verified commit.
 4. Next.js creates a static export in `out/`.
