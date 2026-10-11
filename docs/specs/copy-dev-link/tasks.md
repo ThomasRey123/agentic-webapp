@@ -84,16 +84,16 @@ manual visual/contrast evidence above remain applicable.
 
 Audit results (axe-core/adapter 4.13.0, Playwright 1.64.0):
 
-| Theme | State | Detected violations | Incomplete rules |
-| --- | --- | --- | --- |
-| light | idle | 0 | none |
-| light | pending | 0 | color-contrast |
-| light | success | 0 | color-contrast |
-| light | error | 0 | color-contrast |
-| dark | idle | 0 | none |
-| dark | pending | 0 | color-contrast |
-| dark | success | 0 | color-contrast |
-| dark | error | 0 | color-contrast |
+| Theme | State   | Detected violations | Incomplete rules |
+| ----- | ------- | ------------------- | ---------------- |
+| light | idle    | 0                   | none             |
+| light | pending | 0                   | color-contrast   |
+| light | success | 0                   | color-contrast   |
+| light | error   | 0                   | color-contrast   |
+| dark  | idle    | 0                   | none             |
+| dark  | pending | 0                   | color-contrast   |
+| dark  | success | 0                   | color-contrast   |
+| dark  | error   | 0                   | color-contrast   |
 
 Local and stable-DEV matrices agree. Enabled tags: `wcag2a`, `wcag2aa`,
 `wcag21a`, `wcag21aa`; scope: `nav[aria-label="Project links"]`.
