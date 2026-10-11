@@ -39,8 +39,10 @@ Retain original visual/contrast evidence and report its limits.
 Run `pnpm format`, frozen dependency installation, `pnpm check:pr`, advisory
 security audit, independent CI and exact-head preview checks. Run scoped audits
 against stable DEV with existing authorized NSS access and active TLS checks.
-PR #100 separately fixes the stable-DEV no-JS harness; do not duplicate that
-change or claim a full stable suite passed before it is merged.
+PR #100 separately fixed the stable-DEV no-JS harness and is owner-merged.
+After owner merge of #104, the complete 19-case suite passed on stable DEV;
+see tasks and the worker handoff for actual delivery evidence. Do not duplicate
+the harness repair.
 
 ## Risks and recovery
 

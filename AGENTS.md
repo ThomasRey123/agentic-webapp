@@ -18,6 +18,8 @@ The binding principle is:
 
 > The agent creates changes. The pipeline verifies them.
 
+For a resumed session, read `docs/development/worker-handoff.md` and
+`docs/development/next-steps.md`, then verify their dated status against GitHub.
 Read the linked GitHub issue and this file before changing code. Implement only the issue scope and preserve unrelated user changes.
 
 ## Specification and Approval Contract
