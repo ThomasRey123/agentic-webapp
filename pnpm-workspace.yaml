@@ -3,3 +3,8 @@ allowBuilds:
   sharp: false
   unrs-resolver: false
   workerd: true
+
+# Temporary patch fixes for pinned transitive dependencies; see security-maintenance.md.
+overrides:
+  "brace-expansion@5.0.9": 5.0.12
+  "sharp@0.35.4": 0.35.5
