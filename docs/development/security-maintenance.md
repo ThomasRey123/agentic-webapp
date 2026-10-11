@@ -8,9 +8,10 @@ job runs Gitleaks against full history and fails on findings. The separate
 require explicit triage. A green audit-reporting job is not proof of zero findings.
 All CI jobs must succeed for preview and DEV deployment workflows to run.
 
-After the first successful `secret-scan` run, add its check to `protect-main`
-while retaining the existing quality/browser checks and all other rules.
-Workflow configuration alone does not change repository settings.
+After PR #84 was merged, the owner added `secret-scan` to `protect-main`.
+The active ruleset was verified to require quality, browser and secret-scan,
+with the remaining protection rules preserved. Workflow configuration alone
+does not change repository settings.
 
 ## Audit remediation on 11 October 2026
 
