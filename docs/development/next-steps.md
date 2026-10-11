@@ -21,18 +21,23 @@ Datierte `PROJECT_STATE_*`-Dateien bleiben historische Momentaufnahmen.
   gespeichert; Zugriff auf die FAQ-Vorschau aus dieser Umgebung liefert HTTP 200.
   Neue Aufgaben müssen die veröffentlichte Konfiguration verwenden.
 - **Berechtigungsprüfung:** Workflows, Artefakte, Checkouts und Live-GitHub-Regeln
-  geprüft. Der Review-PR ergänzt eine ausdrückliche Push-/Repository-Prüfung für
-  DEV. Die genauen Cloudflare-Tokenrechte sind über die Integration nicht einsehbar.
+  geprüft. PR #89 ist gemergt: Die ausdrückliche Push-/Repository-Prüfung für
+  DEV ist aktiv; Main-CI, DEV-Smoke und Bereinigung sind erfolgreich. Der
+  Eigentümer hat die Cloudflare-Tokenprüfung bestätigt; direkte API-Einsicht
+  in die genauen Tokenrechte bleibt der Integration verwehrt.
 
 ## Prioritäten
 
-1. **Review abschließen.** Berechtigungsprüfung und Dokumentationsabgleich aus Issue
-   #88 menschlich prüfen und mergen; danach CI und DEV für den Merge-Commit prüfen.
-   Der Eigentümer bestätigt aus dem anderen Worker-Chat, ob der FAQ-Auftrag ohne
-   steuernde Folgemeldungen durchlief. Pipeline-Erfolg allein beweist das nicht.
-2. **Nächstes fachliches Feature abgrenzen.** Einen konkreten Nutzerbedarf, kleine
-   Akzeptanzkriterien und passende Browserabdeckung definieren; den vorhandenen
-   Issue→PR→Vorschau→menschlicher Merge→DEV-Ablauf wiederverwenden.
+1. **Spec Driven Development als nächstes großes Vorhaben planen.**
+   [Epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90) hält den
+   Auftrag fest. Der [recherchierte Plan](spec-driven-development-roadmap.md)
+   beschreibt Primärquellen, Freigaben, Anforderungs-Test-Zuordnung und die
+   schrittweise Einführung. Die aktuelle Änderung dokumentiert den Vorschlag;
+   Agent-/CI-Regeln werden noch nicht umgestellt und kein Werkzeug installiert.
+2. **Den freigegebenen Plan in kleinen Etappen umsetzen.** Zunächst Vorlage und
+   Arbeitsvertrag abstimmen; danach einen kleinen neuen fachlichen Pilot
+   spezifizieren, menschlich freigeben und mit dem bestehenden DEV-Ablauf
+   liefern. Eine Folgeänderung belegt anschließend die Pflege der Spezifikation.
 3. **Wartung fortführen.** Dependabot-Updates wöchentlich prüfen, Node-LTS-Updates
    gemäß [node-updates.md](node-updates.md) manuell koordinieren. Issue #82 bleibt
    offen, bis ein verifizierter unterstützter braces-Fix verfügbar ist.

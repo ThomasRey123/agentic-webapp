@@ -78,7 +78,7 @@ After CI succeeds for a `main` commit, `Deploy DEV` exports the application, dep
 
 The current delivery checkpoint is documented in [`docs/development/delivery-review.md`](docs/development/delivery-review.md). [`PROJECT_STATE_V9.md`](PROJECT_STATE_V9.md) is a historical snapshot.
 
-Follow-up work is tracked in [`docs/development/next-steps.md`](docs/development/next-steps.md).
+Follow-up work is tracked in [`docs/development/next-steps.md`](docs/development/next-steps.md). The next major initiative is [Spec Driven Development, epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90): its [researched roadmap](docs/development/spec-driven-development-roadmap.md) proposes incremental adoption and a small pilot. The roadmap does not yet activate new workflow rules or install a tool.
 
 ## Architecture
 
