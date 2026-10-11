@@ -2,9 +2,20 @@
 
 Open a ChatGPT Work/Codex coding task with access to `ThomasRey123/agentic-webapp`. State the desired visible behavior and any constraints. A coding task keeps working after you leave the page; you do not need to start a second agent or create a GitHub issue yourself.
 
-Example:
+## New behavior: two bounded tasks
 
-> In `ThomasRey123/agentic-webapp`, add a persistent dark mode toggle in the header. Analyze `AGENTS.md` and the current code, create one scoped issue, implement it on an `agent/<issue>-<slug>` branch, add behavior tests, run `pnpm format` and `pnpm check:pr` before opening one PR, follow CI, fix failures, and wait for the PR preview deployment and smoke test. Send me the PR, CI, and working preview URL once ready. Do not merge to `main` or deploy to PROD. Ask only for a decision you cannot infer responsibly.
+First ask for a specification, for example:
+
+> In `ThomasRey123/agentic-webapp`, specify <small useful feature> before coding it. Read AGENTS.md and the SDD working contract, create one spec issue/branch, and draft `docs/specs/<feature>/spec.md` from the template. Define requirement IDs, concrete scenarios, scope/non-goals, relevant constraints and planned verification. Resolve scope/acceptance questions, run applicable checks, and open a spec-only PR explicitly requesting my behavioral approval. No feature implementation and no self-merge.
+
+Review the proposal's behavior and merge it as approval. Then use a separate task:
+
+> Implement the approved specification at <spec path>, approved in <spec-only PR URL> at full merge SHA <SHA>. Verify that revision agrees with current main. Create a separate implementation issue/branch/PR, derive a short plan/tasks and map acceptance IDs to meaningful tests. Run `pnpm format` and `pnpm check:pr`, follow CI and the current-commit preview checks, and report actual results and blockers. Do not expand behavior without a revised spec approval; do not merge or deploy PROD.
+
+No CLI is needed. A roadmap merge or agent-edited status is not spec approval.
+For behavior-restoring fixes, routine updates or editorial/process maintenance,
+use the [short route](spec-driven-development.md): unchanged behavior, affected
+spec or legacy evidence, verification and exclusions in the issue/PR.
 
 The worker should remain on this task until the preview passes. A submitted message in an ordinary chat does not by itself set up a recurring watcher or webhook. If the coding task ends before an external CI/deployment finishes, schedule a follow-up in the same chat to check that PR and notify you; otherwise the user would have to return and restart the wait manually.
 
@@ -12,7 +23,7 @@ The worker should remain on this task until the preview passes. A submitted mess
 
 1. Merge the Phase 2 infrastructure PR through the existing ruleset. This activates `.github/workflows/deploy-preview.yml` on `main`.
 2. Confirm that the GitHub `development` environment has the existing Cloudflare token and account ID and permits unattended DEV deployments. The account token must allow creating a second Worker. Keep PROD credentials separate.
-3. Submit a small feature request in ChatGPT Work/Codex. The worker creates the scoped issue and PR; you only supply the feature description.
+3. Submit a small spec request, review and merge its spec-only PR, then request implementation against that approved revision. The worker creates the separate scoped issues and PRs; you supply the feature goal and approvals.
 4. Watch the PR's `CI` run. The required `quality`, `browser` and `secret-scan` jobs must pass; inspect advisory `security` warnings separately. `Deploy PR preview` should then deploy an isolated Worker and complete its smoke test. Open the current-commit URL in the PR deployment section and test the feature yourself.
 5. When satisfied, review and merge the PR using the protected `main` path. The existing `Deploy DEV` workflow then publishes it to the stable DEV URL. Production remains manual.
 

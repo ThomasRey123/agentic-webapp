@@ -6,6 +6,21 @@ Every implementation starts with exactly one structured GitHub issue. Use the fe
 
 Blank issues are disabled for contributors. Repository maintainers may still see GitHub's maintainer-only blank-issue option. Security-sensitive details must never be posted in a public issue.
 
+## Specification approval
+
+Follow the [SDD working contract](spec-driven-development.md). A spec-only PR
+requests owner approval of new/changed intended behavior. Its human merge closes
+only the spec issue. A separate implementation issue and PR reference the spec
+path, owner approval PR and full actual merge SHA. Each step has one issue,
+branch and PR; merging a roadmap or mixed code/spec PR is not spec-only approval.
+
+Draft/Approved/Implemented are evidence-derived states. Neither a label set by an
+agent nor the zero-review ruleset setting proves approval. Approval is a working
+contract checked by the agent and owner, not a new automated GitHub policy gate.
+Final implementation delivery evidence goes in the existing issue/PR after
+successful main CI and DEV checks. Maintenance records unchanged behavior and
+suitable verification without requiring empty spec files.
+
 ## Branch and Pull Request Contract
 
 Create one short-lived branch from current `main` for each issue:

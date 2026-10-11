@@ -9,7 +9,18 @@ Create one GitHub issue containing:
 - explicit out-of-scope items;
 - relevant implementation notes.
 
-The issue is the task contract. Do not infer additional product scope.
+The issue is the scoped task record. Choose the specification, implementation or
+maintenance route in [spec-driven-development.md](spec-driven-development.md).
+New/changed intended behavior starts with a spec-only issue/PR; the owner merges
+that proposal as behavioral approval. Implementation uses a separate issue/PR
+referencing the spec path, approval PR and full actual merge SHA. Read that
+revision and confirm it matches current main before implementing. A status label
+or green CI is not behavioral approval.
+
+For behavior-preserving fixes/updates or editorial/process maintenance, document
+unchanged behavior, the affected spec or legacy evidence, verification and
+exclusions directly in the task record. If behavior changes or is undecided,
+return to the specification route. Do not infer additional product scope.
 
 Use the structured feature or bug form. Blank issues are disabled for contributors, and security-sensitive details must not be posted publicly. See [`github-governance.md`](github-governance.md) for the complete repository policy.
 
@@ -27,7 +38,7 @@ Use `agent/` when a coding agent owns the implementation. A branch contains exac
 
 ## 3. Implement Within Repository Boundaries
 
-Read `AGENTS.md`, the issue, and relevant documentation before editing. Keep routing and composition in `src/app`; keep feature behavior inside the owning feature module. Preserve unrelated work.
+Read `AGENTS.md`, the issue, the approved spec revision when implementing SDD behavior, and relevant documentation before editing. Specification proposals contain no application implementation; keep technical plans/tasks separate from the behavior contract. Keep routing and composition in `src/app`; keep feature behavior inside the owning feature module. Preserve unrelated work.
 
 ## 4. Verify Locally
 
@@ -77,7 +88,7 @@ Closes #<issue>
 Known risks or `None known`.
 ```
 
-Include screenshots for meaningful visual changes and document new configuration or migration steps.
+Include the chosen task route and its approval/behavioral evidence. For SDD implementation, map every acceptance requirement ID to actual test names/paths or explicitly manual checks and results. Specification proposals label anticipated checks as planned, not passed. Include screenshots for meaningful visual changes and document new configuration or migration steps.
 
 Keep every section of `.github/pull_request_template.md`. The template is the handoff record between implementation, review, and later CI enforcement.
 
@@ -88,5 +99,7 @@ The agent does not merge its own pull request. Required CI and review gates must
 ## 8. Deploy
 
 After a merge, successful CI verification of the resulting `main` commit triggers the DEV workflow. It deploys that exact commit to Cloudflare Workers Static Assets and runs the smoke test against the URL returned by Wrangler. See [`deployment.md`](deployment.md) for configuration and operations.
+
+After human implementation merge, record the exact merge/CI/DEV evidence in the existing issue or PR. This is the delivery-state evidence; spec approval alone does not mean deployed. Keep pending or blocked checks explicit.
 
 PROD requires explicit human approval and cannot be approved by the coding agent.
