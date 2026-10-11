@@ -28,17 +28,18 @@ Datierte `PROJECT_STATE_*`-Dateien bleiben historische Momentaufnahmen.
 
 ## Prioritäten
 
-1. **Erste SDD-Etappe reviewen.** [Epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90)
-   bleibt das nächste große Vorhaben. Der Rechercheplan ist mit PR #92 gemergt.
-   Issue #93 führt den [Arbeitsvertrag](spec-driven-development.md),
-   [Vorlagen](../specs/README.md), Freigabenachweise und passende Agent-/Issue-/PR-Regeln
-   ein. Nach menschlichem Merge gelten diese Regeln; eine SDD-CLI oder ein neues
-   CI-Gate wird nicht installiert.
-2. **Kleinen fachlichen Pilot auswählen und spezifizieren.** Zuerst ein Spec-Issue
-   und einen Spec-PR erstellen, Verhalten und offene Fragen klären und menschlich
-   freigeben. Danach in einem separaten Issue/PR die exakte freigegebene Revision
-   mit Plan/Tasks und Testzuordnung umsetzen. Eine Folgeänderung belegt anschließend
-   die Pflege der Spezifikation. Noch kein Pilot ist ausgewählt oder implementiert.
+1. **Pilot-Spezifikation reviewen.** Die erste SDD-Etappe (Issue #93 / PR #94)
+   ist gemergt; Main-CI, DEV-Smoke und Bereinigung sind erfolgreich.
+   Der ausgewählte Pilot ist „DEV-Link kopieren“. [Issue #95](https://github.com/ThomasRey123/agentic-webapp/issues/95)
+   und [die Spezifikation](../specs/copy-dev-link/spec.md) definieren Verhalten,
+   Fehlerfälle und geplante Nachweise. Die Spezifikation benötigt die ausdrückliche
+   menschliche Freigabe ihres Spec-PRs; noch keine Feature-Implementierung.
+2. **Freigegebenen Pilot separat liefern.** Nach Spec-Freigabe ein eigenes
+   Implementierungs-Issue/PR mit Spec-Pfad, Freigabe-PR und tatsächlichem Merge-SHA
+   erstellen. Plan/Tasks und Anforderungs-Test-Zuordnung daraus ableiten; Implementierung,
+   unabhängige CI, Vorschau und DEV prüfen. Eine Folgeänderung belegt anschließend
+   die Pflege der Spezifikation. [Epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90)
+   bleibt für diese Lieferetappen offen.
 3. **Wartung fortführen.** Dependabot-Updates wöchentlich prüfen, Node-LTS-Updates
    gemäß [node-updates.md](node-updates.md) manuell koordinieren. Issue #82 bleibt
    offen, bis ein verifizierter unterstützter braces-Fix verfügbar ist.
