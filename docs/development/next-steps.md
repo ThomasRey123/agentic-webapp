@@ -1,8 +1,9 @@
-# Nächste Schritte nach dem zweiten UI-Durchlauf
+# Nächste Schritte nach dem gelieferten SDD-Piloten
 
 ## Verifizierter Stand am 11. Oktober 2026
 
-Der aktuelle Nachweis steht in [delivery-review.md](delivery-review.md).
+Der aktuelle Einstieg steht in [worker-handoff.md](worker-handoff.md).
+Liefernachweise stehen dort und in [delivery-review.md](delivery-review.md).
 Datierte `PROJECT_STATE_*`-Dateien bleiben historische Momentaufnahmen.
 
 - **Unabhängige Prüfungen:** `protect-main` verlangt `quality`, `browser` und
@@ -28,20 +29,23 @@ Datierte `PROJECT_STATE_*`-Dateien bleiben historische Momentaufnahmen.
 
 ## Prioritäten
 
-1. **Freigegebenen Pilot liefern.** Die erste SDD-Etappe (Issue #93 / PR #94)
-   und die Pilot-Spezifikation (Issue #95 / PR #96) sind vom Eigentümer gemergt.
-   PR #96 mit Merge `a4a06bd880135436f5b2856a361c1c59b191d10d` genehmigt
-   [„DEV-Link kopieren“](../specs/copy-dev-link/spec.md).
-   [Implementierungs-Issue #97](https://github.com/ThomasRey123/agentic-webapp/issues/97)
-   führt die getrennte Umsetzung; [Plan](../specs/copy-dev-link/plan.md) und
-   [Tasks/Nachweise](../specs/copy-dev-link/tasks.md) dokumentieren den Stand.
-   Vollständige Abnahme verlangt auch die manuellen Prüfungen der Spec.
-2. **Lieferung und Spec-Pflege belegen.** Nach unabhängiger CI und Vorschau
-   kontrolliert der Eigentümer den Implementierungs-Merge. Tatsächlichen
-   Merge-SHA, Main-CI und DEV-Nachweise im bestehenden Issue/PR ergänzen.
-   Eine anschließende kleine Spec-Änderung mit separater Freigabe/Umsetzung
-   belegt die Pflege. [Epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90)
-   bleibt für diese Lieferetappen offen.
+1. **Sichtbare Folgeänderung am Pilot spezifizieren und liefern.**
+   „DEV-Link kopieren“ ist unter der revidierten Abnahme geliefert: PR #98,
+   Testkorrektur #100 und automatisierte Prüfungen #104 sind gemergt. Main-CI,
+   DEV und alle 19 Remote-Browserfälle sind erfolgreich. Spec-Freigabe #102
+   ersetzt den verpflichtenden realen Screenreader-Test durch die dokumentierten
+   automatisierten Prüfungen; hörbare Ausgabe bleibt optional und ungeprüft.
+   Sechs Kontrastprüfungen bleiben automatisch unbewertbar.
+   [Tasks/Nachweise](../specs/copy-dev-link/tasks.md) enthalten die Ergebnisse.
+   Das konkrete nächste sichtbare Verhalten ist noch nicht ausgewählt.
+   Owner-Auftrag klären, Spec-Issue/Spec-only-PR erstellen, erst nach dessen
+   Owner-Merge eine separate Umsetzung beginnen. Die Abnahmepolitik-Revision
+   zählt nicht als die geplante sichtbare Folgeänderung.
+2. **SDD-Nutzen nach der Folgeänderung bewerten.** Anforderungen/Testnachweise,
+   Review-Aufwand und beobachtete Fehler betrachten; nur begründete zusätzliche
+   Automatisierung ergänzen. [Epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90)
+   bleibt für Folgeänderung und Bewertung offen. Kein neuer Feature-Auftrag,
+   SDD-CLI oder dauerhafter Worker ist durch diese Übergabe freigegeben.
 3. **Wartung fortführen.** Dependabot-Updates wöchentlich prüfen, Node-LTS-Updates
    gemäß [node-updates.md](node-updates.md) manuell koordinieren. Issue #82 bleibt
    offen, bis ein verifizierter unterstützter braces-Fix verfügbar ist.

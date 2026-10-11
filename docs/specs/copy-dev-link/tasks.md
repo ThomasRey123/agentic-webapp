@@ -70,9 +70,9 @@ prevented a mobile feedback layout regression. Original delivery evidence is rec
 - [x] Add development-only axe engine and scoped audit matrix, without application changes.
 - [x] Record JSON evidence in the existing browser CI job, without adding gates or permissions.
 - [x] Format, frozen install and `pnpm check:pr` passed: 16 Vitest + 15 Node tests, static export, 19 Chromium cases; advisory audit reviewed.
-- [ ] Verify independent CI and exact-head deployed preview.
-- [x] Scoped stable-DEV audits: all eight cases passed with active TLS checks; full stable suite awaits separate PR #100.
-- [ ] Owner merges this implementation; append actual merge/main CI/DEV evidence.
+- [x] Independent exact-head CI 38152800788 and preview 38152887701 passed; additional full preview suite passed 19/19.
+- [x] PR #100 is merged; after #104 merge, full stable-DEV suite passed 19/19 with active TLS, including all eight audits.
+- [x] Owner merged #104 at `c5755b0a4177cedc9e46253d50312bcbec3a34a2`; exact-commit main CI 38154391357 / DEV 38154476936 passed, including smoke/cleanup.
 
 FR-005 maps to all eight cases in `tests/e2e/copy-dev-link-accessibility.spec.ts`:
 light/dark × idle/pending/success/error. Each checks native keyboard access,
@@ -109,3 +109,23 @@ Security audit reports the existing high-severity braces advisory
 `GHSA-vfj7-8cjw-p6xm`, tracked separately in #82; no new advisories were found.
 Actual audible announcements: **not tested; optional**. Acceptance evidence changes do not satisfy epic #90's
 separate planned later user-visible behavior change.
+
+## Completed revised delivery
+
+Owner merge #100: `d05aaede35544992e2ea4f231785cfef2be8c6e8`, main CI
+38153522823 / DEV 38153590153 succeeded; repaired full DEV suite passed 11/11.
+Owner merge #104: `c5755b0a4177cedc9e46253d50312bcbec3a34a2`,
+[main CI 38154391357](https://github.com/ThomasRey123/agentic-webapp/actions/runs/38154391357)
+and [DEV 38154476936](https://github.com/ThomasRey123/agentic-webapp/actions/runs/38154476936)
+succeeded. Full merged-main suite then passed 19/19 on stable DEV. All eight
+actual deployed audit reports were inspected and match the matrix above.
+Main artifact `copy-accessibility-evidence`: 11708510182, seven-day retention;
+direct artifact/log retrieval from this cloud had HTTP 403, so downloaded CI
+contents were not independently inspected. Main job/metadata and local/DEV
+reports were checked. Existing six incomplete contrast results and optional,
+untested audible output remain explicitly unchanged.
+
+Pilot delivery under the revised contract is complete. Epic #90's separate
+visible follow-up behavior and usefulness evaluation remain open. Resume using
+[the worker handoff](../../development/worker-handoff.md); do not reopen #100/#104
+or retroactively mark the original real screen-reader check passed.

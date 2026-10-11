@@ -1,4 +1,4 @@
-# Delivery permissions and second UI delivery review
+# Delivery permissions and delivery evidence
 
 ## Scope and evidence — 11 October 2026
 
@@ -95,3 +95,24 @@ major Actions updates. Confirm the current ruleset and environment branch policy
 review Cloudflare token scope in its owning account, and inspect one successful
 same-repository preview plus main DEV delivery. Test hostile/obsolete identities
 with the existing script fixtures; do not grant secrets to forks to obtain a test.
+
+## Delivered SDD pilot — 11 October 2026
+
+The original permission review above remains a dated inspection, not a new
+claim that all live settings were re-inspected today. The copy-link pilot was
+owner-delivered through application #98, acceptance spec revision #102, harness
+repair #100 and automated acceptance #104. Latest owner merge:
+`c5755b0a4177cedc9e46253d50312bcbec3a34a2`.
+[Main CI 38154391357](https://github.com/ThomasRey123/agentic-webapp/actions/runs/38154391357)
+and [DEV 38154476936](https://github.com/ThomasRey123/agentic-webapp/actions/runs/38154476936)
+passed including smoke and preview/branch cleanup. The complete merged suite
+passed 19/19 on stable DEV with active TLS checks. Eight scoped axe reports
+had no detected violations; six contrast checks remained incomplete over the
+background gradient. Audible screen-reader output remains untested and optional.
+CI report upload succeeded; direct CI-artifact/log download from this cloud had
+HTTP 403. Local/deployed reports were inspected independently.
+
+The full revision chain, test mapping, environment recovery and next work are
+in [worker-handoff.md](worker-handoff.md) and
+[feature tasks](../specs/copy-dev-link/tasks.md). The delivered pilot does not
+complete epic #90's separate visible behavior change or subsequent evaluation.

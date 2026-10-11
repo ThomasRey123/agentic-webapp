@@ -76,9 +76,11 @@ GitHub Actions runs the same command in the required `quality` job for pull requ
 
 After CI succeeds for a `main` commit, `Deploy DEV` exports the application, deploys it to Cloudflare, and smoke tests the returned deployment URL. See [`docs/development/deployment.md`](docs/development/deployment.md) for the required GitHub environment and Cloudflare setup.
 
-The current delivery checkpoint is documented in [`docs/development/delivery-review.md`](docs/development/delivery-review.md). [`PROJECT_STATE_V9.md`](PROJECT_STATE_V9.md) is a historical snapshot.
+Start a new worker with [`docs/development/worker-handoff.md`](docs/development/worker-handoff.md): it records the delivered SDD pilot, actual merge/CI/DEV evidence, cloud test limitations and the next unapproved behavior-change stage.
 
-Follow-up work is tracked in [`docs/development/next-steps.md`](docs/development/next-steps.md). The next major initiative is [Spec Driven Development, epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90): its [researched roadmap](docs/development/spec-driven-development-roadmap.md) proposes incremental adoption and a small pilot. The [SDD working contract](docs/development/spec-driven-development.md) and [specification templates](docs/specs/README.md) define the first adoption stage; no SDD CLI or extra CI gate is introduced.
+The delivery permission inventory is documented in [`docs/development/delivery-review.md`](docs/development/delivery-review.md). [`PROJECT_STATE_V9.md`](PROJECT_STATE_V9.md) is a historical snapshot.
+
+Follow-up work is tracked in [`docs/development/next-steps.md`](docs/development/next-steps.md). The next major initiative is [Spec Driven Development, epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90): its [researched roadmap](docs/development/spec-driven-development-roadmap.md) records incremental adoption; the copy-link pilot is delivered and its visible follow-up change remains open. The [SDD working contract](docs/development/spec-driven-development.md) and [specification templates](docs/specs/README.md) define the active approval/implementation workflow; no SDD CLI or extra CI gate is introduced.
 
 ## Architecture
 
