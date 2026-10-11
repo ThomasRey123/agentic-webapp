@@ -1,47 +1,52 @@
-# Implementation plan: Copy the stable DEV link
+# Implementation plan: Automated copy-link accessibility evidence
 
-**Implementation issue:** [#97](https://github.com/ThomasRey123/agentic-webapp/issues/97)
+**Implementation issue:** [#103](https://github.com/ThomasRey123/agentic-webapp/issues/103)
 **Approved specification:** `docs/specs/copy-dev-link/spec.md`
-**Owner approval:** [#96](https://github.com/ThomasRey123/agentic-webapp/pull/96), merge `a4a06bd880135436f5b2856a361c1c59b191d10d`.
+**Owner approval:** [#102](https://github.com/ThomasRey123/agentic-webapp/pull/102), merge `6ddf92ca36d183cca0634237b2800689911172af`.
 
-The immutable specification matches current main; FR-001–FR-006 remain unchanged.
+The immutable approval matches main. FR-005 changes the acceptance evidence;
+FR-001–FR-004 and FR-006 and application behavior remain unchanged. Original
+implementation #97/#98 followed approval #96 (`a4a06bd880135436f5b2856a361c1c59b191d10d`).
 
 ## Approach and affected modules
 
-Keep HomePage a Server Component and add one feature-owned `CopyDevLink` Client
-Component. Share the stable URL constant with the existing link. Invoke native
-Clipboard.writeText only from the activation handler. Local state represents
-idle/pending/success/error; a synchronous ref prevents overlapping writes.
+Add a Playwright audit file covering Project links in light/dark themes and
+idle/pending/success/error states. Control only the isolated browser clipboard
+to hold pending or resolve/reject deterministically. Exercise keyboard activation,
+visible focus and retention; inspect Chromium's computed accessibility tree for
+polite/atomic status semantics. Keep existing functional and mobile regressions.
 
-## Decisions and constraints
+Use development-only `@axe-core/playwright` 4.13.0 (MPL-2.0), the maintained
+Deque adapter for axe-core 4.13.0. Its documented include/withTags/analyze API and
+Playwright peer requirement (>=1.0.0) fit installed Playwright 1.64.0. This engine
+provides rule evaluation that hand-written DOM assertions cannot supply. A hosted
+scanner would add an unnecessary service; hand assertions remain useful for
+interaction behavior. No runtime bundle dependency, backend or migration.
 
-Use a native button, a persistent polite `role=status` region and explicit text
-for feedback. `aria-disabled` plus the synchronous handler guard prevents overlap
-without removing keyboard focus. Feedback has no timer or persistence. Catch
-rejection/unavailability and describe the existing manual route. Native clipboard
-policy stays authoritative: no permission requests, reads or deprecated fallback
-in application code. Tests can control their isolated browser clipboard.
+## Verification and evidence
 
-Use existing theme variables, a contrasting control border and visible focus.
-No dependencies, backend, migration, deployment changes or ADR needed; browser
-API access occurs after activation, preserving static export. Installed Next.js
-16.4.0 `use-client` documentation was consulted.
+Scope axe to `nav[aria-label="Project links"]`, with WCAG 2 A/AA and 2.1 A/AA
+tags; exclude no rules. Fail on detected violations. Persist full engine results,
+version, tags, scope, state/theme and incomplete results as eight JSON reports.
+Upload those reports from the existing browser CI job, including successful runs;
+retain seven days, with unchanged permissions and required gates.
 
-## Verification strategy
+Incomplete checks remain explicitly unverified and require review. Neither axe
+nor computed browser semantics proves an audible screen-reader announcement.
+The actual reader check was not performed and is now optional under #102.
+Retain original visual/contrast evidence and report its limits.
 
-Unit tests cover pending truth, exact address, overlap, rejection/unavailability
-and both retry transitions. Chromium exercises a real clipboard write/readback,
-keyboard/focus, deferred outcomes, other controls, theme/reload, mobile themes and
-no-JavaScript links. Existing home/FAQ/theme regressions remain required.
-Run `pnpm format` and `pnpm check:pr`; independently verify CI and PR preview.
+Run `pnpm format`, frozen dependency installation, `pnpm check:pr`, advisory
+security audit, independent CI and exact-head preview checks. Run scoped audits
+against stable DEV with existing authorized NSS access and active TLS checks.
+PR #100 separately fixes the stable-DEV no-JS harness; do not duplicate that
+change or claim a full stable suite passed before it is merged.
 
-Inspect mobile light/dark screenshots and computed contrast. A real screen-reader
-announcement check remains a required manual acceptance item; automated status
-semantics do not prove audible announcement. Record results in tasks and PR.
+## Risks and recovery
 
-## Risks, migration and recovery
-
-Browser policy can deny Clipboard API access; the defined manual route handles
-this without making the page fail. No application permissions are requested.
-Owner review must include manual announcement verification. No data migration;
-reverting this scoped implementation restores the existing links-only behavior.
+Automated rules cover only applicable checks in the selected region, not whole
+site WCAG conformance or assistive-technology compatibility. Review incomplete
+results explicitly. Browser-specific computed semantics use Chromium CDP,
+matching the existing configured browser project. No application changes, extra
+CI gates, new credentials, permissions or ADR. Reverting this test-only change
+restores previous verification; owner-controlled merge remains required.

@@ -1,5 +1,7 @@
 # Tasks: Copy the stable DEV link
 
+## Original delivery evidence (approval #96)
+
 **Implementation issue:** [#97](https://github.com/ThomasRey123/agentic-webapp/issues/97)
 **Specification baseline:** `docs/specs/copy-dev-link/spec.md`, owner approval
 [#96](https://github.com/ThomasRey123/agentic-webapp/pull/96), merge
@@ -9,10 +11,10 @@
 - [x] Derive plan and requirement/test mapping without changing behavior.
 - [x] Implement bounded clipboard action and feedback, FR-001–FR-006.
 - [x] Run `pnpm format` and `pnpm check:pr`; 31 unit/script and 11 browser tests passed, static export succeeded.
-- [ ] Open the one implementation PR; confirm independent CI and exact-commit preview.
+- [x] Original implementation PR #98 passed CI and preview; owner merged it.
 - [x] Inspect static-export mobile screenshots and contrast in both themes.
-- [ ] Complete required real screen-reader announcement check.
-- [ ] Owner merges; append actual merge/CI/DEV evidence to issue #97 or PR.
+- [ ] Original real screen-reader announcement check was not performed; #102 makes it optional.
+- [x] Original owner merge #98: `1e74554f674cdc8dc9bcf6ebc51cd4bf800bb7b6`; main CI run 38150461246 and DEV run 38150541965 succeeded.
 
 ## Requirement evidence
 
@@ -38,13 +40,10 @@ mobile status basis to auto fixed the clipping; both mobile cases and the final
 full gate passed. An intermediate gate encountered the inspection server still
 using port 3000; stopped that owned process and reran the full gate successfully.
 
-Manual screen-reader verification is required by the approved spec. DOM status
-semantics and keyboard tests do not prove actual audible announcements. Until
-that check passes, full acceptance remains blocked even with green CI. Review
-steps: use a real screen reader on the current-commit preview, activate the copy
-button with Enter/Space, confirm polite feedback without focus movement; test
-successful and unavailable/denied clipboard outcomes. No delivery is claimed
-before human merge and successful exact-commit main CI/DEV smoke.
+The original approval required a real screen-reader check; the owner confirmed
+it was not performed. Approval #102 supersedes that requirement: the check is
+optional, while actual audible announcements remain **not tested**. Historical
+automated and visual results do not retroactively prove audible output.
 
 ## Manual visual and contrast evidence
 
@@ -59,5 +58,54 @@ evidence, not proof of screen-reader announcements.
 
 Pilot observations: no scope changes or additional owner steering during
 implementation. Existing browser cache required refresh; tests discovered and
-prevented a mobile feedback layout regression. Real screen-reader review effort
-and post-merge delivery remain to be recorded in issue #97/PR.
+prevented a mobile feedback layout regression. Original delivery evidence is recorded above. Audible output remains untested.
+
+## Automated acceptance revision (approval #102)
+
+**Implementation issue:** [#103](https://github.com/ThomasRey123/agentic-webapp/issues/103)
+**Approved specification:** `docs/specs/copy-dev-link/spec.md`, #102 merge
+`6ddf92ca36d183cca0634237b2800689911172af`.
+
+- [x] Read immutable approved spec and implementation issue; confirm main alignment.
+- [x] Add development-only axe engine and scoped audit matrix, without application changes.
+- [x] Record JSON evidence in the existing browser CI job, without adding gates or permissions.
+- [x] Format, frozen install and `pnpm check:pr` passed: 16 Vitest + 15 Node tests, static export, 19 Chromium cases; advisory audit reviewed.
+- [ ] Verify independent CI and exact-head deployed preview.
+- [x] Scoped stable-DEV audits: all eight cases passed with active TLS checks; full stable suite awaits separate PR #100.
+- [ ] Owner merges this implementation; append actual merge/main CI/DEV evidence.
+
+FR-005 maps to all eight cases in `tests/e2e/copy-dev-link-accessibility.spec.ts`:
+light/dark × idle/pending/success/error. Each checks native keyboard access,
+visible retained focus, accessible button name, computed polite/atomic status,
+and all applicable WCAG 2.1 A/AA axe rules in Project links. No rule exclusions.
+Full JSON results record engine version, tags, scope, violations and incomplete
+checks; incomplete means unverified, not passed. Other requirement mappings and
+manual visual/contrast evidence above remain applicable.
+
+Audit results (axe-core/adapter 4.13.0, Playwright 1.64.0):
+
+| Theme | State | Detected violations | Incomplete rules |
+| --- | --- | --- | --- |
+| light | idle | 0 | none |
+| light | pending | 0 | color-contrast |
+| light | success | 0 | color-contrast |
+| light | error | 0 | color-contrast |
+| dark | idle | 0 | none |
+| dark | pending | 0 | color-contrast |
+| dark | success | 0 | color-contrast |
+| dark | error | 0 | color-contrast |
+
+Local and stable-DEV matrices agree. Enabled tags: `wcag2a`, `wcag2aa`,
+`wcag21a`, `wcag21aa`; scope: `nav[aria-label="Project links"]`.
+The six incomplete checks concern status text over the page's background gradient
+(`bgGradient`): axe cannot determine the background. These automated contrast
+results remain **unverified**. Original visual inspection and conservative
+computed contrast above provide supplementary evidence; they do not turn an
+incomplete engine result into a pass. No rule was disabled or excluded.
+Full reports: `test-results/**/copy-accessibility-*.json`, uploaded in CI as
+`copy-accessibility-evidence` (seven-day retention), with all rule/node details.
+
+Security audit reports the existing high-severity braces advisory
+`GHSA-vfj7-8cjw-p6xm`, tracked separately in #82; no new advisories were found.
+Actual audible announcements: **not tested; optional**. Acceptance evidence changes do not satisfy epic #90's
+separate planned later user-visible behavior change.

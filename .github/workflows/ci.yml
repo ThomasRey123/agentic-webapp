@@ -156,3 +156,12 @@ jobs:
           path: test-results/
           if-no-files-found: ignore
           retention-days: 7
+
+      - name: Upload scoped accessibility evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: copy-accessibility-evidence
+          path: test-results/**/copy-accessibility-*.json
+          if-no-files-found: ignore
+          retention-days: 7
