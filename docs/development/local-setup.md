@@ -61,4 +61,4 @@ pnpm build
 In the current managed development sandbox, Next.js processes can fail while reading process resident memory with `ENOENT: uv_resident_set_memory`. This affects `next build` before application-code diagnostics and can also terminate `next dev` after startup. ESLint and TypeScript checks succeed, and the build error also occurs through the webpack path. Treat this as an environment-specific limitation, not a successful runtime or build check. The future GitHub Actions workflow must run the production build independently in a normal hosted runner.
 
 Node follows the latest supported LTS release through reviewed updates. See
-[`Node update policy`](node-updates.md) for automation activation and verification.
+[`Node update policy`](node-updates.md) for manual updates and verification.

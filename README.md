@@ -131,4 +131,4 @@ The `browser` CI job verifies theme persistence locally. Once this PR is merged,
 - [`PROJECT_STATE_V8.md`](PROJECT_STATE_V8.md): verified project state, worker handoff, and remaining milestones
 
 Node follows the latest supported LTS release through reviewed updates. See
-[`Node update policy`](docs/development/node-updates.md) for automation activation and verification.
+[`Node update policy`](docs/development/node-updates.md) for manual updates and verification.

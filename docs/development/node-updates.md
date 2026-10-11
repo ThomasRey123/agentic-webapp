@@ -5,20 +5,27 @@ is a reproducibility checkpoint, not a permanent commitment to a particular majo
 CI and deployment already read this file. Keep `package.json` engines and
 `@types/node` on the same major as the runtime.
 
-`renovate.json` enables only Node runtime and Node type updates. Renovate's `node`
-versioning treats a new runtime major as stable when it reaches LTS. Applying
-that versioning to `@types/node` also excludes type majors for Current releases.
-Runtime and type updates share a weekly PR group; automatic merging is disabled.
-Dependabot continues to maintain other npm packages and GitHub Actions, and
-ignores `@types/node` to avoid competing PRs.
+Node runtime and type updates are performed manually in a single reviewed PR.
+Check for a new supported LTS release monthly and promptly after a relevant
+security advisory. Dependabot continues its weekly checks for other npm packages
+and GitHub Actions; it ignores `@types/node` so types cannot advance independently
+of the runtime. No additional update bot is required.
 
-## Activate automation
+## Prepare an update
 
-An owner must install or enable the Renovate GitHub App for this repository and
-complete its onboarding. Committing configuration alone does not activate the
-service. No Renovate credential belongs in the repository or cloud setup.
-Review the first proposed update to confirm that runtime, engine range and types
-remain aligned. If a bot proposes only a subset, complete the same PR before merge.
+1. Check the [official Node.js releases](https://nodejs.org/en/about/previous-releases)
+   and select the latest supported LTS release, including its release notes.
+2. Create an issue and a short-lived branch from current `main`.
+3. Update `.nvmrc` to the selected exact version and `package.json` engines to
+   require that version within its major (for example, `>=24.21.0 <25`).
+4. Install and activate that runtime, then run `pnpm add -D @types/node@^<major>`
+   with the chosen major substituted. This updates the type dependency and lockfile.
+   Runtime and type patch versions need not match; their majors must match.
+5. Update any version examples in the setup documentation and prepare the cloud
+   runtime using the saved install script.
+
+Existing Dependabot PRs for `@types/node` are not automatically closed by the
+ignore rule. Review them separately and close superseded proposals deliberately.
 
 ## Validate and adopt an update
 
