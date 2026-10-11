@@ -20,6 +20,15 @@ The binding principle is:
 
 Read the linked GitHub issue and this file before changing code. Implement only the issue scope and preserve unrelated user changes.
 
+## Specification and Approval Contract
+
+- Follow `docs/development/spec-driven-development.md` for new or changed intended application/delivery behavior. Start with a scoped specification issue and a spec-only PR using `docs/specs/templates/spec.md`; resolve scope and acceptance questions before owner review. Do not implement that behavior before the owner merges the spec as explicit approval.
+- Use a separate implementation issue/branch/PR. Record the spec path, owner-merged approval PR and its full actual merge SHA in the implementation issue and PR; read that revision and verify it agrees with current main. A roadmap merge, an agent-authored status label or green CI alone is not spec approval. Never fabricate a future approval/delivery SHA.
+- Derive a compact technical plan and tasks from the approved spec using the companion templates. Keep requirement IDs stable and map every acceptance requirement to locatable tests or explicitly manual checks and actual results. Do not treat test IDs or an AI consistency review as proof of correctness.
+- New intended behavior discovered during implementation requires a revised spec and owner approval before implementing that behavior. Internal design choices within approved scope remain autonomous. Continue independent authorized work while a scope decision is pending.
+- Behavior-preserving bug fixes, routine dependency updates and editorial/process maintenance may use the short route: explain unchanged behavior, the affected spec or legacy behavioral evidence, observable verification and exclusions in the task record/PR. No bulk backfill or empty spec files. If intended behavior changes or is undecided, use the specification route. Dependabot keeps its existing reviewed update path for routine updates.
+- Spec approval and delivery are different states. After human implementation merge, record the exact merge commit and successful CI/DEV evidence in the existing issue/PR; do not claim delivery while checks are pending. Keep human merge, existing quality/browser/secret-scan gates and advisory-audit triage intact.
+
 ## Architecture
 
 - The application is a modular monolith built with Next.js App Router and strict TypeScript.
@@ -41,6 +50,7 @@ src/features/            Feature-owned UI and logic
 src/components/          Shared UI and layout components, when needed
 src/lib/                 Shared technical helpers, when needed
 docs/architecture/       Architecture and ADRs
+docs/specs/             Behavior specifications and SDD templates
 docs/development/        Local setup and delivery workflow
 tests/                   System, smoke, and later E2E tests
 ```
@@ -158,5 +168,6 @@ A task is complete only when:
 - the task branch and commits follow repository conventions;
 - one pull request references the issue and records verification;
 - required CI and review gates pass.
+- for SDD implementation, the approved spec revision and requirement-to-test evidence are recorded and the implementation stays within that contract; spec-only and maintenance tasks record their appropriate route instead.
 
 Production deployment is not part of a coding agent's Definition of Done.

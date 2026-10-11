@@ -5,7 +5,30 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this form as the implementation contract. Describe observable outcomes and explicit boundaries.
+        Use this form as the scoped task record. New or changed intended behavior needs a spec-only PR and owner approval before implementation. See docs/development/spec-driven-development.md.
+
+  - type: dropdown
+    id: task-route
+    attributes:
+      label: SDD task route
+      options:
+        - Specification proposal
+        - Implementation of approved specification
+        - Behavior-preserving maintenance
+    validations:
+      required: true
+
+  - type: textarea
+    id: specification-contract
+    attributes:
+      label: Specification or maintenance contract
+      description: For a proposal, give the intended spec path and open questions. For implementation, give spec path, owner-merged spec PR, full merge SHA and requirement IDs. For maintenance, explain unchanged behavior, spec or legacy evidence, and verification. Approval cannot be self-declared.
+      placeholder: |
+        Spec proposal: docs/specs/<feature>/spec.md; unresolved questions...
+        Implementation: spec path; approved PR URL; full merge SHA; FR-001...
+        Maintenance: no intended behavior change because...; evidence...; checks...
+    validations:
+      required: true
 
   - type: textarea
     id: goal

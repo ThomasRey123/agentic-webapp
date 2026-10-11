@@ -28,16 +28,17 @@ Datierte `PROJECT_STATE_*`-Dateien bleiben historische Momentaufnahmen.
 
 ## Prioritäten
 
-1. **Spec Driven Development als nächstes großes Vorhaben planen.**
-   [Epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90) hält den
-   Auftrag fest. Der [recherchierte Plan](spec-driven-development-roadmap.md)
-   beschreibt Primärquellen, Freigaben, Anforderungs-Test-Zuordnung und die
-   schrittweise Einführung. Die aktuelle Änderung dokumentiert den Vorschlag;
-   Agent-/CI-Regeln werden noch nicht umgestellt und kein Werkzeug installiert.
-2. **Den freigegebenen Plan in kleinen Etappen umsetzen.** Zunächst Vorlage und
-   Arbeitsvertrag abstimmen; danach einen kleinen neuen fachlichen Pilot
-   spezifizieren, menschlich freigeben und mit dem bestehenden DEV-Ablauf
-   liefern. Eine Folgeänderung belegt anschließend die Pflege der Spezifikation.
+1. **Erste SDD-Etappe reviewen.** [Epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90)
+   bleibt das nächste große Vorhaben. Der Rechercheplan ist mit PR #92 gemergt.
+   Issue #93 führt den [Arbeitsvertrag](spec-driven-development.md),
+   [Vorlagen](../specs/README.md), Freigabenachweise und passende Agent-/Issue-/PR-Regeln
+   ein. Nach menschlichem Merge gelten diese Regeln; eine SDD-CLI oder ein neues
+   CI-Gate wird nicht installiert.
+2. **Kleinen fachlichen Pilot auswählen und spezifizieren.** Zuerst ein Spec-Issue
+   und einen Spec-PR erstellen, Verhalten und offene Fragen klären und menschlich
+   freigeben. Danach in einem separaten Issue/PR die exakte freigegebene Revision
+   mit Plan/Tasks und Testzuordnung umsetzen. Eine Folgeänderung belegt anschließend
+   die Pflege der Spezifikation. Noch kein Pilot ist ausgewählt oder implementiert.
 3. **Wartung fortführen.** Dependabot-Updates wöchentlich prüfen, Node-LTS-Updates
    gemäß [node-updates.md](node-updates.md) manuell koordinieren. Issue #82 bleibt
    offen, bis ein verifizierter unterstützter braces-Fix verfügbar ist.

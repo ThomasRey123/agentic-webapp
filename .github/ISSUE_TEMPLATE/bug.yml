@@ -43,6 +43,18 @@ body:
       placeholder: Firefox 143, development, commit abc1234
 
   - type: textarea
+    id: behavior-contract
+    attributes:
+      label: Behavioral contract and regression evidence
+      description: Reference the affected approved spec/requirement IDs, or evidence of established behavior in a legacy area. Explain why this restores behavior. If intended behavior is undecided or changes, use a specification proposal before implementation.
+      placeholder: |
+        Contract or legacy evidence: ...
+        Behavior restored without new scope: ...
+        Planned regression check: ...
+    validations:
+      required: true
+
+  - type: textarea
     id: acceptance-criteria
     attributes:
       label: Acceptance criteria

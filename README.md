@@ -78,7 +78,7 @@ After CI succeeds for a `main` commit, `Deploy DEV` exports the application, dep
 
 The current delivery checkpoint is documented in [`docs/development/delivery-review.md`](docs/development/delivery-review.md). [`PROJECT_STATE_V9.md`](PROJECT_STATE_V9.md) is a historical snapshot.
 
-Follow-up work is tracked in [`docs/development/next-steps.md`](docs/development/next-steps.md). The next major initiative is [Spec Driven Development, epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90): its [researched roadmap](docs/development/spec-driven-development-roadmap.md) proposes incremental adoption and a small pilot. The roadmap does not yet activate new workflow rules or install a tool.
+Follow-up work is tracked in [`docs/development/next-steps.md`](docs/development/next-steps.md). The next major initiative is [Spec Driven Development, epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90): its [researched roadmap](docs/development/spec-driven-development-roadmap.md) proposes incremental adoption and a small pilot. The [SDD working contract](docs/development/spec-driven-development.md) and [specification templates](docs/specs/README.md) define the first adoption stage; no SDD CLI or extra CI gate is introduced.
 
 ## Architecture
 
@@ -99,13 +99,14 @@ Only directories with an immediate purpose are created. See [`docs/architecture/
 
 ## Development Workflow
 
-1. Describe the feature in ChatGPT Work/Codex. The worker creates one scoped GitHub issue as the task contract.
-2. Create one short-lived branch such as `agent/42-dark-mode`.
-3. Implement only the agreed scope; run `pnpm format` and `pnpm check:pr` for user-facing changes before opening the PR.
-4. Commit using Conventional Commits.
-5. Open one pull request containing `Closes #42`, verification, and risks.
-6. Test the automatically deployed PR preview after successful CI.
-7. Merge only after the required checks and review pass; stable DEV then deploys automatically.
+1. Describe new/changed behavior in ChatGPT Work/Codex. The worker drafts a spec in one scoped issue/PR; you review and merge it as behavioral approval.
+2. Start a separate implementation issue/PR referencing the spec path, approval PR and full merge SHA. For behavior-preserving maintenance, use the short route described in the SDD contract.
+3. Create one short-lived branch such as `agent/42-dark-mode`.
+4. Implement only the agreed scope; run `pnpm format` and `pnpm check:pr` for user-facing changes before opening the PR.
+5. Commit using Conventional Commits.
+6. Open one pull request containing `Closes #42`, verification, and risks.
+7. Test the automatically deployed PR preview after successful CI.
+8. Merge only after the required checks and review pass; stable DEV then deploys automatically.
 
 Read [`AGENTS.md`](AGENTS.md) before agent-assisted work and [`docs/development/workflow.md`](docs/development/workflow.md) for the complete process.
 
@@ -125,6 +126,8 @@ The `browser` CI job verifies page/link, FAQ and theme behavior locally. The tru
 - [`docs/architecture/decisions/ADR-001-modular-monolith.md`](docs/architecture/decisions/ADR-001-modular-monolith.md): architecture decision record
 - [`docs/architecture/decisions/ADR-002-cloudflare-workers-static-assets.md`](docs/architecture/decisions/ADR-002-cloudflare-workers-static-assets.md): DEV hosting decision
 - [`docs/development/local-setup.md`](docs/development/local-setup.md): local installation and troubleshooting
+- [`docs/development/spec-driven-development.md`](docs/development/spec-driven-development.md): SDD task routes, approval and delivery evidence
+- [`docs/specs/README.md`](docs/specs/README.md): specification, plan and task templates
 - [`docs/development/workflow.md`](docs/development/workflow.md): issue-to-PR workflow
 - [`docs/development/github-governance.md`](docs/development/github-governance.md): issue templates, pull-request contract, and branch protection
 - [`docs/development/deployment.md`](docs/development/deployment.md): DEV deployment configuration and operation
