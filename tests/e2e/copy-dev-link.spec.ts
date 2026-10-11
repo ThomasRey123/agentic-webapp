@@ -159,7 +159,6 @@ test("FR-006: no-JavaScript links remain usable and copying is never claimed", a
   });
   try {
     const page = await context.newPage();
-    await context.route(stableUrl, (route) => route.fulfill({ body: "Stable DEV destination" }));
     await page.goto("/");
     const link = page.getByRole("link", { name: "Open stable DEV" });
     await expect(link).toHaveAttribute("href", stableUrl);
@@ -169,6 +168,8 @@ test("FR-006: no-JavaScript links remain usable and copying is never claimed", a
     );
     await page.getByRole("button", { name: "Copy DEV link" }).click();
     await expect(page.getByRole("status", { name: "DEV link copy status" })).toBeEmpty();
+    // Install the popup stub after loading the app: DEV_URL can itself be stableUrl.
+    await context.route(stableUrl, (route) => route.fulfill({ body: "Stable DEV destination" }));
     const popup = page.waitForEvent("popup");
     await link.click();
     const opened = await popup;
