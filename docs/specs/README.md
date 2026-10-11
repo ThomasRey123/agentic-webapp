@@ -16,5 +16,7 @@ not in the spec revision that is awaiting that merge.
 ## Feature proposals and contracts
 
 - [Copy the stable DEV link](copy-dev-link/spec.md), specification issue #95:
-  first pilot proposal. Consult its owner approval/delivery evidence before
-  treating it as approved or implemented; planned tests are not passed tests.
+  approved by owner-merged PR #96 at `a4a06bd880135436f5b2856a361c1c59b191d10d`.
+  Implementation issue #97 derives its [plan](copy-dev-link/plan.md) and
+  [tasks/evidence](copy-dev-link/tasks.md) from this revision. Approval does not
+  establish implementation acceptance or DEV delivery.
