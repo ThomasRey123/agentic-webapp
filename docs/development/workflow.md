@@ -31,15 +31,15 @@ Read `AGENTS.md`, the issue, and relevant documentation before editing. Keep rou
 
 ## 4. Verify Locally
 
-Run the required local completion gate and report its result accurately:
+Run `pnpm format`, then the required local completion gate and report its result accurately:
 
 ```bash
 pnpm check
 ```
 
-An environment limitation must be recorded; it is not equivalent to a passing check.
+For user-facing changes, run `pnpm check:pr` instead: it adds the full local browser regression suite. Complete the applicable gate before opening a PR. An environment limitation must be recorded; it is not equivalent to a passing check.
 
-GitHub Actions independently runs the same command in the stable `quality` job for pull requests targeting `main` and pushes to `main`. The parallel `security` job scans Git history for secrets and fails on high- or critical-severity dependency advisories. Local output helps the author iterate, but only the GitHub-hosted results satisfy the required repository status checks.
+GitHub Actions independently runs the same command in the stable `quality` job for pull requests targeting `main` and pushes to `main`. The required `browser` job runs browser regression coverage and `secret-scan` scans Git history. The separate `security` job reports dependency advisories as warnings requiring triage. Local output helps the author iterate, but only the GitHub-hosted results satisfy the required repository status checks.
 
 ## 5. Commit
 
@@ -83,10 +83,10 @@ Keep every section of `.github/pull_request_template.md`. The template is the ha
 
 ## 7. Review and Merge
 
-The agent does not merge its own pull request. Required CI and review gates must pass. The `protect-main` repository ruleset requires the pull-request path, successful `quality` and `security` status checks against current `main`, and resolved review threads; it also blocks force pushes and deletion.
+The agent does not merge its own pull request. Required CI and review gates must pass. The `protect-main` repository ruleset requires the pull-request path, successful `quality`, `browser` and `secret-scan` status checks against current `main`, and resolved review threads; it also blocks force pushes and deletion.
 
 ## 8. Deploy
 
-After a merge, successful `quality` and `security` verification of the resulting `main` commit triggers the DEV workflow. It deploys that exact commit to Cloudflare Workers Static Assets and runs the smoke test against the URL returned by Wrangler. See [`deployment.md`](deployment.md) for configuration and operations.
+After a merge, successful CI verification of the resulting `main` commit triggers the DEV workflow. It deploys that exact commit to Cloudflare Workers Static Assets and runs the smoke test against the URL returned by Wrangler. See [`deployment.md`](deployment.md) for configuration and operations.
 
 PROD requires explicit human approval and cannot be approved by the coding agent.

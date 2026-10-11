@@ -1,6 +1,6 @@
 # Commit-specific PR preview status
 
-After merging this workflow change, successful PR CI triggers the trusted-main
+Successful PR CI triggers the trusted-main
 preview deployment workflow. Its deployment job creates a non-production,
 transient GitHub Deployment for the exact verified SHA and environment
 `pr-<number>`. The PR deployment section exposes the preview URL once both the
@@ -20,6 +20,9 @@ continues to check out trusted `main` and download the exact CI artifact; it nev
 executes scripts from the PR branch. URLs are restricted to that PR's isolated
 Workers hostname. No write access to PR comments is needed.
 
-A bootstrap PR cannot exercise the new trusted-main workflow before merge. After
-merge, use a small follow-up PR to verify the success URL, failure reporting and
-superseded-commit behavior on GitHub.
+The flow was verified live after PR #85 merged: Dependabot PR #78 and the FAQ
+PR #87 both produced exact-commit success deployments with smoke/theme browser
+checks. See [delivery-review.md](delivery-review.md) for the FAQ run and deployment
+IDs. Failure and superseded-identity paths have automated script coverage; no
+intentional failing remote deployment was performed. Closed PR Worker cleanup is
+automatic; a historical deployment link can point to a removed Worker after merge.

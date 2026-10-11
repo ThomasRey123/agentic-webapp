@@ -21,7 +21,7 @@ Issue -> task branch -> pull request -> CI -> main -> DEV -> smoke test
 
 The first successful public DEV deployment was verified on September 15, 2026. Production deployment remains part of the target architecture but was intentionally deferred by the repository owner. It is not required for the next milestone.
 
-The remaining Phase 1 proof is application-level: deliver one visible, tested feature through the established issue-to-DEV path. Until that proof succeeds, the delivery foundation is complete but the original end-to-end feature acceptance is not.
+The application-level proof is complete: the persistent theme feature traversed the issue-to-preview-to-DEV path. The FAQ (issue #86 / PR #87) provides a second small UI delivery with independent browser coverage. See [the current delivery review](../development/delivery-review.md) for dated evidence and limits. Production remains deferred.
 
 ## Application Boundary
 
