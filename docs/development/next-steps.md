@@ -16,9 +16,9 @@ Issue #58 dokumentiert die beim ersten Phase-3-Durchlauf gefundenen Vorab-Verifi
 
 ## Wartung am 11. Oktober 2026
 
-PR #84 bereitet einen eigenen `secret-scan`-Job, Dependency-Korrekturen und die
-Wrangler-Angleichung vor. Der Repository-Eigentümer muss `secret-scan` im Ruleset
-als Pflichtcheck ergänzen; der API-Schreibzugriff der Integration ist nicht vorhanden.
+PR #84 ist gemergt: eigener `secret-scan`-Job, Dependency-Korrekturen und
+Wrangler-Angleichung sind auf `main`. Das aktive Ruleset verlangt nun `quality`,
+`browser` und `secret-scan`; CI, DEV-Deployment und Bereinigung wurden bestätigt.
 
 Die Preview-Anzeige und eine isolierte Rollback-Übung sind in
 [`preview-status.md`](preview-status.md) und [`dev-rollback.md`](dev-rollback.md)
