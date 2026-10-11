@@ -79,7 +79,7 @@ Create a directory only when it contains a real file with an immediate purpose. 
 
 ## Commands
 
-Use pnpm and the pinned Node.js version from `.nvmrc`.
+Use pnpm and the tested Node.js version from `.nvmrc`. Follow the latest supported LTS line; update `.nvmrc`, `package.json` engines and `@types/node` together through a reviewed PR. See `docs/development/node-updates.md`.
 
 ```bash
 pnpm install --frozen-lockfile
