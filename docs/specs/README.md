@@ -12,3 +12,9 @@ backfill.
 Approval and delivery states are derived from GitHub evidence, not from copied
 template text. Keep the approval merge SHA in the implementation issue/PR,
 not in the spec revision that is awaiting that merge.
+
+## Feature proposals and contracts
+
+- [Copy the stable DEV link](copy-dev-link/spec.md), specification issue #95:
+  first pilot proposal. Consult its owner approval/delivery evidence before
+  treating it as approved or implemented; planned tests are not passed tests.
