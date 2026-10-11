@@ -17,7 +17,7 @@ test("loads the project workflow with its primary links", async ({ page }) => {
     }),
   ).toBeVisible();
 
-  await expect(page.getByText("ChatGPT request")).toBeVisible();
+  await expect(page.getByText("ChatGPT request", { exact: true })).toBeVisible();
   await expect(page.getByText("Verified stable DEV deployment")).toBeVisible();
 
   const cloudTest = page.getByRole("button", { name: "Cloud-Test" });

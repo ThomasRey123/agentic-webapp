@@ -1,6 +1,7 @@
 import { ThemeToggle } from "@/features/theme";
 
 import { CloudTest } from "./cloud-test";
+import { HomeFaq } from "./home-faq";
 import styles from "./home-page.module.css";
 
 const deliverySteps = [
@@ -43,6 +44,8 @@ export function HomePage() {
             ))}
           </ol>
         </section>
+
+        <HomeFaq />
 
         <nav className={styles.links} aria-label="Project links">
           <a

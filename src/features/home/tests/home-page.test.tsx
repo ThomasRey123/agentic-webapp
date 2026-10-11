@@ -16,6 +16,7 @@ describe("HomePage", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("ChatGPT request")).toBeInTheDocument();
     expect(screen.getByText("Verified stable DEV deployment")).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Frequently asked questions" })).toBeInTheDocument();
   });
 
   it("links to the repository and stable DEV environment", () => {

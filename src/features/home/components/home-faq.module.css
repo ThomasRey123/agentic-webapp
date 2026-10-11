@@ -1,0 +1,45 @@
+.faq {
+  display: grid;
+  gap: 12px;
+}
+
+.faq h2 {
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.faq details {
+  border: 1px solid var(--button-secondary-border);
+  border-radius: 18px;
+  background: var(--panel);
+  color: var(--text-primary);
+}
+
+.faq summary {
+  min-height: 44px;
+  border-radius: 18px;
+  padding: 20px;
+  font-weight: 700;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.faq summary:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+.faq p {
+  padding: 0 20px 20px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .faq summary:hover {
+    background: var(--button-secondary-hover);
+  }
+}
