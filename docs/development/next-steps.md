@@ -28,17 +28,19 @@ Datierte `PROJECT_STATE_*`-Dateien bleiben historische Momentaufnahmen.
 
 ## Prioritäten
 
-1. **Pilot-Spezifikation reviewen.** Die erste SDD-Etappe (Issue #93 / PR #94)
-   ist gemergt; Main-CI, DEV-Smoke und Bereinigung sind erfolgreich.
-   Der ausgewählte Pilot ist „DEV-Link kopieren“. [Issue #95](https://github.com/ThomasRey123/agentic-webapp/issues/95)
-   und [die Spezifikation](../specs/copy-dev-link/spec.md) definieren Verhalten,
-   Fehlerfälle und geplante Nachweise. Die Spezifikation benötigt die ausdrückliche
-   menschliche Freigabe ihres Spec-PRs; noch keine Feature-Implementierung.
-2. **Freigegebenen Pilot separat liefern.** Nach Spec-Freigabe ein eigenes
-   Implementierungs-Issue/PR mit Spec-Pfad, Freigabe-PR und tatsächlichem Merge-SHA
-   erstellen. Plan/Tasks und Anforderungs-Test-Zuordnung daraus ableiten; Implementierung,
-   unabhängige CI, Vorschau und DEV prüfen. Eine Folgeänderung belegt anschließend
-   die Pflege der Spezifikation. [Epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90)
+1. **Freigegebenen Pilot liefern.** Die erste SDD-Etappe (Issue #93 / PR #94)
+   und die Pilot-Spezifikation (Issue #95 / PR #96) sind vom Eigentümer gemergt.
+   PR #96 mit Merge `a4a06bd880135436f5b2856a361c1c59b191d10d` genehmigt
+   [„DEV-Link kopieren“](../specs/copy-dev-link/spec.md).
+   [Implementierungs-Issue #97](https://github.com/ThomasRey123/agentic-webapp/issues/97)
+   führt die getrennte Umsetzung; [Plan](../specs/copy-dev-link/plan.md) und
+   [Tasks/Nachweise](../specs/copy-dev-link/tasks.md) dokumentieren den Stand.
+   Vollständige Abnahme verlangt auch die manuellen Prüfungen der Spec.
+2. **Lieferung und Spec-Pflege belegen.** Nach unabhängiger CI und Vorschau
+   kontrolliert der Eigentümer den Implementierungs-Merge. Tatsächlichen
+   Merge-SHA, Main-CI und DEV-Nachweise im bestehenden Issue/PR ergänzen.
+   Eine anschließende kleine Spec-Änderung mit separater Freigabe/Umsetzung
+   belegt die Pflege. [Epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90)
    bleibt für diese Lieferetappen offen.
 3. **Wartung fortführen.** Dependabot-Updates wöchentlich prüfen, Node-LTS-Updates
    gemäß [node-updates.md](node-updates.md) manuell koordinieren. Issue #82 bleibt

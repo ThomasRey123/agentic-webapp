@@ -1,0 +1,43 @@
+.button {
+  min-height: 44px;
+  border: 1px solid var(--text-secondary);
+  border-radius: 999px;
+  background: var(--panel);
+  padding: 0 20px;
+  color: var(--text-primary);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+.button[aria-disabled="true"] {
+  cursor: wait;
+}
+
+.status {
+  flex-basis: 100%;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    background: var(--button-secondary-hover);
+  }
+}
+
+@media (max-width: 680px) {
+  .button {
+    width: 100%;
+  }
+
+  .status {
+    flex-basis: auto;
+  }
+}

@@ -1,6 +1,8 @@
 import { ThemeToggle } from "@/features/theme";
 
+import { stableDevUrl } from "../stable-dev-url";
 import { CloudTest } from "./cloud-test";
+import { CopyDevLink } from "./copy-dev-link";
 import { HomeFaq } from "./home-faq";
 import styles from "./home-page.module.css";
 
@@ -58,12 +60,13 @@ export function HomePage() {
           </a>
           <a
             className={styles.secondary}
-            href="https://agentic-webapp-dev.tr-config-place.workers.dev/"
+            href={stableDevUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
             Open stable DEV
           </a>
+          <CopyDevLink />
         </nav>
       </main>
     </div>
