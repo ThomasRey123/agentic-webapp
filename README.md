@@ -36,7 +36,7 @@ The persistent theme toggle completed this workflow through a PR preview, human 
 ## Prerequisites
 
 - Git
-- Node.js `24.19.0` as pinned in `.nvmrc`
+- Node.js `24.21.0` as pinned in `.nvmrc`
 - pnpm `11.19.0` as pinned in `package.json`
 
 ## Local Setup
@@ -129,3 +129,6 @@ The `browser` CI job verifies theme persistence locally. Once this PR is merged,
 - [`docs/development/github-governance.md`](docs/development/github-governance.md): issue templates, pull-request contract, and branch protection
 - [`docs/development/deployment.md`](docs/development/deployment.md): DEV deployment configuration and operation
 - [`PROJECT_STATE_V8.md`](PROJECT_STATE_V8.md): verified project state, worker handoff, and remaining milestones
+
+Node follows the latest supported LTS release through reviewed updates. See
+[`Node update policy`](docs/development/node-updates.md) for automation activation and verification.

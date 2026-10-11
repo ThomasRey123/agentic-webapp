@@ -8,6 +8,9 @@ updates:
       day: monday
       time: "08:00"
       timezone: Europe/Berlin
+    ignore:
+      # Renovate updates these together with the Node.js runtime.
+      - dependency-name: "@types/node"
     open-pull-requests-limit: 3
     groups:
       routine-dependencies:
