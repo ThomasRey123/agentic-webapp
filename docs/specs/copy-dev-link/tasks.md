@@ -129,3 +129,58 @@ Pilot delivery under the revised contract is complete. Epic #90's separate
 visible follow-up behavior and usefulness evaluation remain open. Resume using
 [the worker handoff](../../development/worker-handoff.md); do not reopen #100/#104
 or retroactively mark the original real screen-reader check passed.
+
+## Follow-up implementation #111 (approval #110)
+
+**Approved spec:** `docs/specs/copy-dev-link/spec.md` at owner merge
+`9c747eb2ed3169255fa28073de6fb93d8c11051b`.
+
+- [x] Verify owner merge and immutable spec equality with main.
+- [x] Derive the scoped plan and implement error-only native recovery field.
+- [x] Extend component errors/retries and browser manual selection/copy, lifecycle,
+      themes/mobile, existing scoped audits and unchanged journey coverage.
+- [x] Frozen install, formatting, full local `pnpm check:pr` and advisory audit.
+- [x] Inspect new mobile screenshots, contrast and all eight audit JSON reports.
+- [ ] Exact-head independent CI and full deployed preview suite.
+- [ ] Owner merge and actual successful main CI/stable DEV evidence.
+
+Local `pnpm install --frozen-lockfile`, `pnpm format` and `pnpm check:pr`
+passed: 16 Vitest + 15 Node script cases, static export and 21 Chromium cases.
+The advisory audit still reports only the known high development-only braces
+finding GHSA-vfj7-8cjw-p6xm (#82); it is not suppressed or fixed here.
+
+| Requirement | Actual checks for this revision                                                                                                                                                            | Result                                                                                                                    |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| FR-001      | `tests/e2e/copy-dev-link.spec.ts`: real clipboard contains stable DEV; component idle/exact URL case                                                                                       | Passed locally; exact stable URL, no implicit writes/navigation                                                           |
+| FR-002      | Component idle/pending/completion and browser pending/retries/keyboard/theme/reload case                                                                                                   | Passed locally; overlap prevented, other controls usable                                                                  |
+| FR-003      | Component rejected/missing/writeText absent/synchronous failure cases; browser missing/denied and keyboard/mouse manual recovery cases                                                     | Passed locally; exact read-only address, native copy/readback, no second app write or false success                       |
+| FR-004      | Component retry case and browser pending/retries/keyboard/theme/reload case                                                                                                                | Passed locally; address absent in idle/pending/success, present in error, retained across theme change, removed on reload |
+| FR-005      | `tests/e2e/copy-dev-link-accessibility.spec.ts`: eight theme/state audits with error-field keyboard focus; copy browser keyboard/mouse and mobile cases; manual screenshots/contrast below | Passed local browser checks; zero detected axe violations, incomplete checks explicitly unverified                        |
+| FR-006      | Existing home/FAQ/theme suites, copy no-JS case and static production build                                                                                                                | Passed locally; existing journeys and no-JS links preserved                                                               |
+
+### New manual visual/contrast evidence
+
+Inspected production static export at 390 × 844 in both themes with the recovery
+field focused: [light](evidence/recovery-mobile-light.png),
+[dark](evidence/recovery-mobile-dark.png). Complete address wraps visibly to two
+lines; no clipped guidance or field content, visible focus. Page width 390px;
+field client/scroll widths 348px and client/scroll heights 72px in both themes.
+Native browser selection/copy succeeds for the complete underlying URL, without
+introducing a newline in the copied value.
+
+Computed field text/background: black/white = 21:1 (light), #ededed/black =
+17.94:1 (dark). Border against solid field background: #666/white = 5.74:1,
+#999/black = 7.37:1. Focus is 2px and uses primary text color. Manual contrast
+review also covers the label and longer guidance against the existing conservative
+maximum gradient overlay (guidance ≥4.69:1 light / ≥6.52:1 dark, label/focus higher).
+
+Inspected all eight actual local axe 4.13.0 JSON reports, scope Project links,
+WCAG 2/2.1 A/AA tags, no excluded rules, zero detected violations. Six non-idle
+state/theme reports retain incomplete status contrast; the two error reports
+also contain incomplete contrast for the new label against the gradient. These
+additional label nodes are **automatically unverified**, supplemented by the new
+manual contrast/visual evidence above. The solid recovery field itself has no
+incomplete contrast result. Neither old nor new incomplete findings are passes.
+Audible screen-reader output remains not tested and optional; no whole-site WCAG
+or audible interoperability claim. Independent CI/preview and owner delivery
+remain pending; previous delivery tables are historical evidence.

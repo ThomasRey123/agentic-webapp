@@ -51,6 +51,8 @@ test("FR-001/002/004/005/006: pending, retries, keyboard, theme and reload prese
   const button = page.getByRole("button", { name: "Copy DEV link" });
   const status = page.getByRole("status", { name: "DEV link copy status" });
   await expect(status).toBeEmpty();
+  const address = page.getByRole("textbox", { name: "Stable DEV address" });
+  await expect(address).toHaveCount(0);
   const toggle = page.getByRole("button", { name: "Theme wechseln" });
   await toggle.click();
   expect(await page.evaluate(() => window.copyTest.writes)).toEqual([]);
@@ -60,11 +62,13 @@ test("FR-001/002/004/005/006: pending, retries, keyboard, theme and reload prese
   expect(await button.evaluate((element) => getComputedStyle(element).outlineStyle)).toBe("solid");
   await page.keyboard.press("Enter");
   await expect(status).toHaveText("Copying the DEV link…");
+  await expect(address).toHaveCount(0);
   await expect(button).toBeFocused();
   await page.keyboard.press("Space");
   expect(await page.evaluate(() => window.copyTest.writes)).toEqual([stableUrl]);
   await toggle.click();
   await expect(status).toHaveText("Copying the DEV link…");
+  await expect(address).toHaveCount(0);
   await page.locator("summary").first().click();
   await expect(page.locator("details").first()).toHaveAttribute("open", "");
   await expect(page.getByRole("link", { name: "Open stable DEV" })).toHaveAttribute(
@@ -73,17 +77,25 @@ test("FR-001/002/004/005/006: pending, retries, keyboard, theme and reload prese
   );
   await page.evaluate(() => window.copyTest.settle(false));
   await expect(status).toContainText("copy its address manually");
+  await expect(address).toHaveValue(stableUrl);
+  await toggle.click();
+  await expect(address).toHaveValue(stableUrl);
+  await expect(status).toContainText("Could not copy");
   await button.focus();
   await page.keyboard.press("Space");
   await expect(status).toHaveText("Copying the DEV link…");
+  await expect(address).toHaveCount(0);
   await expect(button).toBeFocused();
   await page.evaluate(() => window.copyTest.settle(true));
   await expect(status).toHaveText("DEV link copied.");
+  await expect(address).toHaveCount(0);
   await expect(button).toBeFocused();
   await toggle.click();
   await expect(status).toHaveText("DEV link copied.");
+  await expect(address).toHaveCount(0);
   await button.click();
   await expect(status).toHaveText("Copying the DEV link…");
+  await expect(address).toHaveCount(0);
   await page.evaluate(() => window.copyTest.settle(false));
   await expect(status).toContainText("Could not copy");
   await expect(status).not.toContainText("DEV link copied.");
@@ -94,6 +106,7 @@ test("FR-001/002/004/005/006: pending, retries, keyboard, theme and reload prese
   ]);
   await page.reload();
   await expect(status).toBeEmpty();
+  await expect(address).toHaveCount(0);
   expect(await page.evaluate(() => window.copyTest.writes)).toEqual([]);
 });
 
@@ -120,9 +133,65 @@ for (const mode of ["missing", "denied"] as const) {
     const status = page.getByRole("status", { name: "DEV link copy status" });
     await expect(status).toContainText("copy its address manually");
     await expect(status).not.toContainText("internal details");
+    await expect(page.getByRole("textbox", { name: "Stable DEV address" })).toHaveValue(stableUrl);
     await page.getByRole("button", { name: "Cloud-Test" }).click();
     await expect(page.getByText("Der Cloud-Agent funktioniert.")).toBeVisible();
     expect(errors).toEqual([]);
+  });
+}
+
+for (const selection of ["keyboard", "mouse"] as const) {
+  test(`FR-003/005: ${selection} manual recovery copies the exact address without app success`, async ({
+    page,
+    context,
+  }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await page.addInitScript(() => {
+      window.copyTest = { writes: [], settle: () => {} };
+      // Keep the real read API for isolated test readback and native copy commands.
+      Object.defineProperty(navigator.clipboard, "writeText", {
+        configurable: true,
+        value: (text: string) => {
+          window.copyTest.writes.push(text);
+          return Promise.reject(new DOMException("denied", "NotAllowedError"));
+        },
+      });
+    });
+    await page.goto("/");
+    const before = page.url();
+    const button = page.getByRole("button", { name: "Copy DEV link" });
+    await button.focus();
+    await page.keyboard.press("Enter");
+    const status = page.getByRole("status", { name: "DEV link copy status" });
+    await expect(status).toContainText("Could not copy");
+    await expect(button).toBeFocused();
+    const address = page.getByRole("textbox", { name: "Stable DEV address" });
+    await expect(address).toHaveValue(stableUrl);
+    await expect(address).toHaveAttribute("readonly", "");
+    if (selection === "keyboard") {
+      await page.keyboard.press("Tab");
+      await expect(address).toBeFocused();
+      expect(await address.evaluate((element) => getComputedStyle(element).outlineStyle)).toBe(
+        "solid",
+      );
+      await page.keyboard.press("ControlOrMeta+A");
+    } else {
+      await address.click({ clickCount: 3 });
+    }
+    await expect
+      .poll(() =>
+        address.evaluate((element: HTMLTextAreaElement) =>
+          element.value.slice(element.selectionStart, element.selectionEnd),
+        ),
+      )
+      .toBe(stableUrl);
+    await page.keyboard.press("ControlOrMeta+C");
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(stableUrl);
+    await expect(status).toContainText("Could not copy");
+    await expect(status).not.toContainText("DEV link copied.");
+    expect(await page.evaluate(() => window.copyTest.writes)).toEqual([stableUrl]);
+    expect(page.url()).toBe(before);
+    expect(context.pages()).toHaveLength(1);
   });
 }
 
@@ -138,6 +207,19 @@ for (const theme of ["light", "dark"]) {
     const status = page.getByRole("status", { name: "DEV link copy status" });
     await expect(status).toContainText("copy its address manually");
     await expect(status).toHaveAttribute("aria-atomic", "true");
+    const address = page.getByRole("textbox", { name: "Stable DEV address" });
+    await expect(address).toBeVisible();
+    await expect(address).toHaveValue(stableUrl);
+    await address.focus();
+    await expect(address).toBeFocused();
+    expect(
+      await address.evaluate(
+        (element) =>
+          element.scrollWidth <= element.clientWidth &&
+          element.scrollHeight <= element.clientHeight,
+      ),
+    ).toBe(true);
+
     const box = await status.boundingBox();
     expect(box).not.toBeNull();
     expect(box!.x + box!.width).toBeLessThanOrEqual(390);

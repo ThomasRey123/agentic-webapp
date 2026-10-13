@@ -6,6 +6,7 @@ import { CopyDevLink } from "../components/copy-dev-link";
 const originalClipboard = Object.getOwnPropertyDescriptor(navigator, "clipboard");
 const url = "https://agentic-webapp-dev.tr-config-place.workers.dev/";
 const button = () => screen.getByRole("button", { name: "Copy DEV link" });
+const address = () => screen.queryByRole("textbox", { name: "Stable DEV address" });
 const status = () => screen.getByRole("status", { name: "DEV link copy status" });
 
 function clipboard(writeText: ReturnType<typeof vi.fn> | undefined) {
@@ -28,6 +29,7 @@ describe("CopyDevLink", () => {
     render(<CopyDevLink />);
     expect(write).not.toHaveBeenCalled();
     expect(status()).toBeEmptyDOMElement();
+    expect(address()).not.toBeInTheDocument();
     fireEvent.click(button());
     expect(write).toHaveBeenCalledWith(url);
     expect(status()).toHaveTextContent("Copying the DEV link…");
@@ -36,6 +38,7 @@ describe("CopyDevLink", () => {
     expect(write).toHaveBeenCalledTimes(1);
     await act(async () => attempt.resolve());
     expect(status()).toHaveTextContent("DEV link copied.");
+    expect(address()).not.toBeInTheDocument();
     expect(button()).toHaveAttribute("aria-disabled", "false");
   });
 
@@ -44,6 +47,8 @@ describe("CopyDevLink", () => {
     render(<CopyDevLink />);
     await act(async () => fireEvent.click(button()));
     expect(status()).toHaveTextContent("Could not copy the DEV link.");
+    expect(address()).toHaveValue(url);
+    expect(address()).toHaveAttribute("readonly");
     expect(status()).toHaveTextContent("Open stable DEV");
     expect(status()).toHaveTextContent("copy its address manually");
     expect(status()).not.toHaveTextContent("private exception details");
@@ -55,6 +60,8 @@ describe("CopyDevLink", () => {
     render(<CopyDevLink />);
     fireEvent.click(button());
     expect(status()).toHaveTextContent("Could not copy the DEV link.");
+    expect(address()).toHaveValue(url);
+    expect(address()).toHaveAttribute("readonly");
     expect(status()).toHaveTextContent("copy its address manually");
   });
 
@@ -63,6 +70,8 @@ describe("CopyDevLink", () => {
     render(<CopyDevLink />);
     fireEvent.click(button());
     expect(status()).toHaveTextContent("Could not copy the DEV link.");
+    expect(address()).toHaveValue(url);
+    expect(address()).toHaveAttribute("readonly");
   });
 
   it("FR-003: synchronous clipboard failures are handled", () => {
@@ -74,6 +83,8 @@ describe("CopyDevLink", () => {
     render(<CopyDevLink />);
     fireEvent.click(button());
     expect(status()).toHaveTextContent("Could not copy the DEV link.");
+    expect(address()).toHaveValue(url);
+    expect(address()).toHaveAttribute("readonly");
   });
 
   it("FR-004: retry replaces error with pending then success, and success with pending then error", async () => {
@@ -88,16 +99,21 @@ describe("CopyDevLink", () => {
     render(<CopyDevLink />);
     await act(async () => fireEvent.click(button()));
     expect(status()).toHaveTextContent("Could not copy");
+    expect(address()).toHaveValue(url);
     fireEvent.click(button());
     expect(status()).toHaveTextContent("Copying");
+    expect(address()).not.toBeInTheDocument();
     expect(status()).not.toHaveTextContent("Could not copy");
     await act(async () => retry.resolve());
     expect(status()).toHaveTextContent("DEV link copied.");
+    expect(address()).not.toBeInTheDocument();
     fireEvent.click(button());
     expect(status()).toHaveTextContent("Copying");
+    expect(address()).not.toBeInTheDocument();
     expect(status()).not.toHaveTextContent("DEV link copied.");
     await act(async () => last.reject(new Error("denied again")));
     expect(status()).toHaveTextContent("Could not copy");
+    expect(address()).toHaveValue(url);
     expect(write).toHaveBeenCalledTimes(3);
   });
 });
