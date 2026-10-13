@@ -12,21 +12,26 @@ Owner-Merge [#112](https://github.com/ThomasRey123/agentic-webapp/pull/112):
 Main-CI 38436187920 und DEV 38436330269 einschließlich Smoke/Bereinigung
 sind erfolgreich; 21/21 Browserfälle bestanden auf stabilem DEV.
 
-Der nächste Schritt in [Epic #90](https://github.com/ThomasRey123/agentic-webapp/issues/90)
-ist der Owner-Review der [SDD-Auswertung](sdd-pilot-review.md), Issue #113.
-Ihr PR-/Merge-Status ist live zu prüfen. Es ist keine neue Feature- oder
-Werkzeuginstallation beauftragt. Empfehlung: bestehender Ablauf, kürzere
-Dokumentation, keine zusätzliche CLI/CI-Prüfung.
+Epic #90 ist nach Owner-Merge der Auswertung #114 abgeschlossen. Der genaue
+Abschlussrecord steht in #90/#113/#114; der Dokumentationsmerge ist
+`93e07d7c30caea95f03ba1f0f8adcb935fccd7bf`, Main-CI 38437770050 / DEV 38437935864
+inklusive Smoke/Bereinigung erfolgreich.
 
-1. `AGENTS.md`, diese Übergabe, [Prioritäten](next-steps.md) und Auswertung lesen;
-   aktuellen Main-/Issue-/PR-Status prüfen und fremde lokale Änderungen bewahren.
-2. Ist die Auswertung noch offen, ihren Review-/CI-Stand prüfen; keine eigene PR
-   mergen. Nach Owner-Merge tatsächlichen Merge und erfolgreiche Main-CI/DEV
-   im bestehenden Review-Issue/PR und Epic dokumentieren; dann die letzte
-   Bewertungs-Etappe und Epic #90 abschließen.
-3. Ist #90 abgeschlossen, nur einen konkreten neuen Owner-Auftrag aufnehmen.
-   Neues Verhalten folgt dem [SDD-Vertrag](spec-driven-development.md), Wartung
-   der bestehenden Kurzroute. Kein PROD-Deployment.
+Der aktuelle Owner-Auftrag ist [Gravurshop-Epic #115](https://github.com/ThomasRey123/agentic-webapp/issues/115).
+Arbeitsname Gravurwerk, Deutschland, Creme/Holzbraun/Petrol; Holz/Leder/Glas mit
+Gravurtext, Kundenkonto und Gastbestellung, separater Admin, PayPal und Karte.
+Epoxidharz/Möbel sind zunächst ausgeschlossen.
+
+1. `AGENTS.md`, diese Übergabe, [Prioritäten](next-steps.md) und
+   [Shop-Spec](../specs/engraving-shop/spec.md) lesen; aktuelle Main-/Issue-/PR-
+   Zustände prüfen und fremde lokale Änderungen bewahren.
+2. Spec-Issue #116 / dessen Spec-only-PR zuerst durch den Owner freigeben lassen.
+   Keinen eigenen PR mergen; noch keine Shop-Implementierung, Datenbank oder
+   kostenpflichtige Infrastruktur einrichten. Entwurf/CI ist keine Spec-Freigabe.
+3. Nach tatsächlichem Owner-Merge separate Implementierungsaufträge gemäß Spec
+   mit echtem Freigabe-SHA aufnehmen. Den nötigen Architekturwechsel als ADR
+   begründen; Medusa ist Kandidat, kein bereits ausgewähltes Hosting.
+   Pflichtprüfungen/Vorschau/DEV und separate PROD-Grenze erhalten.
 
 ## Nachweise und Prüfgrenzen
 
