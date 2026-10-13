@@ -41,3 +41,31 @@
     flex-basis: auto;
   }
 }
+
+.recovery {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.address {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--text-secondary);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel);
+  color: var(--text-primary);
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.address:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}

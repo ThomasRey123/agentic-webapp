@@ -55,6 +55,20 @@ for (const theme of ["light", "dark"] as const) {
       await expect(button).toBeFocused();
       await expect(button).toHaveAttribute("aria-disabled", String(state === "pending"));
 
+      const address = region.getByRole("textbox", { name: "Stable DEV address" });
+      if (state === "error") {
+        await expect(address).toHaveValue(
+          "https://agentic-webapp-dev.tr-config-place.workers.dev/",
+        );
+        await page.keyboard.press("Tab");
+        await expect(address).toBeFocused();
+        expect(await address.evaluate((element) => getComputedStyle(element).outlineStyle)).toBe(
+          "solid",
+        );
+      } else {
+        await expect(address).toHaveCount(0);
+      }
+
       // Inspect Chromium's computed accessibility semantics, not audible output.
       const session = await page.context().newCDPSession(page);
       try {

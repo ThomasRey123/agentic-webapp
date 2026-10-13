@@ -11,7 +11,8 @@ const messages: Record<CopyStatus, string> = {
   idle: "",
   pending: "Copying the DEV link…",
   success: "DEV link copied.",
-  error: "Could not copy the DEV link. Use “Open stable DEV” and copy its address manually.",
+  error:
+    "Could not copy the DEV link. Select and copy the address below, or use “Open stable DEV” and copy its address manually.",
 };
 
 export function CopyDevLink() {
@@ -55,6 +56,18 @@ export function CopyDevLink() {
       >
         {messages[status]}
       </p>
+      {status === "error" && (
+        <label className={styles.recovery}>
+          Stable DEV address
+          <textarea
+            className={styles.address}
+            readOnly
+            value={stableDevUrl}
+            rows={2}
+            spellCheck={false}
+          />
+        </label>
+      )}
     </>
   );
 }
