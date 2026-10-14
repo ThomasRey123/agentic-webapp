@@ -1,276 +1,201 @@
-# Spezifikation: Gravurwerk – erster verkaufbarer Shopumfang
+# Spezifikation: Gravurwerk – Produktkatalog mit Kontaktmöglichkeit
 
 **Spec-Issue:** [#116](https://github.com/ThomasRey123/agentic-webapp/issues/116).
 **Epic:** [#115](https://github.com/ThomasRey123/agentic-webapp/issues/115).
-**Reviewzweck:** Fachlicher Vorschlag zur Owner-Freigabe, keine Umsetzung oder Lieferbehauptung.
-**Bestehende Spec:** Neue Shop-Anforderungen; die historischen Copy-DEV-Link-IDs werden nicht umgedeutet.
+**Reviewzweck:** Revidierter fachlicher Vorschlag zur Owner-Freigabe, keine Umsetzung.
+**Stand:** 14. Oktober 2026 (Europe/Berlin). Der bisherige Spec-PR #117 ist noch nicht gemergt.
 
 Es gilt der [SDD-Vertrag](../../development/spec-driven-development.md). Erst nach
 Owner-Merge folgen separate Implementierungs-Issues/PRs mit Spec-Pfad, Freigabe-PR
-und dessen tatsächlichem vollständigen Merge-SHA. Keine Infrastruktur wird durch
-Erstellung dieses Entwurfs eingerichtet.
+und tatsächlichem vollständigen Merge-SHA. Keine Anbieter oder Infrastruktur
+werden durch den Entwurf eingerichtet.
 
-## Ziel und Nutzer
+## Ziel, Umfang und bestehendes Verhalten
 
-Kunden in Deutschland kaufen personalisierte Gravurprodukte aus Holz, Leder und
-Glas. Der Betreiber pflegt Sortiment und Bestellungen selbst über einen separaten
-Adminzugang. Arbeitsname: **Gravurwerk**. Kundentexte und Shopbedienung sind deutsch;
-Preise und Zahlungen verwenden EUR.
+Interessenten in Deutschland entdecken Gravurprodukte aus Holz, Leder und Glas
+und kontaktieren den Betreiber. Arbeitsname **Gravurwerk**, deutsche Oberfläche,
+Preise in EUR, warmer Auftritt in Creme/Holzbraun/Petrol. Der Betreiber verwaltet
+das Sortiment über einen geschützten Adminzugang.
 
-## Umfang und Nicht-Ziele
+Owner-Änderung vom 14. Oktober: **Nur Produktkatalog mit Kontaktmöglichkeit**.
+Keine Kundenkonten, Kundenregistrierung/-login/-Passwortreset, Warenkorb,
+Bestellung, Checkout, Zahlung, Zahlungswebhooks oder Kunden-Bestellübersicht.
+Ebenso ausgeschlossen: Epoxidharz/Möbel, grafischer Gravurkonfigurator,
+Kunden-Uploads, eingebautes Anfrageformular und freie Layoutbearbeitung im Admin.
+Ein Gravurwunsch wird gegebenenfalls außerhalb der Webseite per E-Mail besprochen;
+die frühere Texteingabe beim Kauf entfällt mit dem Kaufablauf.
 
-Im ersten Umfang: Shopgestaltung, Produktkatalog/-details, Admin-Produktpflege mit
-Bildern/Preisen, Kundenkonto und Gastbestellung, eingegebener Gravurtext, Warenkorb,
-deutscher Versand, PayPal/Kartenzahlung, Kunden-/Admin-Bestellübersicht.
-
-Ausgeschlossen: Epoxidharz/Möbel, internationale Lieferungen/Mehrwährungen,
-Kunden-Logo-/Foto-Uploads, grafischer Gravurkonfigurator, Rabattcodes, Abonnements,
-Marktplatz, freie Layoutbearbeitung im Admin und eigene Rückerstattungsoberfläche.
-Rückerstattungen können im Zahlungsanbieter-Dashboard bearbeitet werden; der
-Bestell-Zahlungsstatus muss deren bestätigtes Ergebnis nachvollziehen.
-Echtbetrieb/PROD, verbindlicher Markenname und kostenpflichtige Providerbuchungen
-benötigen einen separaten Auftrag. Die technische Erstabnahme erfolgt in DEV
-mit Sandboxzahlungen und Testdaten, nicht mit echten Kunden/Zahlungen.
-
-## Bestehendes und vorgeschlagenes Verhalten
-
-Die aktuelle Startseite demonstriert den Entwicklungsablauf. Künftig führt `/`
-in den Shop. Die bestehende Projekt-Demo bleibt unter `/projekt` mit ihren Links,
-FAQ, Cloud-Test, Copy-DEV-Link und Theme-Verhalten erreichbar; ihre historische
-Spec gilt weiter. Das Verschieben erhält diese Abläufe und deren Browserprüfungen.
-Ein Adminlogin ist vom Kundenlogin getrennt und autorisiert tatsächliche
-serverseitige Verwaltung. Ein geändertes Produkt bleibt nach Reload und in einem
-anderen Browser sichtbar; lokale Demo-Daten sind kein funktionierendes Shopsystem.
+Künftig führt `/` zum Katalog. Die bestehende Projekt-Demo bleibt unter `/projekt`
+mit Links, FAQ, Cloud-Test, Copy-DEV-Link und persistentem Theme erreichbar;
+ihre historische Spec und Browserprüfungen werden mitverschoben. Der Admin
+verwaltet tatsächliche dauerhafte Daten; lokale Browser-Demodaten gelten nicht
+als funktionierende Produktverwaltung. PROD und kostenpflichtige Providerbuchungen
+bleiben separat freizugebende Schritte.
 
 ## Anforderungen und Szenarien
 
-### FR-001 — Warmer Shopauftritt und Navigation
+### FR-001 — Warmer Katalogauftritt und Navigation
 
-Creme, Holzbraun und Petrol bestimmen den hellen Auftritt. Große Material-/Gravur-
-Produktfotos, ruhige Flächen und gut lesbare Schriften vermitteln Handarbeit.
-Die Startseite zeigt Produktbereiche Holz, Leder und Glas, ausgewählte verfügbare
-Produkte und einen kurzen Werkstatttext. Navigation führt zu Shop, Kundenkonto
-und Warenkorb; der Admin besitzt einen eigenen Einstieg. Das vorhandene Theme
-bleibt umschaltbar und über Reload erhalten; ein dunkler Auftritt erhält denselben
-Markencharakter. Keine erfundenen Rezensionen, Siegel oder Lieferzusagen.
+Creme, Holzbraun und Petrol, große Produkt-/Materialfotos, ruhige Flächen und gut
+lesbare Schriften vermitteln Handarbeit. Startseite mit Holz/Leder/Glas-Bereichen,
+ausgewählten veröffentlichten Produkten und kurzem Werkstatttext. Navigation:
+Katalog und Kontakt; Admin mit eigenem Einstieg. Das vorhandene Theme bleibt
+umschaltbar und persistent, der dunkle Auftritt erhält denselben Markencharakter.
+Keine erfundenen Rezensionen, Siegel oder Lieferzusagen.
 
 - Gegeben Desktop oder 390px-Mobilansicht, wenn Nutzer navigieren, dann erreichen
-  sie Katalog, Konto und Warenkorb ohne abgeschnittene Inhalte oder Hover-Zwang.
-- Gegeben ein Theme-Wechsel/Reload, dann bleiben gewähltes Theme und lesbare
-  Kontraste erhalten; die Projekt-Demo bleibt auf ihrer eigenen Route nutzbar.
+  sie Katalog und Kontakt ohne Clipping oder Hover-Zwang; kein Konto-/Warenkorb-/Bezahlzugang.
+- Gegeben Theme-Wechsel/Reload, dann bleiben Theme und lesbare Kontraste erhalten;
+  die Projekt-Demo bleibt auf ihrer eigenen Route nutzbar.
 
-### FR-002 — Veröffentlichte Produkte und nachvollziehbare Produktdetails
+### FR-002 — Veröffentlichte Produkte und verständliche Details
 
 Nur veröffentlichte Produkte erscheinen öffentlich. Details zeigen Name,
-Beschreibung, Material, Bilder, Preis, Variante und konfigurierte Lieferzeit/
-Verfügbarkeit. Preis enthält die Gravur; es gibt im MVP keinen separaten
-Gravuraufschlag. Nicht verfügbare Produkte sind nicht bestellbar.
+Beschreibung, Material, Bilder, Preis und konfigurierte Verfügbarkeit/Lieferhinweise.
+Der vorgeschlagene Produktpreis umfasst Textgravur; es gibt keine Preisberechnung
+oder Kaufaktion. Detailseiten führen stattdessen zur Kontaktmöglichkeit FR-011.
 
-- Gegeben Entwurf und veröffentlichtes Produkt, wenn ein Kunde den Katalog
-  öffnet oder eine Detailadresse direkt aufruft, dann erhält er keine
-  unveröffentlichten Produktdetails; nur das veröffentlichte Produkt ist kaufbar.
-- Gegeben fehlendes/fehlerhaftes Bild oder leerer Katalog, dann zeigt die Seite
-  verständlichen Ersatz/Leerzustand statt eines kaputten oder erfundenen Angebots.
+- Gegeben Entwurf und veröffentlichtes Produkt, wenn Katalog oder Detailadresse
+  direkt aufgerufen wird, dann werden keine unveröffentlichten Produktdaten ausgeliefert.
+- Gegeben fehlendes/fehlerhaftes Bild oder leerer Katalog, dann erscheint ein
+  verständlicher Ersatz/Leerzustand statt kaputter Bilder oder erfundener Angebote.
 
-### FR-003 — Getrennter, geschützter Adminzugang
+### FR-003 — Geschützter Adminzugang
 
-Nur vom Betreiber eingerichtete Admins verwalten Produkte, Shop-Einstellungen
-und Bestellungen. Öffentliche Registrierung erzeugt niemals Adminrechte.
-Berechtigungen werden für jeden Lese-/Schreibzugriff im Backend geprüft.
+Nur vom Betreiber eingerichtete Admins verwalten Produkte und öffentliche
+Kontakt-/Werkstattangaben. Es gibt keine öffentliche Registrierung. Rechte werden
+für jeden Verwaltungs-Lese-/Schreibzugriff im Backend geprüft.
 
-- Gegeben Gast/Kundenkonto, wenn Adminseiten oder deren APIs direkt aufgerufen
-  werden, dann sind Verwaltungsdaten und Schreibaktionen verweigert.
-- Gegeben angemeldeter Admin, wenn er sich abmeldet oder seine Sitzung ungültig
-  wird, dann scheitert auch ein zuvor vorbereiteter Verwaltungsrequest.
+- Gegeben nicht angemeldeter Besucher, wenn Adminseiten/APIs direkt aufgerufen
+  werden, dann werden Verwaltungsdaten und Schreibaktionen verweigert.
+- Gegeben Admin, wenn er sich abmeldet oder seine Sitzung ungültig wird, dann
+  scheitert auch ein zuvor vorbereiteter Verwaltungsrequest.
 
 ### FR-004 — Dauerhafte Produkt-, Preis- und Bildverwaltung
 
-Admins erstellen/bearbeiten Produkte: Titel, Beschreibung, Materialkategorie,
-Varianten/Preise, Veröffentlichung, Verfügbarkeit, Lieferzeit, Bilder und
-Gravurpflicht/-Zeichenlimit. Preise sind gültige positive EUR-Beträge, Mengen
-positive ganze Zahlen. Archivieren/Depublizieren ersetzt physisches Löschen
-von bestellten Produkten; historische Bestellungen bleiben unverändert.
+Admins erstellen/bearbeiten Titel, Beschreibung, Materialkategorie, positive
+EUR-Preise, Veröffentlichung, Verfügbarkeit/Lieferhinweise und Produktbilder.
+Produkte lassen sich depublizieren/archivieren. Es gibt keine Bestell-/Zahlungsverwaltung.
 
-- Gegeben Admin, wenn er ein Produkt speichert/veröffentlicht oder dessen Preis
-  ändert, dann sieht ein anderer Browser nach Aktualisierung den gespeicherten
-  Stand. Ungültige Eingaben erzeugen Feldfehler und keine Teiländerung.
+- Gegeben Admin, wenn er Produkt/Preis speichert und veröffentlicht, dann sieht
+  ein anderer Browser nach Aktualisierung den gespeicherten Stand. Ungültige
+  Felder erzeugen verständliche Fehler und keine Teiländerung.
 - Gegeben Bild-Upload, wenn eine gültige JPEG-/PNG-/WebP-Datei bis 10 MiB eingeht,
-  dann ist sie dauerhaft als Produktbild nutzbar. Fremde Formate, beschädigte
-  Bilder oder größere Dateien werden serverseitig abgewiesen; ein Uploadfehler
-  entfernt keine vorhandenen Bilder. Alternative Bildtexte sind bearbeitbar.
+  dann ist sie dauerhaft als Produktbild nutzbar. Fremde Formate, beschädigte oder
+  größere Bilder werden serverseitig abgewiesen. Uploadfehler entfernen keine
+  vorhandenen Bilder; alternative Bildtexte sind bearbeitbar.
+- Gegeben Admin, wenn er Kontakt-E-Mail/Werkstatttext speichert, dann erscheinen
+  gültige Angaben nach Aktualisierung öffentlich; ungültige E-Mail wird abgewiesen.
 
-### FR-005 — Kundenkonten und Gastbestellungen
+### FR-005 — Zurückgezogen: Kundenkonten und Gastbestellungen
 
-Kunden registrieren sich mit E-Mail/Passwort, melden sich an/ab und können ein
-Passwort über einen begrenzten, einmal verwendbaren E-Mail-Link zurücksetzen.
-Es gibt eine Bestellübersicht für das eigene Konto. Gastbestellung ist ohne
-Registrierung möglich; Gäste werden nicht stillschweigend registriert.
+Am 14. Oktober auf Owner-Wunsch entfernt: Kundenkonto, Registrierung, Login,
+Passwortreset, Konto-/Gastbestellung und kontoabhängige Bestellübersicht.
+Admin-Authentifizierung gemäß FR-003 bleibt erforderlich. ID nicht wiederverwenden.
 
-- Gegeben Kundenkonto A, wenn es die Bestellungen von B über manipulierte IDs
-  anfragt, dann erhält es keine fremden Daten; ein Kundenkonto erhält keine Adminrechte.
-- Gegeben Gast, wenn er bestellen möchte, dann genügt der Gastweg mit nötigen
-  Kontakt-/Adressdaten. Die Bestellbestätigung ist geschützt und nicht über
-  erratbare Bestellnummern öffentlich abrufbar.
-- Gegeben falsches Passwort oder ungültiger/abgelaufener Reset-Link, dann schlägt
-  die Aktion verständlich fehl. Reset-Anfragen verraten nicht, ob eine E-Mail existiert.
+### FR-006 — Zurückgezogen: Gravurtext im Kaufablauf
 
-### FR-006 — Gravurtext gehört zur bestellten Position
+Mit der Entscheidung für einen reinen Katalog entfällt die Eingabe/Speicherung
+von Gravurtext in Warenkorb oder Bestellung. Individuelle Wünsche werden über
+FR-011 außerhalb der Webseite besprochen. ID nicht wiederverwenden.
 
-Gravurfähige Produkte besitzen ein Texteingabefeld mit sichtbarem, vom Admin
-festgelegtem Zeichenlimit und Kennzeichnung, ob die Eingabe erforderlich ist.
-Nur Textgravur; keine automatische grafische Vorschau. Der Preis verändert sich
-nicht durch Textlänge. Text wird als Text dargestellt, nicht als HTML ausgeführt.
+### FR-007 — Zurückgezogen: Warenkorb
 
-- Gegeben Pflichtgravur, wenn Text leer/nur Leerzeichen oder länger als das
-  angezeigte Limit ist, dann verhindern Frontend und Backend die Aufnahme/Bestellung.
-- Gegeben gültiger Text, wenn das Produkt in den Warenkorb und die Bestellung
-  gelangt, dann bleibt der bestätigte Text exakt in Position/Bestellübersicht/
-  Adminansicht erhalten, einschließlich Umlauten. Änderungen sind vor Bestellung möglich.
-- Gegeben gleiche Variante mit zwei unterschiedlichen Gravuren, dann bleiben
-  zwei unterscheidbare Positionen; Texte werden nicht durch Mengenaggregation überschrieben.
+Kein Warenkorb, keine Mengen-/Positionsbearbeitung oder Warenkorb-Persistenz.
+ID nicht wiederverwenden.
 
-### FR-007 — Bearbeitbarer Warenkorb
+### FR-008 — Zurückgezogen: Checkout
 
-Gäste und Kunden fügen verfügbare Varianten mit Menge/Gravur hinzu, ändern Mengen
-oder Gravur und entfernen Positionen. Ein Reload verliert den Warenkorb nicht;
-bei Login wird ein vorhandener Gastwarenkorb übernommen. Geräteübergreifendes
-Zusammenführen mehrerer Warenkörbe ist nicht Teil des MVP.
+Kein Checkout, keine Adress-/Versanderfassung, Versandpauschalenberechnung oder
+verbindlicher Bestellabschluss auf der Webseite. ID nicht wiederverwenden.
 
-- Gegeben nicht leerer Warenkorb, wenn Menge/Gravur geändert wird, dann stimmen
-  sichtbare Positionen und Summen; Entfernen der letzten Position zeigt einen Leerzustand.
-- Gegeben Preis-/Verfügbarkeitsänderung seit Hinzufügen, wenn Checkout beginnt,
-  dann prüft der Server neu und informiert über Änderungen. Eine geänderte Summe
-  muss vor einer Zahlung erneut bestätigt werden.
+### FR-009 — Zurückgezogen: Online-Bezahlung
 
-### FR-008 — Checkout für Deutschland mit klarer Gesamtsumme
+Keine PayPal-/Kartenzahlung, Payment-Integration, Zahlungswebhooks oder
+Online-Rückerstattungen. ID nicht wiederverwenden.
 
-Checkout erfasst Kontakt-E-Mail, Liefer-/Rechnungsadresse und verlangt eine
-lieferfähige deutsche Adresse. Vor Zahlung zeigt er Positionen mit Gravur,
-Versand und Gesamtpreis sowie konfigurierte Steuerhinweise. Eine im Admin
-konfigurierbare deutschlandweite Versandpauschale ist der erste Versandtarif;
-keine automatische Paketdienstintegration. Bestellabschluss erfolgt ausdrücklich.
+### FR-010 — Zurückgezogen: Bestellverwaltung
 
-- Gegeben gültige deutsche Adresse, wenn Kunde oder Gast fortfährt, dann sieht
-  er dieselbe serverseitig berechnete EUR-Gesamtsumme einschließlich Versand.
-- Gegeben ungültige/nicht deutsche Adresse, leeren Warenkorb oder fehlende
-  Versand-/Steuerkonfiguration, dann startet keine Zahlung; verständliche Fehler
-  ermöglichen Korrektur. Manipulierte Browserpreise werden nicht übernommen.
+Keine Kunden-/Admin-Bestellübersicht, Bestellbestätigung, Bestell-E-Mails oder
+Zahlungs-/Versandstatusverwaltung. ID nicht wiederverwenden.
 
-### FR-009 — PayPal und Karte mit wahrheitsgemäßem Zahlungsstatus
+### FR-011 — Kontakt und produktbezogene E-Mail-Anfrage
 
-Beide Zahlungsarten müssen im Zielbetrieb verfügbar und in DEV über die
-jeweilige Sandbox nachgewiesen sein. Kartendaten verarbeitet der Zahlungsanbieter;
-Shopdatenbank und Logs speichern keine vollständigen Kartendaten. Ein Rücksprung
-vom Anbieter allein bestätigt keine erfolgreiche Zahlung.
+Eine Kontaktseite zeigt die vom Betreiber konfigurierte Kontakt-E-Mail als
+sichtbaren Text und nutzbaren E-Mail-Link. Produktdetails bieten „Produkt anfragen“
+als klar bezeichneten E-Mail-Link mit Produktname und stabiler Produktreferenz
+im vorausgefüllten Betreff. Weitere Wünsche, etwa Gravurtext, kann der Interessent
+in seinem E-Mail-Programm formulieren. Die Webseite speichert/versendet keine Anfrage.
 
-- Gegeben erfolgreiche, serverseitig bestätigte Zahlung, dann entsteht genau
-  eine bezahlte Bestellung mit unveränderlichem Preis-/Produkt-/Gravursnapshot.
-- Gegeben Ablehnung, Abbruch oder noch ausstehende Zahlung, dann wird kein
-  erfolgreicher Kauf behauptet. Nutzer erhalten passenden Status und einen
-  sicheren weiteren Versuch; keine zweite Zahlung für denselben bestätigten Auftrag.
-- Gegeben gefälschte, doppelte oder verzögert zugestellte Anbieterereignisse,
-  dann verändern ungültige Ereignisse nichts und gültige Duplikate erzeugen
-  weder doppelte Bestellungen noch doppelte Bestätigungen.
+- Gegeben Produktdetail, wenn „Produkt anfragen“ aktiviert wird, dann wird ein
+  korrekt kodierter `mailto:`-Link für den konfigurierten Empfänger angeboten;
+  auch Umlaute/Sonderzeichen erzeugen keinen falschen Empfänger oder Zusatzheader.
+- Gegeben kein eingerichtetes E-Mail-Programm, dann bleibt die Kontaktadresse
+  sichtbar manuell kopierbar; die Webseite behauptet niemals „Anfrage gesendet“.
+- Gegeben noch nicht konfigurierte Kontaktadresse in DEV, dann wird ein klarer
+  Hinweis statt eines erfundenen Empfängers oder scheinbar funktionsfähigen Links gezeigt.
+  Vor vollständiger Abnahme muss der Owner eine gültige Kontaktadresse bereitstellen.
 
-### FR-010 — Bestellungen für Kunde und Betreiber
+## Grenzen und Umsetzungsetappen
 
-Bestätigung und Kundenkonto zeigen eigene Bestellnummer, Positionen/Gravur,
-Gesamtsumme und Zahlungs-/Versandstatus. Nach bestätigter Bestellung geht eine
-E-Mail an die angegebene Adresse; ein E-Mail-Fehler macht eine bezahlte Bestellung
-nicht ungeschehen. Admins sehen die Bestellungen mit für Bearbeitung nötigen
-Kontaktdaten, markieren Bearbeitungs-/Versandstatus und können Versandinformationen
-hinterlegen. Sie können eine unbezahlte Bestellung nicht einfach als bezahlt setzen.
+- Bedienbarkeit: Native Controls, Tastatur/Fokus, verständliche Feldfehler und
+  Statussemantik, Bildalternativen und Kontrast in beiden Themes; Desktop/390px.
+- Sicherheit: Serverseitige Admin-Autorisierung, geschützte Sessions, Eingabe-/Dateiprüfung,
+  Auth-Abuse-Schutz, keine Secrets im Browser/Logs; öffentliche Kontakte dürfen
+  keine Script-/Header-Injection ermöglichen. DEV nutzt isolierte Testdaten.
+- Architektur: Öffentlicher Katalog kann statisch oder dynamisch ausgeliefert
+  werden; dauerhafte geschützte Adminverwaltung benötigt Backend/Datenspeicher.
+  Eine ADR begründet vor Umsetzung Laufzeit, Admin-Auth, Produkt-/Bildspeicher,
+  Veröffentlichung und Hostingkosten. Keine Commerce-, Kunden-Auth-, Payment-
+  oder E-Mail-Versandinfrastruktur erforderlich. Die frühere Medusa-Empfehlung
+  ist für diesen kleineren Umfang neu zu bewerten, keine getroffene Anbieterwahl.
+- Kompatibilität: Projekt-Demo und Pflichtgates/menschliche Merges bleiben erhalten.
+  Langsame/fehlerhafte Dienste erzeugen keine falschen Speicher-Erfolgsmeldungen.
+  Bilder passend ausliefern; kein unbegründetes Latenzziel. Kein direkter PROD-Deploy.
 
-- Gegeben Bestellung, wenn später Produkttext/Preis geändert oder das Produkt
-  archiviert wird, dann bleibt ihr ursprünglicher Snapshot erhalten.
-- Gegeben Admin ändert Versandstatus oder Anbieter bestätigt Rückerstattung,
-  dann wird der entsprechende Status nachvollziehbar aktualisiert; Zahlungs-
-  und Versandstatus werden getrennt behandelt. Kunden sehen nur eigene Daten.
-
-## Grenzen und vorgeschlagene Umsetzungsetappen
-
-- Bedienbarkeit: Native Controls, Tastatur/Fokus, verständliche Feldfehler,
-  passende Statussemantik, Bildalternativen und Kontrast in beiden Themes.
-  Kritische Abläufe bei 390px und Desktop prüfen; keine komplette WCAG-Zertifizierung.
-- Sicherheit: Dauerhafte serverseitige Datenhaltung und Autorisierung, geschützte
-  Sessions, serverseitige Preise/Eingabe-/Dateiprüfung, Abuse-Schutz für Auth,
-  verifizierte Providerereignisse, keine Secrets in Browser/Logs. DEV nutzt
-  isolierte Testkonten/-daten; Kundendaten nicht in Repository/CI-Artefakten.
-- Architektur: Der statische Export allein reicht nicht. Vor Backend-Umsetzung
-  begründet eine ADR Laufzeit, Commerce-/Auth-Basis, Datenbank, Bild-/E-Mail-Dienst,
-  Provider und Hosting einschließlich Kosten/Alternativen. Medusa ist Kandidat,
-  keine endgültige technische Wahl. Keine Providerkonten oder kostenpflichtigen
-  Dienste ohne passenden Owner-Auftrag einrichten.
-- Kompatibilität: Historische Projekt-Demo und kritische Journeys bleiben unter
-  `/projekt` erreichbar; ihre Browserabdeckung wird mitverschoben. Bestehende
-  Pflichtgates/menschliche Merges bleiben erhalten. Kein direkter PROD-Deploy.
-- Leistung: Bildgrößen/Übertragung begrenzen und keine Original-Uploads unnötig
-  im Katalog laden. Noch kein empirisch begründetes Latenzziel; langsame/fehlende
-  Dienste dürfen keine falschen Erfolgszustände erzeugen.
-
-Drei getrennte Implementierungsaufträge nach Freigabe: (1) Shopgestaltung und
-Admin-/Produktgrundlage FR-001–004; (2) Kundenkonten, Gravur und Warenkorb
-FR-005–007; (3) Checkout/Zahlungen/Bestellungen FR-008–010 mit Integration aller
-Anforderungen. Plan/Tasks entstehen erst aus der freigegebenen Revision.
-Zwischenstände sind als unvollständig gekennzeichnet und bieten keine scheinbar
-funktionierenden Login-/Bezahlbuttons. Vollständige Lieferung erfordert die
-integrierte Abnahme; Hosting-/Architekturabhängigkeiten bleiben in den Teilaufträgen sichtbar.
+Nach Freigabe zwei getrennte Implementierungsaufträge: (1) Admin-/Produktgrundlage
+FR-003/004 einschließlich ADR; (2) Katalog/Kontakt FR-001/002/011 mit integrierter
+Abnahme. Plan/Tasks folgen der tatsächlich freigegebenen Revision. Teilstände
+sind als unvollständig erkennbar; vollständige Lieferung verlangt alle aktiven
+Anforderungen, Main-CI/DEV und Owner-Prüfung. Keine Account-/Payment-Platzhalter.
 
 ## Annahmen und offene Fragen
 
-Owner entschied: Arbeitsname, Deutschland, Farbwelt, eingegebener Gravurtext,
-Gastbestellung zusätzlich zum Konto, PayPal und Karte; Epoxidharz zurückgestellt.
-Produktpreis einschließlich Textgravur, konfigurierbare einheitliche Versandpauschale,
-Text statt Live-Vorschau und die Demo-Route sind explizite Vorschläge dieses PRs.
-
-Offene fachliche Scope-/Abnahmefragen: keine für diesen vorgeschlagenen MVP.
-Anbieter-/Hostingauswahl, tatsächliche Versandpreise, Steuerbehandlung, Absender,
-Händlerdaten, Produktmaterial und bereitgestellte Rechtstexte sind noch keine
-festgelegten Betriebswerte. Vor Echtbetrieb werden sie korrekt konfiguriert und
-vom Owner geprüft; ihre Testwerte sind als Testdaten gekennzeichnet. Eine technische
-Wahl, die den vereinbarten Umfang nicht erfüllen kann, erfordert erneute Klärung,
-keinen stillen Verzicht auf PayPal, Gastbestellung oder sichere Konten.
+Bestätigt: nur Katalog/Kontakt, Admin bleibt, bisherige Gestaltung/Materialien/
+Deutschland/Arbeitsname bleiben. `mailto:` statt Anfrageformular, Gravur im
+angezeigten Preis und die Demo-Route sind explizite Vorschläge zur Prüfung.
+Offene fachliche Scope-/Abnahmefragen: keine für diesen Vorschlag. Tatsächliche
+Kontakt-/Händlerdaten, Preise, Bilder, Rechtstexte und Hostingkosten sind noch
+bereitzustellen/zu prüfen; Testwerte werden kenntlich gemacht. Sie werden nicht
+als bereits geklärte Betriebsfreigabe behauptet.
 
 ## Abnahme und geplante Prüfungen
 
-Alle folgenden Prüfungen sind **geplant und nicht ausgeführt**. Pro Teilauftrag
-`pnpm format` und passendes vollständiges Gate, für Nutzerabläufe `pnpm check:pr`,
-unabhängige CI/commitgenaue Vorschau und nach Owner-Merge Main-CI/DEV nachweisen.
+Prüfungen sind **geplant, nicht ausgeführt**: `pnpm format`, für Nutzerabläufe
+`pnpm check:pr`, unabhängige CI/commitgenaue Vorschau, Owner-Review/-Merge und
+Main-CI/DEV. Die Spec allein liefert keine funktionierende Webseite.
 
-| ID     | Geplante beobachtbare Prüfung                                                                                                                                             |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| FR-001 | Browsernavigation/Desktop/390px, Theme/Reload und verschobene Projektregressionen; manuelle Visual-/Kontrastprüfung in beiden Themes                                      |
-| FR-002 | Service-/Browserfälle für veröffentlicht/Entwurf/unverfügbar, direkte Detailadresse, Leerzustand und fehlendes Bild                                                       |
-| FR-003 | Integration mit Gast/Kunde/Admin, direkte API-Manipulation und ungültiger Sitzung; verweigerte Daten-/Schreibzugriffe                                                     |
-| FR-004 | Admin speichern → separater Browser/Reload; ungültige Preise/Felder; reale Bildpersistenz und abgewiesene beschädigte/zu große/fremde Dateien                             |
-| FR-005 | Registrierung/Login/Logout/Reset, Kunde A/B-Isolation und geschützte Gastbestätigung; Browser-End-to-End ohne Registrierung                                               |
-| FR-006 | Backend-/Browserfälle leer/Limit/Umlaute/HTML-Text; zwei gleiche Varianten mit verschiedenen Gravuren bis zur Admin-Bestellansicht                                        |
-| FR-007 | Browser Mengen/Text/Entfernen/Reload/Login-Übernahme; Backend-Preis-/Verfügbarkeitsänderung mit erneuter Bestätigung                                                      |
-| FR-008 | Gast-/Kundencheckout, deutsche/ungültige/fremde Adresse, fehlende Konfiguration, manipulierte Preise; korrekte konfigurierte Gesamtsumme                                  |
-| FR-009 | Echte Provider-Sandboxfälle für beide Zahlungsarten: Erfolg/Ablehnung/Abbruch/ausstehend; Integration gefälschter/doppelter/verzögerter Ereignisse, genau eine Bestellung |
-| FR-010 | Bestell-/E-Mail-Sandbox, Produktänderung/Archivierung, Mailfehler, Admin-/Kundenstatus und bestätigte Rückerstattung; fremde Datenzugriffe verweigert                     |
+| ID     | Geplante beobachtbare Prüfung                                                                                                                                                                                 |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| FR-001 | Desktop-/Mobilnavigation, keine Kundenkonto-/Warenkorb-/Bezahlaktionen, Theme/Reload und verschobene Projektregressionen; manuelle Visual-/Kontrastprüfung                                                    |
+| FR-002 | Entwurf/veröffentlicht, direkte Detailadresse, fehlendes Bild/Leerzustand; keine Kaufaktion                                                                                                                   |
+| FR-003 | Besucher vs. Admin, direkte API-Manipulation, Logout/ungültige Session: verweigerte Verwaltungszugriffe                                                                                                       |
+| FR-004 | Admin speichern → anderer Browser/Reload; ungültige Felder/Preise/Kontaktadresse; reale Bildpersistenz und abgewiesene fehlerhafte/fremde/zu große Dateien                                                    |
+| FR-011 | Kontaktseite und Produktlink mit kodiertem Produktnamen/Referenz/Empfänger, Umlaute/Header-Manipulation, sichtbare kopierbare Adresse und fehlende Konfiguration; manuell korrektes Öffnen im E-Mail-Programm |
 
-Kritische Formulare/Zustände ergänzen automatisierte Accessibility-Prüfungen
-(WCAG 2/2.1 A/AA, keine verschwiegenen Ausschlüsse). Incomplete-Ergebnisse bleiben
-sichtbar ungeprüft und werden manuell bewertet. Hörbare Screenreader-Ausgabe
-bleibt ausdrücklich ungeprüft, sofern keine Sitzung dokumentiert wird. Fachliche
-Owner-Prüfung der Vorschau ist zusätzlich zu Tests nötig. Vor Echthandel sind
-Händler-/Versand-/Steuer-/Rechtstextkonfiguration und reale Provider-/Hostingkosten
-separat manuell zu prüfen; kein solcher Startnachweis wird hier behauptet.
+FR-005–010 sind zurückgezogen und haben keine Implementierungs-Abnahme mehr.
+Automatisierte Accessibility-Prüfungen kritischer Zustände (WCAG 2/2.1 A/AA)
+und manuelle Bedien-/Kontrastprüfung ergänzen die Browserfälle. Incomplete-Befunde
+bleiben sichtbar unbewertet; keine vollständige WCAG-/hörbare Screenreader-Zusage.
+Vor Echtbetrieb prüft der Owner tatsächliche Kontakt-/Händler-/Rechtstextdaten
+und Hostingkosten separat; keine kommerzielle Startfreigabe durch diesen PR.
 
-## Entscheidungsnotizen und Quellen
+## Änderungsnotizen und Quellen
 
-Neue IDs FR-001–010 gelten innerhalb `engraving-shop`; keine historischen IDs
-werden entfernt oder wiederverwendet. Designableitung aus
-[Ingrained Inc.](https://ingrainedinc.com/): Material-/Geschenkkategorien,
-Produktfotos und Werkstattbezug. Die Palette ist unser eigener Vorschlag, keine
-behauptete Kopie der Referenz. Frühere Tischreferenzen gehören nicht zum ersten Shopumfang.
-
-Technische Recherche, 13. Oktober 2026:
-[Medusa Produkt-/Bildpflege](https://docs.medusajs.com/user-guide/products/edit),
-[personalisierte Produkte](https://docs.medusajs.com/resources/recipes/personalized-products),
-[Gastwarenkorb](https://docs.medusajs.com/resources/storefront-development/cart/create),
-[Payment-Anbindungen](https://docs.medusajs.com/resources/commerce-modules/payment/payment-provider)
-und [Hostinganforderungen](https://docs.medusajs.com/learn/deployment/general).
-Diese Quellen belegen mögliche Bausteine, keine fertig integrierte Lösung,
-kostenlose Betriebszusage oder Anbieterfreigabe.
+Owner hat am 14. Oktober den noch offenen Entwurf #117 auf Katalog/Kontakt
+reduziert. FR-001–004 angepasst, FR-005–010 zurückgezogen, FR-011 neu hinzugefügt.
+Historische IDs bleiben dokumentiert; die ursprüngliche Shopfassung steht in Git.
+Designreferenz [Ingrained Inc.](https://ingrainedinc.com/): Materialkategorien,
+Produktfotos/Werkstattbezug. Palette ist unser eigener Vorschlag. Frühere
+Commerce-/Payment-Recherche ist historisch und autorisiert keine Integration
+für den jetzt reduzierten Umfang.

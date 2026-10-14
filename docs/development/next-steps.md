@@ -1,17 +1,18 @@
 # Nächste Schritte nach Pilot und sichtbarer Folgeänderung
 
-Stand: 13. Oktober 2026 (Europe/Berlin). Aktueller Einstieg:
+Stand: 14. Oktober 2026 (Europe/Berlin). Aktueller Einstieg:
 [Worker-Übergabe](worker-handoff.md). Historische `PROJECT_STATE_*`-Dateien sind
 Momentaufnahmen; GitHub liefert den aktuellen Status.
 
 ## Prioritäten
 
-1. **Gravurshop-MVP spezifizieren und freigeben.**
+1. **Gravurkatalog mit Kontakt spezifizieren und freigeben.**
    [Epic #115](https://github.com/ThomasRey123/agentic-webapp/issues/115) ist der
    neue Owner-Auftrag; [Shop-Spec](../specs/engraving-shop/spec.md) / Issue #116
    legt den ersten Umfang fest. Noch keine Umsetzung vor Owner-Spec-Merge.
-   Danach folgen getrennte Aufträge für Shop/Admin, Konten/Warenkorb und
-   Checkout/Bestellungen; Architektur-/Hostingbedarf zuerst begründen.
+   Danach folgen getrennte Aufträge für Admin-/Produktgrundlage und Katalog/Kontakt;
+   Architektur-/Hostingbedarf zuerst begründen. Kundenkonten, Warenkorb, Bestellung
+   und Online-Bezahlung sind auf Owner-Wunsch entfernt.
    Epoxidharz ist zurückgestellt. Die [SDD-Auswertung](sdd-pilot-review.md) ist
    mit #114 geliefert; Epic #90 ist abgeschlossen, kein weiterer SDD-Werkzeugauftrag.
 2. **Wartung fortführen.** Dependabot wöchentlich prüfen; Node-LTS nach dem

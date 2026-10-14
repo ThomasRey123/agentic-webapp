@@ -1,6 +1,6 @@
 # Übergabe an den nächsten Worker
 
-Stand: 13. Oktober 2026 (Europe/Berlin). Repository:
+Stand: 14. Oktober 2026 (Europe/Berlin). Repository:
 `ThomasRey123/agentic-webapp`. GitHub ist die Quelle für aktuelle Merge-/CI-/DEV-Zustände.
 
 ## Genau hier weiterarbeiten
@@ -17,10 +17,11 @@ Abschlussrecord steht in #90/#113/#114; der Dokumentationsmerge ist
 `93e07d7c30caea95f03ba1f0f8adcb935fccd7bf`, Main-CI 38437770050 / DEV 38437935864
 inklusive Smoke/Bereinigung erfolgreich.
 
-Der aktuelle Owner-Auftrag ist [Gravurshop-Epic #115](https://github.com/ThomasRey123/agentic-webapp/issues/115).
+Der aktuelle Owner-Auftrag ist [Katalog-Epic #115](https://github.com/ThomasRey123/agentic-webapp/issues/115).
 Arbeitsname Gravurwerk, Deutschland, Creme/Holzbraun/Petrol; Holz/Leder/Glas mit
-Gravurtext, Kundenkonto und Gastbestellung, separater Admin, PayPal und Karte.
-Epoxidharz/Möbel sind zunächst ausgeschlossen.
+Produktkatalog und Kontaktmöglichkeit, separater Admin für Produkt-/Preis-/Bildpflege.
+Owner hat am 14. Oktober Kundenkonten, Warenkorb, Bestellung und Online-Bezahlung
+aus dem Umfang entfernt. Epoxidharz/Möbel bleiben ausgeschlossen.
 
 1. `AGENTS.md`, diese Übergabe, [Prioritäten](next-steps.md) und
    [Shop-Spec](../specs/engraving-shop/spec.md) lesen; aktuelle Main-/Issue-/PR-
@@ -30,7 +31,7 @@ Epoxidharz/Möbel sind zunächst ausgeschlossen.
    kostenpflichtige Infrastruktur einrichten. Entwurf/CI ist keine Spec-Freigabe.
 3. Nach tatsächlichem Owner-Merge separate Implementierungsaufträge gemäß Spec
    mit echtem Freigabe-SHA aufnehmen. Den nötigen Architekturwechsel als ADR
-   begründen; Medusa ist Kandidat, kein bereits ausgewähltes Hosting.
+   begründen; keine Commerce-/Kundenkonto-/Payment-Infrastruktur mehr vorsehen.
    Pflichtprüfungen/Vorschau/DEV und separate PROD-Grenze erhalten.
 
 ## Nachweise und Prüfgrenzen
