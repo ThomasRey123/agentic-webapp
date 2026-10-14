@@ -25,11 +25,13 @@ Kunden-Uploads, eingebautes Anfrageformular und freie Layoutbearbeitung im Admin
 Ein Gravurwunsch wird gegebenenfalls außerhalb der Webseite per E-Mail besprochen;
 die frühere Texteingabe beim Kauf entfällt mit dem Kaufablauf.
 
-Künftig führt `/` zum Katalog. Die bestehende Projekt-Demo bleibt unter `/projekt`
-mit Links, FAQ, Cloud-Test, Copy-DEV-Link und persistentem Theme erreichbar;
-ihre historische Spec und Browserprüfungen werden mitverschoben. Der Admin
-verwaltet tatsächliche dauerhafte Daten; lokale Browser-Demodaten gelten nicht
-als funktionierende Produktverwaltung. PROD und kostenpflichtige Providerbuchungen
+Künftig ersetzt der Katalog unter `/` die bisherige Seite vollständig.
+Auf Owner-Wunsch vom 14. Oktober entfallen Projekt-/Delivery-Inhalte, Projekt-FAQ,
+Cloud-Test, Repository-/DEV-Links und Copy-DEV-Link aus der Anwendung. Es gibt
+keine Archiv-/Demoroute `/projekt`. Historische Specs/Liefernachweise bleiben
+als Entwicklungsdokumentation und Git-Historie erhalten, nicht als Webseiteninhalt.
+Der Admin verwaltet tatsächliche dauerhafte Daten; lokale Browser-Demodaten gelten
+nicht als funktionierende Produktverwaltung. PROD und kostenpflichtige Providerbuchungen
 bleiben separat freizugebende Schritte.
 
 ## Anforderungen und Szenarien
@@ -39,14 +41,16 @@ bleiben separat freizugebende Schritte.
 Creme, Holzbraun und Petrol, große Produkt-/Materialfotos, ruhige Flächen und gut
 lesbare Schriften vermitteln Handarbeit. Startseite mit Holz/Leder/Glas-Bereichen,
 ausgewählten veröffentlichten Produkten und kurzem Werkstatttext. Navigation:
-Katalog und Kontakt; Admin mit eigenem Einstieg. Das vorhandene Theme bleibt
-umschaltbar und persistent, der dunkle Auftritt erhält denselben Markencharakter.
+Katalog und Kontakt; Admin mit eigenem Einstieg. Der Katalog bietet ein
+umschaltbares, persistentes Theme; der dunkle Auftritt erhält denselben Markencharakter.
 Keine erfundenen Rezensionen, Siegel oder Lieferzusagen.
 
 - Gegeben Desktop oder 390px-Mobilansicht, wenn Nutzer navigieren, dann erreichen
   sie Katalog und Kontakt ohne Clipping oder Hover-Zwang; kein Konto-/Warenkorb-/Bezahlzugang.
-- Gegeben Theme-Wechsel/Reload, dann bleiben Theme und lesbare Kontraste erhalten;
-  die Projekt-Demo bleibt auf ihrer eigenen Route nutzbar.
+- Gegeben Theme-Wechsel/Reload, dann bleiben Theme und lesbare Kontraste erhalten.
+- Gegeben die neue Startseite, dann erscheinen ausschließlich Katalog-/Kontakt-
+  und Betreiberinhalte. Die bisherigen Projekt-Demoaktionen sind nicht vorhanden;
+  ein direkter Aufruf von `/projekt` liefert eine Nicht-gefunden-Seite.
 
 ### FR-002 — Veröffentlichte Produkte und verständliche Details
 
@@ -149,8 +153,14 @@ in seinem E-Mail-Programm formulieren. Die Webseite speichert/versendet keine An
   Veröffentlichung und Hostingkosten. Keine Commerce-, Kunden-Auth-, Payment-
   oder E-Mail-Versandinfrastruktur erforderlich. Die frühere Medusa-Empfehlung
   ist für diesen kleineren Umfang neu zu bewerten, keine getroffene Anbieterwahl.
-- Kompatibilität: Projekt-Demo und Pflichtgates/menschliche Merges bleiben erhalten.
-  Langsame/fehlerhafte Dienste erzeugen keine falschen Speicher-Erfolgsmeldungen.
+- Ablösung: Bei Lieferung des Katalogs alte Demo-Routen/-Komponenten/-Assets und
+  ausschließlich dafür bestehende Tests entfernen. Im selben Implementierungs-PR
+  aktive Katalog-/Kontakt-/Admin-Journeys, statische Assets und Theme durch passende
+  neue Unit-/Browserregressionen prüfen. Alte Demo-Specs sind dann historisch,
+  kein fortgeltender Produktauftrag. Keine Tests wegen eines Fehlers umgehen;
+  die Ablösung folgt diesem ausdrücklich geänderten Produktumfang. Pflichtgates
+  und menschliche Merges bleiben erhalten. Langsame/fehlerhafte Dienste erzeugen
+  keine falschen Speicher-Erfolgsmeldungen.
   Bilder passend ausliefern; kein unbegründetes Latenzziel. Kein direkter PROD-Deploy.
 
 Nach Freigabe zwei getrennte Implementierungsaufträge: (1) Admin-/Produktgrundlage
@@ -163,7 +173,8 @@ Anforderungen, Main-CI/DEV und Owner-Prüfung. Keine Account-/Payment-Platzhalte
 
 Bestätigt: nur Katalog/Kontakt, Admin bleibt, bisherige Gestaltung/Materialien/
 Deutschland/Arbeitsname bleiben. `mailto:` statt Anfrageformular, Gravur im
-angezeigten Preis und die Demo-Route sind explizite Vorschläge zur Prüfung.
+angezeigten Preis sind explizite Vorschläge zur Prüfung. Die alte Seite entfällt
+auf ausdrücklichen Owner-Wunsch; `/projekt` wird nicht eingerichtet.
 Offene fachliche Scope-/Abnahmefragen: keine für diesen Vorschlag. Tatsächliche
 Kontakt-/Händlerdaten, Preise, Bilder, Rechtstexte und Hostingkosten sind noch
 bereitzustellen/zu prüfen; Testwerte werden kenntlich gemacht. Sie werden nicht
@@ -177,7 +188,7 @@ Main-CI/DEV. Die Spec allein liefert keine funktionierende Webseite.
 
 | ID     | Geplante beobachtbare Prüfung                                                                                                                                                                                 |
 | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| FR-001 | Desktop-/Mobilnavigation, keine Kundenkonto-/Warenkorb-/Bezahlaktionen, Theme/Reload und verschobene Projektregressionen; manuelle Visual-/Kontrastprüfung                                                    |
+| FR-001 | Desktop-/Mobilnavigation, keine Kundenkonto-/Warenkorb-/Bezahlaktionen, Theme/Reload, keine alten Demoaktionen und `/projekt` nicht gefunden; manuelle Visual-/Kontrastprüfung                                |
 | FR-002 | Entwurf/veröffentlicht, direkte Detailadresse, fehlendes Bild/Leerzustand; keine Kaufaktion                                                                                                                   |
 | FR-003 | Besucher vs. Admin, direkte API-Manipulation, Logout/ungültige Session: verweigerte Verwaltungszugriffe                                                                                                       |
 | FR-004 | Admin speichern → anderer Browser/Reload; ungültige Felder/Preise/Kontaktadresse; reale Bildpersistenz und abgewiesene fehlerhafte/fremde/zu große Dateien                                                    |
@@ -193,7 +204,9 @@ und Hostingkosten separat; keine kommerzielle Startfreigabe durch diesen PR.
 ## Änderungsnotizen und Quellen
 
 Owner hat am 14. Oktober den noch offenen Entwurf #117 auf Katalog/Kontakt
-reduziert. FR-001–004 angepasst, FR-005–010 zurückgezogen, FR-011 neu hinzugefügt.
+reduziert und die vollständige Ablösung der alten Seite verlangt. FR-001–004
+angepasst, FR-005–010 zurückgezogen, FR-011 neu hinzugefügt. Die zuvor vorgeschlagene
+Verschiebung der Demo nach `/projekt` ist aufgehoben.
 Historische IDs bleiben dokumentiert; die ursprüngliche Shopfassung steht in Git.
 Designreferenz [Ingrained Inc.](https://ingrainedinc.com/): Materialkategorien,
 Produktfotos/Werkstattbezug. Palette ist unser eigener Vorschlag. Frühere

@@ -21,7 +21,9 @@ Der aktuelle Owner-Auftrag ist [Katalog-Epic #115](https://github.com/ThomasRey1
 Arbeitsname Gravurwerk, Deutschland, Creme/Holzbraun/Petrol; Holz/Leder/Glas mit
 Produktkatalog und Kontaktmöglichkeit, separater Admin für Produkt-/Preis-/Bildpflege.
 Owner hat am 14. Oktober Kundenkonten, Warenkorb, Bestellung und Online-Bezahlung
-aus dem Umfang entfernt. Epoxidharz/Möbel bleiben ausgeschlossen.
+aus dem Umfang entfernt. Die alte Projekt-Demoseite wird bei Lieferung des
+Katalogs vollständig ersetzt, keine Archivroute `/projekt`. Epoxidharz/Möbel
+bleiben ausgeschlossen.
 
 1. `AGENTS.md`, diese Übergabe, [Prioritäten](next-steps.md) und
    [Shop-Spec](../specs/engraving-shop/spec.md) lesen; aktuelle Main-/Issue-/PR-
@@ -32,6 +34,8 @@ aus dem Umfang entfernt. Epoxidharz/Möbel bleiben ausgeschlossen.
 3. Nach tatsächlichem Owner-Merge separate Implementierungsaufträge gemäß Spec
    mit echtem Freigabe-SHA aufnehmen. Den nötigen Architekturwechsel als ADR
    begründen; keine Commerce-/Kundenkonto-/Payment-Infrastruktur mehr vorsehen.
+   Alte Demo-Inhalte und deren ausschließlich zugehörige Tests im Katalog-PR
+   durch die freigegebene Katalogoberfläche mit neuer Regression ersetzen.
    Pflichtprüfungen/Vorschau/DEV und separate PROD-Grenze erhalten.
 
 ## Nachweise und Prüfgrenzen
