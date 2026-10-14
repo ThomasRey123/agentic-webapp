@@ -31,12 +31,15 @@ reale Angaben/Inhalte prüfen und ersetzen; Muster sind keine Rechtsfreigabe.
 1. `AGENTS.md`, diese Übergabe, [Prioritäten](next-steps.md) und
    [Shop-Spec](../specs/engraving-shop/spec.md) lesen; aktuelle Main-/Issue-/PR-
    Zustände prüfen und fremde lokale Änderungen bewahren.
-2. Spec-Issue #116 / dessen Spec-only-PR zuerst durch den Owner freigeben lassen.
-   Keinen eigenen PR mergen; noch keine Shop-Implementierung, Datenbank oder
-   kostenpflichtige Infrastruktur einrichten. Entwurf/CI ist keine Spec-Freigabe.
-3. Nach tatsächlichem Owner-Merge separate Implementierungsaufträge gemäß Spec
-   mit echtem Freigabe-SHA aufnehmen. Den nötigen Architekturwechsel als ADR
-   begründen; keine Commerce-/Kundenkonto-/Payment-Infrastruktur mehr vorsehen.
+2. Spec #117 ist owner-gemergt: `0a2235ba264ecd8f0dd228458547fd275ca3ad68`.
+   [Plan](../specs/engraving-shop/plan.md), dann [Tasks](../specs/engraving-shop/tasks.md)
+   und [ADR-003](../architecture/decisions/ADR-003-catalog-runtime.md) sind zu
+   Planungs-Issue #118 vorbereitet; ihren PR-/CI-Stand live prüfen. Noch keine
+   Laufzeit/Bindings/Dienste eingerichtet oder kompatibel getestet.
+3. Separate Implementierungsaufträge A/B mit echtem Freigabe-SHA aufnehmen;
+   Tasks in Reihenfolge abarbeiten. Kosten-/Account-/Access-/Absender-/Testziel-
+   Voraussetzungen vor Remoteeinrichtung klären. Keine kostenpflichtigen Dienste
+   oder PROD ohne passenden Owner-Auftrag; keine Commerce-/Kunden-/Paymentfunktionen.
    Alte Demo-Inhalte und deren ausschließlich zugehörige Tests im Katalog-PR
    durch die freigegebene Katalogoberfläche mit neuer Regression ersetzen.
    Pflichtprüfungen/Vorschau/DEV und separate PROD-Grenze erhalten.
