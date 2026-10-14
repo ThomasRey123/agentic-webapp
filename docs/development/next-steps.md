@@ -14,6 +14,8 @@ Momentaufnahmen; GitHub liefert den aktuellen Status.
    Architektur-/Hostingbedarf zuerst begründen. Kundenkonten, Warenkorb, Bestellung
    und Online-Bezahlung sind auf Owner-Wunsch entfernt. Der Katalog ersetzt
    die bisherige Projektseite vollständig; keine Demo-/Archivroute `/projekt`.
+   Allgemeines Kontaktformular, kein Verkauf per E-Mail. Informations-/Rechtstexte
+   zunächst als markierte, adminbearbeitbare Beispiele; vor Echtbetrieb prüfen/ersetzen.
    Epoxidharz ist zurückgestellt. Die [SDD-Auswertung](sdd-pilot-review.md) ist
    mit #114 geliefert; Epic #90 ist abgeschlossen, kein weiterer SDD-Werkzeugauftrag.
 2. **Wartung fortführen.** Dependabot wöchentlich prüfen; Node-LTS nach dem

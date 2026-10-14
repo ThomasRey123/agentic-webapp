@@ -23,7 +23,10 @@ Produktkatalog und Kontaktmöglichkeit, separater Admin für Produkt-/Preis-/Bil
 Owner hat am 14. Oktober Kundenkonten, Warenkorb, Bestellung und Online-Bezahlung
 aus dem Umfang entfernt. Die alte Projekt-Demoseite wird bei Lieferung des
 Katalogs vollständig ersetzt, keine Archivroute `/projekt`. Epoxidharz/Möbel
-bleiben ausgeschlossen.
+bleiben ausgeschlossen. Das Kontaktformular dient ausschließlich allgemeinen
+Anfragen; kein Verkauf über Webseite oder E-Mail. FR-012–018 ergänzen bearbeitbare,
+in DEV markierte Beispieltexte für Pflicht-/Informationsbereiche. Vor Echtbetrieb
+reale Angaben/Inhalte prüfen und ersetzen; Muster sind keine Rechtsfreigabe.
 
 1. `AGENTS.md`, diese Übergabe, [Prioritäten](next-steps.md) und
    [Shop-Spec](../specs/engraving-shop/spec.md) lesen; aktuelle Main-/Issue-/PR-
