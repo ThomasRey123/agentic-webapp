@@ -1,18 +1,23 @@
 # Nächste Schritte nach Pilot und sichtbarer Folgeänderung
 
-Stand: 13. Oktober 2026 (Europe/Berlin). Aktueller Einstieg:
+Stand: 14. Oktober 2026 (Europe/Berlin). Aktueller Einstieg:
 [Worker-Übergabe](worker-handoff.md). Historische `PROJECT_STATE_*`-Dateien sind
 Momentaufnahmen; GitHub liefert den aktuellen Status.
 
 ## Prioritäten
 
-1. **SDD-Auswertung reviewen und Epic #90 abschließen.** Pilot #98, revidierte
-   Abnahme #102/#104 und sichtbare Folgeänderung #110/#112 sind owner-gemergt
-   und geliefert. Die [Auswertung](sdd-pilot-review.md) zu Issue #113 enthält
-   Nutzen, Nacharbeit, Owner-Rückmeldung und Grenzen. Ihre Empfehlung erhält den
-   bestehenden Ablauf und kürzt die Dokumentation; keine neue CLI oder CI-Prüfung.
-   Erst nach Owner-Merge der Auswertung und erfolgreichen Main-CI-/DEV-Prüfungen
-   die letzte Epic-Etappe als abgeschlossen dokumentieren. Kein neuer Feature-Auftrag.
+1. **Gravurkatalog mit Kontakt spezifizieren und freigeben.**
+   [Epic #115](https://github.com/ThomasRey123/agentic-webapp/issues/115) ist der
+   neue Owner-Auftrag; [Shop-Spec](../specs/engraving-shop/spec.md) / Issue #116
+   legt den ersten Umfang fest. Noch keine Umsetzung vor Owner-Spec-Merge.
+   Danach folgen getrennte Aufträge für Admin-/Produktgrundlage und Katalog/Kontakt;
+   Architektur-/Hostingbedarf zuerst begründen. Kundenkonten, Warenkorb, Bestellung
+   und Online-Bezahlung sind auf Owner-Wunsch entfernt. Der Katalog ersetzt
+   die bisherige Projektseite vollständig; keine Demo-/Archivroute `/projekt`.
+   Allgemeines Kontaktformular, kein Verkauf per E-Mail. Informations-/Rechtstexte
+   zunächst als markierte, adminbearbeitbare Beispiele; vor Echtbetrieb prüfen/ersetzen.
+   Epoxidharz ist zurückgestellt. Die [SDD-Auswertung](sdd-pilot-review.md) ist
+   mit #114 geliefert; Epic #90 ist abgeschlossen, kein weiterer SDD-Werkzeugauftrag.
 2. **Wartung fortführen.** Dependabot wöchentlich prüfen; Node-LTS nach dem
    [Update-Verfahren](node-updates.md). Für [#82](https://github.com/ThomasRey123/agentic-webapp/issues/82)
    nur einen tatsächlich veröffentlichten, unterstützten braces-Fix übernehmen.
